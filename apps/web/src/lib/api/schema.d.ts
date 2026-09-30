@@ -41,10 +41,156 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/movies": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Movies
+         * @description The three films, in release order.
+         */
+        get: operations["list_movies"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/species": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Species
+         * @description Every dragon species in the catalog, by name.
+         */
+        get: operations["list_species"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/species/{species_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Species
+         * @description One species with its film appearances, named dragons and sources.
+         */
+        get: operations["get_species"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/individuals": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Individuals
+         * @description Every named dragon in the catalog, by name.
+         */
+        get: operations["list_individuals"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/individuals/{individual_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Individual
+         * @description One named dragon with its species, film appearances, riders per film and sources.
+         */
+        get: operations["get_individual"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Search
+         * @description Species and named dragons whose name contains `q`, prefix matches first.
+         */
+        get: operations["search"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** Appearance */
+        Appearance: {
+            /** Movie Id */
+            movie_id: string;
+            appearance_type: components["schemas"]["AppearanceType"];
+            confidence: components["schemas"]["Confidence"];
+            /** Evidence */
+            evidence: string | null;
+        };
+        /**
+         * AppearanceType
+         * @enum {string}
+         */
+        AppearanceType: "featured" | "on_screen" | "background" | "mentioned" | "pictured";
+        /** CharacterRef */
+        CharacterRef: {
+            /** Id */
+            id: string;
+            /** Name */
+            name: string;
+        };
+        /**
+         * Confidence
+         * @enum {string}
+         */
+        Confidence: "high" | "medium" | "low";
         /** CurrentUser */
         CurrentUser: {
             /**
@@ -57,10 +203,22 @@ export interface components {
             /** Role */
             role: string;
         };
+        /** DragonClass */
+        DragonClass: {
+            /** Value */
+            value: string;
+            /** @description `franchise` means the class comes from outside the films */
+            scope: components["schemas"]["Scope"];
+        };
         /** ErrorResponse */
         ErrorResponse: {
             /** Detail */
             detail: string;
+        };
+        /** HTTPValidationError */
+        HTTPValidationError: {
+            /** Detail */
+            detail?: components["schemas"]["ValidationError"][];
         };
         /** HealthResponse */
         HealthResponse: {
@@ -70,6 +228,176 @@ export interface components {
              * @constant
              */
             status: "ok";
+        };
+        /** IndividualDetail */
+        IndividualDetail: {
+            /** Id */
+            id: string;
+            /** Name */
+            name: string;
+            species: components["schemas"]["SpeciesRef"];
+            confidence: components["schemas"]["Confidence"];
+            /**
+             * Movies
+             * @description Films the dragon appears in, in film order
+             */
+            movies: string[];
+            /** Description */
+            description: string | null;
+            /** Notes */
+            notes: string | null;
+            /** Appearances */
+            appearances: components["schemas"]["Appearance"][];
+            /** Riders */
+            riders: components["schemas"]["Rider"][];
+            /** Sources */
+            sources: components["schemas"]["Source"][];
+        };
+        /** IndividualRef */
+        IndividualRef: {
+            /** Id */
+            id: string;
+            /** Name */
+            name: string;
+        };
+        /** IndividualSummary */
+        IndividualSummary: {
+            /** Id */
+            id: string;
+            /** Name */
+            name: string;
+            species: components["schemas"]["SpeciesRef"];
+            confidence: components["schemas"]["Confidence"];
+            /**
+             * Movies
+             * @description Films the dragon appears in, in film order
+             */
+            movies: string[];
+        };
+        /** Movie */
+        Movie: {
+            /** Id */
+            id: string;
+            /** Title */
+            title: string;
+            /** Year */
+            year: number;
+            /** Ordinal */
+            ordinal: number;
+        };
+        /** Rider */
+        Rider: {
+            /** Movie Id */
+            movie_id: string;
+            character: components["schemas"]["CharacterRef"];
+            /**
+             * Relation
+             * @enum {string}
+             */
+            relation: "rider" | "owner" | "controller" | "companion";
+            confidence: components["schemas"]["Confidence"];
+        };
+        /**
+         * Scope
+         * @enum {string}
+         */
+        Scope: "film" | "franchise";
+        /** SearchResult */
+        SearchResult: {
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "species" | "individual";
+            /** Id */
+            id: string;
+            /** Name */
+            name: string;
+            /** @description For individuals: their species */
+            species: components["schemas"]["SpeciesRef"] | null;
+        };
+        /** Source */
+        Source: {
+            /** Id */
+            id: string;
+            /** Title */
+            title: string;
+            /**
+             * Type
+             * @enum {string}
+             */
+            type: "film" | "official" | "book" | "wiki" | "other";
+            /** Url */
+            url: string | null;
+            /** Accessed On */
+            accessed_on: string | null;
+        };
+        /** SpeciesDetail */
+        SpeciesDetail: {
+            /** Id */
+            id: string;
+            /** Name */
+            name: string;
+            class: components["schemas"]["DragonClass"] | null;
+            /** Size */
+            size: ("tiny" | "small" | "medium" | "large" | "titan") | null;
+            confidence: components["schemas"]["Confidence"];
+            /**
+             * Movies
+             * @description Films the species appears in, in film order
+             */
+            movies: string[];
+            /** Diet */
+            diet: string | null;
+            /** Description */
+            description: string | null;
+            /** Notes */
+            notes: string | null;
+            /** Appearances */
+            appearances: components["schemas"]["Appearance"][];
+            /**
+             * Individuals
+             * @description Named dragons of this species
+             */
+            individuals: components["schemas"]["IndividualRef"][];
+            /** Sources */
+            sources: components["schemas"]["Source"][];
+        };
+        /** SpeciesRef */
+        SpeciesRef: {
+            /** Id */
+            id: string;
+            /** Name */
+            name: string;
+        };
+        /** SpeciesSummary */
+        SpeciesSummary: {
+            /** Id */
+            id: string;
+            /** Name */
+            name: string;
+            class: components["schemas"]["DragonClass"] | null;
+            /** Size */
+            size: ("tiny" | "small" | "medium" | "large" | "titan") | null;
+            confidence: components["schemas"]["Confidence"];
+            /**
+             * Movies
+             * @description Films the species appears in, in film order
+             */
+            movies: string[];
+        };
+        /** ValidationError */
+        ValidationError: {
+            /** Location */
+            loc: (string | number)[];
+            /** Message */
+            msg: string;
+            /** Error Type */
+            type: string;
+            /** Input */
+            input?: unknown;
+            /** Context */
+            ctx?: Record<string, never>;
         };
     };
     responses: never;
@@ -125,6 +453,203 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    list_movies: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Movie"][];
+                };
+            };
+        };
+    };
+    list_species: {
+        parameters: {
+            query?: {
+                /** @description Only entries that appear in this film, e.g. `httyd2` */
+                movie?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SpeciesSummary"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_species: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                species_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SpeciesDetail"];
+                };
+            };
+            /** @description No entry with this id */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_individuals: {
+        parameters: {
+            query?: {
+                /** @description Only entries that appear in this film, e.g. `httyd2` */
+                movie?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["IndividualSummary"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_individual: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                individual_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["IndividualDetail"];
+                };
+            };
+            /** @description No entry with this id */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    search: {
+        parameters: {
+            query: {
+                /** @description Part of a name */
+                q: string;
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SearchResult"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };

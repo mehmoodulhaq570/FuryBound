@@ -1,6 +1,6 @@
 # Tech stack
 
-What Dragon Academy is built with as of **Phase 0 (foundations)**. Versions come from `apps/web/package.json`, `apps/api/pyproject.toml` and the local Supabase stack. See [Plan.md §6](Plan.md#6-tech-stack) for the full planned stack.
+What Dragon Academy is built with as of **Phase 1 (dragon database)**. Versions come from `apps/web/package.json`, `apps/api/pyproject.toml` and the local Supabase stack. See [Plan.md §6](Plan.md#6-tech-stack) for the full planned stack.
 
 ## Frontend (`apps/web`)
 
@@ -25,6 +25,14 @@ What Dragon Academy is built with as of **Phase 0 (foundations)**. Versions come
 | Pydantic Settings | 2.15 | Configuration from environment variables |
 | PyJWT (with crypto) | 2.15 | Verifies Supabase access tokens (JWKS, or HS256 locally) |
 | structlog | 26.1 | Structured request logging |
+| SQLAlchemy (async) | 2.1 | Database queries |
+| asyncpg | 0.31 | PostgreSQL driver used by SQLAlchemy |
+
+## Data pipeline (`scripts/`, `data/`)
+
+| Technology | Role |
+|---|---|
+| Python + Pydantic | `import_scene_logs.py`, `validate_catalog.py` and `build_catalog.py` turn scene logs and catalog CSVs into `seed.sql`, `dragons.json` and `dragons.csv` (see [data/README.md](data/README.md)) |
 
 ## Database and auth (`supabase/`)
 
@@ -65,13 +73,12 @@ What Dragon Academy is built with as of **Phase 0 (foundations)**. Versions come
 
 | Technology | Role |
 |---|---|
-| GitHub Actions | Two jobs, **API** and **Web**. Each runs lint, type checks and tests, and checks that the OpenAPI schema and generated frontend types are up to date |
+| GitHub Actions | Three jobs. **API**: lint, type checks, and tests against a seeded Supabase database; checks the OpenAPI schema is up to date. **Data**: checks the catalog and that scene logs, catalog and build outputs agree. **Web**: lint, type checks, tests; checks the generated API types are up to date |
 
 ## Coming in later phases
 
 | Technology | Phase | Role |
 |---|---|---|
-| SQLAlchemy 2 (async) + asyncpg | 1 | Database access from FastAPI |
 | Fuse.js | 2 | Client-side Dragon Book search |
 | Hypothesis | 3 | Property tests for the game engines |
 | scikit-learn, NumPy, pandas | 3 | Matching calibration and analysis |

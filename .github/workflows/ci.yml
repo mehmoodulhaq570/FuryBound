@@ -11,7 +11,7 @@ concurrency:
 
 jobs:
   api:
-    name: API (lint, types, tests)
+    name: API (lint, types, tests against the seeded database)
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -25,6 +25,20 @@ jobs:
       - run: uv run ruff check .
       - run: uv run ruff format --check .
       - run: uv run mypy
+      - uses: supabase/setup-cli@v1
+        with:
+          version: 2.116.0
+      - name: Start database (migrations + dragon seed)
+        working-directory: .
+        env:
+          DB: postgresql://postgres:postgres@127.0.0.1:54322/postgres
+        run: |
+          supabase db start
+          # Load the seed if `db start` didn't (fails loudly if the migrations didn't run either).
+          if [ "$(psql "$DB" -tAc 'select count(*) from species')" = "0" ]; then
+            psql "$DB" -v ON_ERROR_STOP=1 -q -f data/build/seed.sql
+          fi
+          psql "$DB" -tAc "select 'species: ' || count(*) from species"
       - run: uv run pytest
       - name: OpenAPI schema is up to date
         run: |

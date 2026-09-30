@@ -4,9 +4,11 @@ version = "0.1.0"
 description = "Dragon Academy backend: canon data, game engines and AI companion"
 requires-python = ">=3.14"
 dependencies = [
+    "asyncpg>=0.31.0",
     "fastapi[standard]>=0.142.1",
     "pydantic-settings>=2.15.0",
     "pyjwt[crypto]>=2.15.1",
+    "sqlalchemy[asyncio]>=2.1.1",
     "structlog>=26.1.0",
 ]
 

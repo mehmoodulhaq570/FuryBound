@@ -62,10 +62,396 @@
           }
         ]
       }
+    },
+    "/api/v1/movies": {
+      "get": {
+        "tags": [
+          "canon"
+        ],
+        "summary": "List Movies",
+        "description": "The three films, in release order.",
+        "operationId": "list_movies",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/Movie"
+                  },
+                  "type": "array",
+                  "title": "Response List Movies"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/species": {
+      "get": {
+        "tags": [
+          "canon"
+        ],
+        "summary": "List Species",
+        "description": "Every dragon species in the catalog, by name.",
+        "operationId": "list_species",
+        "parameters": [
+          {
+            "name": "movie",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Only entries that appear in this film, e.g. `httyd2`",
+              "title": "Movie"
+            },
+            "description": "Only entries that appear in this film, e.g. `httyd2`"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SpeciesSummary"
+                  },
+                  "title": "Response List Species"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/species/{species_id}": {
+      "get": {
+        "tags": [
+          "canon"
+        ],
+        "summary": "Get Species",
+        "description": "One species with its film appearances, named dragons and sources.",
+        "operationId": "get_species",
+        "parameters": [
+          {
+            "name": "species_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-z0-9_]+$",
+              "examples": [
+                "night_fury"
+              ],
+              "title": "Species Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SpeciesDetail"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No entry with this id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/individuals": {
+      "get": {
+        "tags": [
+          "canon"
+        ],
+        "summary": "List Individuals",
+        "description": "Every named dragon in the catalog, by name.",
+        "operationId": "list_individuals",
+        "parameters": [
+          {
+            "name": "movie",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Only entries that appear in this film, e.g. `httyd2`",
+              "title": "Movie"
+            },
+            "description": "Only entries that appear in this film, e.g. `httyd2`"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IndividualSummary"
+                  },
+                  "title": "Response List Individuals"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/individuals/{individual_id}": {
+      "get": {
+        "tags": [
+          "canon"
+        ],
+        "summary": "Get Individual",
+        "description": "One named dragon with its species, film appearances, riders per film and sources.",
+        "operationId": "get_individual",
+        "parameters": [
+          {
+            "name": "individual_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-z0-9_]+$",
+              "examples": [
+                "night_fury"
+              ],
+              "title": "Individual Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IndividualDetail"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No entry with this id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/search": {
+      "get": {
+        "tags": [
+          "canon"
+        ],
+        "summary": "Search",
+        "description": "Species and named dragons whose name contains `q`, prefix matches first.",
+        "operationId": "search",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100,
+              "description": "Part of a name",
+              "title": "Q"
+            },
+            "description": "Part of a name"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 50,
+              "minimum": 1,
+              "default": 20,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SearchResult"
+                  },
+                  "title": "Response Search"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
+      "Appearance": {
+        "properties": {
+          "movie_id": {
+            "type": "string",
+            "title": "Movie Id"
+          },
+          "appearance_type": {
+            "$ref": "#/components/schemas/AppearanceType"
+          },
+          "confidence": {
+            "$ref": "#/components/schemas/Confidence"
+          },
+          "evidence": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Evidence"
+          }
+        },
+        "type": "object",
+        "required": [
+          "movie_id",
+          "appearance_type",
+          "confidence",
+          "evidence"
+        ],
+        "title": "Appearance"
+      },
+      "AppearanceType": {
+        "type": "string",
+        "enum": [
+          "featured",
+          "on_screen",
+          "background",
+          "mentioned",
+          "pictured"
+        ],
+        "title": "AppearanceType"
+      },
+      "CharacterRef": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name"
+        ],
+        "title": "CharacterRef"
+      },
+      "Confidence": {
+        "type": "string",
+        "enum": [
+          "high",
+          "medium",
+          "low"
+        ],
+        "title": "Confidence"
+      },
       "CurrentUser": {
         "properties": {
           "id": {
@@ -96,6 +482,24 @@
         ],
         "title": "CurrentUser"
       },
+      "DragonClass": {
+        "properties": {
+          "value": {
+            "type": "string",
+            "title": "Value"
+          },
+          "scope": {
+            "$ref": "#/components/schemas/Scope",
+            "description": "`franchise` means the class comes from outside the films"
+          }
+        },
+        "type": "object",
+        "required": [
+          "value",
+          "scope"
+        ],
+        "title": "DragonClass"
+      },
       "ErrorResponse": {
         "properties": {
           "detail": {
@@ -109,6 +513,19 @@
         ],
         "title": "ErrorResponse"
       },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
       "HealthResponse": {
         "properties": {
           "status": {
@@ -120,6 +537,545 @@
         },
         "type": "object",
         "title": "HealthResponse"
+      },
+      "IndividualDetail": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "species": {
+            "$ref": "#/components/schemas/SpeciesRef"
+          },
+          "confidence": {
+            "$ref": "#/components/schemas/Confidence"
+          },
+          "movies": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Movies",
+            "description": "Films the dragon appears in, in film order"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notes"
+          },
+          "appearances": {
+            "items": {
+              "$ref": "#/components/schemas/Appearance"
+            },
+            "type": "array",
+            "title": "Appearances"
+          },
+          "riders": {
+            "items": {
+              "$ref": "#/components/schemas/Rider"
+            },
+            "type": "array",
+            "title": "Riders"
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/Source"
+            },
+            "type": "array",
+            "title": "Sources"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "species",
+          "confidence",
+          "movies",
+          "description",
+          "notes",
+          "appearances",
+          "riders",
+          "sources"
+        ],
+        "title": "IndividualDetail"
+      },
+      "IndividualRef": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name"
+        ],
+        "title": "IndividualRef"
+      },
+      "IndividualSummary": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "species": {
+            "$ref": "#/components/schemas/SpeciesRef"
+          },
+          "confidence": {
+            "$ref": "#/components/schemas/Confidence"
+          },
+          "movies": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Movies",
+            "description": "Films the dragon appears in, in film order"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "species",
+          "confidence",
+          "movies"
+        ],
+        "title": "IndividualSummary"
+      },
+      "Movie": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "year": {
+            "type": "integer",
+            "title": "Year"
+          },
+          "ordinal": {
+            "type": "integer",
+            "title": "Ordinal"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "year",
+          "ordinal"
+        ],
+        "title": "Movie"
+      },
+      "Rider": {
+        "properties": {
+          "movie_id": {
+            "type": "string",
+            "title": "Movie Id"
+          },
+          "character": {
+            "$ref": "#/components/schemas/CharacterRef"
+          },
+          "relation": {
+            "type": "string",
+            "enum": [
+              "rider",
+              "owner",
+              "controller",
+              "companion"
+            ],
+            "title": "Relation"
+          },
+          "confidence": {
+            "$ref": "#/components/schemas/Confidence"
+          }
+        },
+        "type": "object",
+        "required": [
+          "movie_id",
+          "character",
+          "relation",
+          "confidence"
+        ],
+        "title": "Rider"
+      },
+      "Scope": {
+        "type": "string",
+        "enum": [
+          "film",
+          "franchise"
+        ],
+        "title": "Scope"
+      },
+      "SearchResult": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "species",
+              "individual"
+            ],
+            "title": "Kind"
+          },
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "species": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SpeciesRef"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "For individuals: their species"
+          }
+        },
+        "type": "object",
+        "required": [
+          "kind",
+          "id",
+          "name",
+          "species"
+        ],
+        "title": "SearchResult"
+      },
+      "Source": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "film",
+              "official",
+              "book",
+              "wiki",
+              "other"
+            ],
+            "title": "Type"
+          },
+          "url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Url"
+          },
+          "accessed_on": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Accessed On"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "type",
+          "url",
+          "accessed_on"
+        ],
+        "title": "Source"
+      },
+      "SpeciesDetail": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "class": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DragonClass"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "size": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "tiny",
+                  "small",
+                  "medium",
+                  "large",
+                  "titan"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Size"
+          },
+          "confidence": {
+            "$ref": "#/components/schemas/Confidence"
+          },
+          "movies": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Movies",
+            "description": "Films the species appears in, in film order"
+          },
+          "diet": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Diet"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notes"
+          },
+          "appearances": {
+            "items": {
+              "$ref": "#/components/schemas/Appearance"
+            },
+            "type": "array",
+            "title": "Appearances"
+          },
+          "individuals": {
+            "items": {
+              "$ref": "#/components/schemas/IndividualRef"
+            },
+            "type": "array",
+            "title": "Individuals",
+            "description": "Named dragons of this species"
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/Source"
+            },
+            "type": "array",
+            "title": "Sources"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "class",
+          "size",
+          "confidence",
+          "movies",
+          "diet",
+          "description",
+          "notes",
+          "appearances",
+          "individuals",
+          "sources"
+        ],
+        "title": "SpeciesDetail"
+      },
+      "SpeciesRef": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name"
+        ],
+        "title": "SpeciesRef"
+      },
+      "SpeciesSummary": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "class": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DragonClass"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "size": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "tiny",
+                  "small",
+                  "medium",
+                  "large",
+                  "titan"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Size"
+          },
+          "confidence": {
+            "$ref": "#/components/schemas/Confidence"
+          },
+          "movies": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Movies",
+            "description": "Films the species appears in, in film order"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "class",
+          "size",
+          "confidence",
+          "movies"
+        ],
+        "title": "SpeciesSummary"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
       }
     },
     "securitySchemes": {

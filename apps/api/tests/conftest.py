@@ -1,5 +1,9 @@
+import asyncio
+import json
+import os
 import time
 from collections.abc import Callable, Iterator
+from pathlib import Path
 from typing import Any
 from uuid import UUID, uuid4
 
@@ -7,9 +11,11 @@ import jwt
 import pytest
 from cryptography.hazmat.primitives.asymmetric import ec
 from fastapi.testclient import TestClient
+from sqlalchemy import text
 
 from app.auth import TokenVerifier, get_token_verifier
 from app.config import Settings
+from app.db.session import create_engine
 from app.main import create_app
 
 ISSUER = "http://supabase.test/auth/v1"
@@ -50,6 +56,58 @@ def client(verifier: TokenVerifier) -> Iterator[TestClient]:
     app.dependency_overrides[get_token_verifier] = lambda: verifier
     with TestClient(app) as test_client:
         yield test_client
+
+
+DRAGONS_JSON = Path(__file__).resolve().parents[3] / "data" / "build" / "dragons.json"
+
+
+def _database_ready(url: str) -> str | None:
+    """None if the seeded database answers, else the reason it doesn't."""
+
+    async def probe() -> None:
+        engine = create_engine(url)
+        try:
+            async with engine.connect() as conn:
+                await conn.execute(text("select 1 from species limit 1"))
+        finally:
+            await engine.dispose()
+
+    try:
+        asyncio.run(asyncio.wait_for(probe(), timeout=5))
+    except Exception as exc:
+        return f"{type(exc).__name__}: {exc}"
+    return None
+
+
+@pytest.fixture(scope="session")
+def database_url() -> str:
+    """The local Supabase database, seeded from the catalog (`pnpm db:start`).
+
+    Skips database tests when it isn't running, except on CI (where CI=true),
+    so they can't be silently skipped there.
+    """
+    url = Settings().database_url
+    problem = _database_ready(url)
+    if problem:
+        message = f"Seeded database not reachable ({problem}). Run `pnpm db:start`."
+        if os.environ.get("CI"):
+            pytest.fail(message)
+        pytest.skip(message)
+    return url
+
+
+@pytest.fixture
+def db_client(database_url: str) -> Iterator[TestClient]:
+    app = create_app(Settings(app_env="test", database_url=database_url))
+    with TestClient(app) as test_client:
+        yield test_client
+
+
+@pytest.fixture(scope="session")
+def catalog() -> list[dict[str, Any]]:
+    """The build output the database was seeded from."""
+    entries: list[dict[str, Any]] = json.loads(DRAGONS_JSON.read_text(encoding="utf-8"))
+    return entries
 
 
 MakeToken = Callable[..., str]
