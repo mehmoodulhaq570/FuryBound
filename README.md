@@ -1,6 +1,6 @@
 # Dragon Academy
 
-An interactive AI, game and ML project built on a sourced dataset of every dragon in the three *How to Train Your Dragon* animated films. See [Plan.md](Plan.md) for the full plan.
+An interactive AI, game and ML project built on a sourced dataset of every dragon in the three *How to Train Your Dragon* animated films. See [Plan.md](Plan.md) for the full plan and [TECH_STACK.md](TECH_STACK.md) for what it's built with.
 
 **Status:** Phase 0 (foundations).
 
