@@ -1,0 +1,16 @@
+{
+  "name": "dragon-academy",
+  "private": true,
+  "packageManager": "pnpm@10.19.0",
+  "scripts": {
+    "dev:web": "pnpm --filter web dev",
+    "dev:api": "uv run --directory apps/api fastapi dev app/main.py --port 8000",
+    "db:start": "supabase start",
+    "db:stop": "supabase stop",
+    "db:reset": "supabase db reset",
+    "gen:api-types": "uv run --directory apps/api python -m scripts.export_openapi && pnpm --filter web gen:api-types",
+    "check:web": "pnpm --filter web lint && pnpm --filter web format:check && pnpm --filter web typecheck && pnpm --filter web test",
+    "check:api": "uv run --directory apps/api ruff check . && uv run --directory apps/api ruff format --check . && uv run --directory apps/api mypy && uv run --directory apps/api pytest",
+    "check": "pnpm check:api && pnpm check:web"
+  }
+}

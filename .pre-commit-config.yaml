@@ -1,0 +1,42 @@
+# Install once: `uvx pre-commit install`
+# Ruff, Prettier and ESLint run as local hooks so they use the exact versions
+# pinned in apps/api/uv.lock and pnpm-lock.yaml.
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+        exclude: ^data/build/
+      - id: end-of-file-fixer
+        exclude: ^data/build/
+      - id: check-yaml
+      - id: check-toml
+      - id: check-merge-conflict
+      - id: check-added-large-files
+        args: ["--maxkb=1024"]
+
+  - repo: local
+    hooks:
+      - id: ruff-check
+        name: ruff check
+        entry: uv run --directory apps/api ruff check --fix --force-exclude
+        language: system
+        types: [python]
+        files: ^apps/api/
+      - id: ruff-format
+        name: ruff format
+        entry: uv run --directory apps/api ruff format --force-exclude
+        language: system
+        types: [python]
+        files: ^apps/api/
+      - id: prettier
+        name: prettier
+        entry: pnpm --dir apps/web exec prettier --write --ignore-unknown
+        language: system
+        files: ^apps/web/
+        exclude: ^apps/web/src/lib/api/schema\.d\.ts$
+      - id: eslint
+        name: eslint
+        entry: pnpm --dir apps/web exec eslint --fix
+        language: system
+        files: ^apps/web/.*\.(ts|tsx|mjs|js)$

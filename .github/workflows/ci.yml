@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  api:
+    name: API (lint, types, tests)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/api
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+      - run: uv sync --locked
+      - run: uv run ruff check .
+      - run: uv run ruff format --check .
+      - run: uv run mypy
+      - run: uv run pytest
+      - name: OpenAPI schema is up to date
+        run: |
+          uv run python -m scripts.export_openapi
+          git diff --exit-code -- openapi.json || (echo "::error::Run 'uv run python -m scripts.export_openapi' in apps/api and commit openapi.json" && exit 1)
+
+  web:
+    name: Web (lint, types, tests)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: API types match openapi.json
+        run: |
+          pnpm --filter web gen:api-types
+          git diff --exit-code -- apps/web/src/lib/api/schema.d.ts || (echo "::error::Run 'pnpm gen:api-types' and commit schema.d.ts" && exit 1)
+      - run: pnpm --filter web lint
+      - run: pnpm --filter web format:check
+      - run: pnpm --filter web typecheck
+      - run: pnpm --filter web test

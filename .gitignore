@@ -1,0 +1,35 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+.venv/
+
+# Build output
+.next/
+out/
+dist/
+build/
+!data/build/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+coverage/
+*.tsbuildinfo
+next-env.d.ts
+
+# Env
+.env
+.env.*
+!.env.example
+
+# Supabase
+supabase/.branches/
+supabase/.temp/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea/

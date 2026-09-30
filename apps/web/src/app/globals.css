@@ -1,0 +1,45 @@
+@import "tailwindcss";
+
+/* Placeholder theme: "Berk at dusk". Replace once there's real art direction. */
+:root {
+  --background: #f7f4ee;
+  --foreground: #1c1a17;
+  --muted: #6b6457;
+  --line: #e2dccf;
+  --surface: #ffffff;
+  --accent: #c2410c;
+  --ok: #15803d;
+  --bad: #b91c1c;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0f1115;
+    --foreground: #ebe7df;
+    --muted: #9a9384;
+    --line: #262a33;
+    --surface: #161920;
+    --accent: #fb923c;
+    --ok: #4ade80;
+    --bad: #f87171;
+  }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-surface: var(--surface);
+  --color-accent: var(--accent);
+  --color-ok: var(--ok);
+  --color-bad: var(--bad);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
