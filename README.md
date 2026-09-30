@@ -2,7 +2,7 @@
 
 An interactive AI, game and ML project built on a sourced dataset of every dragon in the three *How to Train Your Dragon* animated films. See [Plan.md](Plan.md) for the full plan and [TECH_STACK.md](TECH_STACK.md) for what it's built with.
 
-**Status:** Phase 0 (foundations).
+**Status:** Phase 1 (dragon database). The catalog is pre-filled and in the database; film verification is in progress. See [data/README.md](data/README.md).
 
 ## Layout
 
@@ -53,6 +53,9 @@ Supabase Studio runs at http://localhost:54323.
 | All checks (what CI runs) | `pnpm check` |
 | Regenerate frontend API types after changing the API | `pnpm gen:api-types` |
 | New database migration | `supabase migration new <name>` |
-| Re-apply all migrations to local DB | `pnpm db:reset` |
+| Re-apply all migrations and the dragon seed to local DB | `pnpm db:reset` |
+| Scene logs → catalog appearances and riders | `pnpm catalog:import` |
+| Check the dragon catalog | `pnpm catalog:check` |
+| Rebuild the seed and dragon exports from the catalog | `pnpm catalog:build` |
 
 The frontend's API types are generated from FastAPI's OpenAPI schema. Commit `apps/api/openapi.json` and `apps/web/src/lib/api/schema.d.ts` together; CI fails if they drift.

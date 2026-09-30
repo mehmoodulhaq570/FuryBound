@@ -1,0 +1,139 @@
+entity_kind,entity_id,movie_id,appearance_type,scope,evidence,source_ids,confidence
+individual,toothless,httyd1,featured,film,Named on screen by Hiccup,wiki_httyd1|claude_knowledge,high
+individual,stormfly,httyd1,featured,film,Astrid's Nadder. Check whether the name Stormfly is used in this film,wiki_httyd1|claude_knowledge,medium
+individual,meatlug,httyd1,featured,film,Fishlegs's Gronckle. Check whether the name Meatlug is used in this film,wiki_httyd1|claude_knowledge,medium
+individual,hookfang,httyd1,featured,film,Snotlout's Nightmare. Check whether the name Hookfang is used in this film,wiki_httyd1|claude_knowledge,medium
+individual,barf_and_belch,httyd1,featured,film,The twins' Zippleback. Check whether the names are used in this film,wiki_httyd1|claude_knowledge,medium
+individual,the_red_death,httyd1,featured,film,Nest queen and final battle. Check whether 'Red Death' is said in the film,wiki_httyd1|claude_knowledge,high
+species,deadly_nadder,httyd1,on_screen,film,Also in the training arena,wiki_httyd1|claude_knowledge,high
+species,gronckle,httyd1,on_screen,film,Also in the training arena,wiki_httyd1|claude_knowledge,high
+species,hideous_zippleback,httyd1,on_screen,film,Also in the training arena,wiki_httyd1|claude_knowledge,high
+species,monstrous_nightmare,httyd1,on_screen,film,Also in the training arena,wiki_httyd1|claude_knowledge,high
+species,night_fury,httyd1,on_screen,film,,wiki_httyd1|claude_knowledge,high
+species,red_death,httyd1,on_screen,film,,wiki_httyd1|claude_knowledge,high
+species,boneknapper,httyd1,mentioned,film,Wiki: mentioned and pictured (Book of Dragons),wiki_httyd1,medium
+species,changewing,httyd1,mentioned,film,Wiki: mentioned and pictured (Book of Dragons),wiki_httyd1,medium
+species,grapple_grounder,httyd1,pictured,film,Wiki: 'possible statue'. Needs a close look,wiki_httyd1,low
+species,scauldron,httyd1,mentioned,film,Wiki: mentioned and pictured (Book of Dragons),wiki_httyd1,medium
+species,skrill,httyd1,mentioned,film,Wiki: mentioned and pictured (Book of Dragons),wiki_httyd1,medium
+species,smothering_smokebreath,httyd1,pictured,film,Wiki: pictured only,wiki_httyd1,medium
+species,snaptrapper,httyd1,pictured,film,Wiki: pictured only,wiki_httyd1,medium
+species,speed_stinger,httyd1,pictured,film,Wiki: pictured only,wiki_httyd1,medium
+species,terrible_terror,httyd1,on_screen,film,,wiki_httyd1|claude_knowledge,high
+species,thunderdrum,httyd1,mentioned,film,Wiki: mentioned and pictured (Book of Dragons),wiki_httyd1,medium
+species,timberjack,httyd1,mentioned,film,Wiki: mentioned and pictured (Book of Dragons),wiki_httyd1,medium
+species,whispering_death,httyd1,mentioned,film,Wiki: mentioned and pictured (Book of Dragons),wiki_httyd1,medium
+individual,toothless,httyd2,featured,film,,wiki_httyd2|claude_knowledge,high
+individual,stormfly,httyd2,featured,film,,wiki_httyd2|claude_knowledge,high
+individual,meatlug,httyd2,featured,film,,wiki_httyd2|claude_knowledge,high
+individual,hookfang,httyd2,featured,film,,wiki_httyd2|claude_knowledge,high
+individual,barf_and_belch,httyd2,featured,film,,wiki_httyd2|claude_knowledge,high
+individual,cloudjumper,httyd2,featured,film,,wiki_httyd2|claude_knowledge,high
+individual,skullcrusher,httyd2,featured,film,"Plan: rider is Stoick in 2, Eret in 3",wiki_httyd2|claude_knowledge,high
+individual,grump,httyd2,featured,film,,wiki_httyd2|claude_knowledge,high
+individual,valkas_bewilderbeast,httyd2,featured,film,,wiki_httyd2|claude_knowledge,high
+individual,dragos_bewilderbeast,httyd2,featured,film,,wiki_httyd2|claude_knowledge,high
+species,bewilderbeast,httyd2,on_screen,film,,wiki_httyd2|claude_knowledge,high
+species,deadly_nadder,httyd2,on_screen,film,,wiki_httyd2|claude_knowledge,high
+species,gronckle,httyd2,on_screen,film,,wiki_httyd2|claude_knowledge,high
+species,hideous_zippleback,httyd2,on_screen,film,,wiki_httyd2|claude_knowledge,high
+species,hotburple,httyd2,on_screen,film,,wiki_httyd2|claude_knowledge,high
+species,monstrous_nightmare,httyd2,on_screen,film,,wiki_httyd2|claude_knowledge,high
+species,night_fury,httyd2,on_screen,film,,wiki_httyd2|claude_knowledge,high
+species,rumblehorn,httyd2,on_screen,film,,wiki_httyd2|claude_knowledge,high
+species,stormcutter,httyd2,on_screen,film,,wiki_httyd2|claude_knowledge,high
+individual,bonesnarl,httyd2,background,film,"Name may come from outside the film (art book, credits or TV); check if it's said or shown",wiki_httyd2,low
+individual,clawlifter,httyd2,background,film,"Name may come from outside the film (art book, credits or TV); check if it's said or shown",wiki_httyd2,low
+individual,gothis_pet,httyd2,background,film,"Name may come from outside the film (art book, credits or TV); check if it's said or shown",wiki_httyd2,low
+individual,gruff,httyd2,background,film,"Name may come from outside the film (art book, credits or TV); check if it's said or shown",wiki_httyd2,low
+individual,gustnudger,httyd2,background,film,"Name may come from outside the film (art book, credits or TV); check if it's said or shown",wiki_httyd2,low
+individual,lump,httyd2,background,film,"Name may come from outside the film (art book, credits or TV); check if it's said or shown",wiki_httyd2,low
+individual,pestbud,httyd2,background,film,"Name may come from outside the film (art book, credits or TV); check if it's said or shown",wiki_httyd2,low
+individual,rumpus,httyd2,background,film,"Name may come from outside the film (art book, credits or TV); check if it's said or shown",wiki_httyd2,low
+individual,sailback,httyd2,background,film,"Name may come from outside the film (art book, credits or TV); check if it's said or shown",wiki_httyd2,low
+individual,soaring_sidekick,httyd2,background,film,"Name may come from outside the film (art book, credits or TV); check if it's said or shown",wiki_httyd2,low
+individual,the_red_death,httyd2,mentioned,film,Wiki: mentioned,wiki_httyd2,medium
+individual,thump,httyd2,background,film,"Name may come from outside the film (art book, credits or TV); check if it's said or shown",wiki_httyd2,low
+individual,valkas_mercy,httyd2,background,film,"Name may come from outside the film (art book, credits or TV); check if it's said or shown",wiki_httyd2,low
+individual,winged_warden,httyd2,background,film,"Name may come from outside the film (art book, credits or TV); check if it's said or shown",wiki_httyd2,low
+species,changewing,httyd2,pictured,film,Wiki: pictured only,wiki_httyd2,medium
+species,firefang,httyd2,background,film,"Wiki lists it with no detail; background is a guess, may be on_screen",wiki_httyd2,low
+species,hobblegrunt,httyd2,background,film,"Wiki lists it with no detail; background is a guess, may be on_screen",wiki_httyd2,low
+species,horrible_hornswoggler,httyd2,background,film,"Wiki lists it with no detail; background is a guess, may be on_screen",wiki_httyd2,low
+species,raincutter,httyd2,background,film,"Wiki lists it with no detail; background is a guess, may be on_screen",wiki_httyd2,low
+species,red_death,httyd2,mentioned,film,Wiki: pictured and mentioned,wiki_httyd2,medium
+species,scauldron,httyd2,pictured,film,Wiki: pictured only,wiki_httyd2,medium
+species,scuttleclaw,httyd2,on_screen,film,Wiki: Scuttleclaw hatchlings,wiki_httyd2,medium
+species,seashocker,httyd2,on_screen,film,Wiki: Valka's Seashockers,wiki_httyd2,medium
+species,shovelhelm,httyd2,background,film,"Wiki lists it with no detail; background is a guess, may be on_screen",wiki_httyd2,low
+species,sliquifier,httyd2,pictured,film,Wiki: pictured only,wiki_httyd2,medium
+species,snafflefang,httyd2,background,film,"Wiki lists it with no detail; background is a guess, may be on_screen",wiki_httyd2,low
+species,snaptrapper,httyd2,pictured,film,Wiki: pictured only,wiki_httyd2,medium
+species,snifflehunch,httyd2,background,film,"Wiki lists it with no detail; background is a guess, may be on_screen",wiki_httyd2,low
+species,songwing,httyd2,pictured,film,Wiki: pictured only,wiki_httyd2,medium
+species,stubcrown_stinker,httyd2,background,film,"Wiki lists it with no detail; background is a guess, may be on_screen",wiki_httyd2,low
+species,submaripper,httyd2,pictured,film,Wiki: pictured only,wiki_httyd2,medium
+species,terrible_terror,httyd2,on_screen,film,,wiki_httyd2|claude_knowledge,high
+species,thornridge,httyd2,background,film,"Wiki lists it with no detail; background is a guess, may be on_screen",wiki_httyd2,low
+species,threadtail,httyd2,background,film,"Wiki lists it with no detail; background is a guess, may be on_screen",wiki_httyd2,low
+species,thunderclaw,httyd2,background,film,"Wiki lists it with no detail; background is a guess, may be on_screen",wiki_httyd2,low
+species,thunderdrum,httyd2,background,film,"Wiki lists it with no detail; background is a guess, may be on_screen",wiki_httyd2,low
+species,timberjack,httyd2,background,film,"Wiki lists it with no detail; background is a guess, may be on_screen",wiki_httyd2,low
+species,typhoomerang,httyd2,pictured,film,Wiki: pictured only,wiki_httyd2,medium
+species,whispering_death,httyd2,mentioned,film,Wiki: mentioned,wiki_httyd2,medium
+species,windgnasher,httyd2,background,film,"Wiki lists it with no detail; background is a guess, may be on_screen",wiki_httyd2,low
+species,windstriker,httyd2,background,film,"Wiki lists it with no detail; background is a guess, may be on_screen",wiki_httyd2,low
+individual,toothless,httyd3,featured,film,,wiki_httyd3|claude_knowledge,high
+individual,stormfly,httyd3,featured,film,,wiki_httyd3|claude_knowledge,high
+individual,meatlug,httyd3,featured,film,,wiki_httyd3|claude_knowledge,high
+individual,hookfang,httyd3,featured,film,,wiki_httyd3|claude_knowledge,high
+individual,barf_and_belch,httyd3,featured,film,,wiki_httyd3|claude_knowledge,high
+individual,cloudjumper,httyd3,featured,film,,wiki_httyd3|claude_knowledge,high
+individual,skullcrusher,httyd3,featured,film,"Plan: rider is Stoick in 2, Eret in 3",wiki_httyd3|claude_knowledge,high
+individual,grump,httyd3,on_screen,film,Wiki lists him for this film (Plan had it unverified),wiki_httyd3,medium
+individual,the_light_fury,httyd3,featured,film,,wiki_httyd3|claude_knowledge,high
+individual,night_lights,httyd3,on_screen,film,"Toothless and the Light Fury's hatchlings, final scene. Wiki names them Dart, Pouncer and Ruffrunner; check if any name is said or shown",wiki_httyd3|claude_knowledge,high
+species,deadly_nadder,httyd3,on_screen,film,,wiki_httyd3|claude_knowledge,high
+species,gronckle,httyd3,on_screen,film,,wiki_httyd3|claude_knowledge,high
+species,hideous_zippleback,httyd3,on_screen,film,,wiki_httyd3|claude_knowledge,high
+species,hotburple,httyd3,on_screen,film,,wiki_httyd3|claude_knowledge,high
+species,light_fury,httyd3,on_screen,film,,wiki_httyd3|claude_knowledge,high
+species,monstrous_nightmare,httyd3,on_screen,film,,wiki_httyd3|claude_knowledge,high
+species,night_fury,httyd3,on_screen,film,,wiki_httyd3|claude_knowledge,high
+species,night_light,httyd3,on_screen,film,,wiki_httyd3|claude_knowledge,high
+species,rumblehorn,httyd3,on_screen,film,,wiki_httyd3|claude_knowledge,high
+species,stormcutter,httyd3,on_screen,film,,wiki_httyd3|claude_knowledge,high
+individual,dragos_bewilderbeast,httyd3,mentioned,film,Wiki lists it with no detail; check how it appears,wiki_httyd3,low
+individual,fishmeat,httyd3,background,film,"Wiki: Fishlegs's Gronckle. Name may come from outside the film (art book, credits or TV); check if it's said or shown",wiki_httyd3,low
+individual,gothis_pet,httyd3,background,film,"Name may come from outside the film (art book, credits or TV); check if it's said or shown",wiki_httyd3,low
+individual,the_red_death,httyd3,pictured,film,Wiki: credits only,wiki_httyd3,low
+species,bewilderbeast,httyd3,mentioned,film,Wiki lists it; check how it appears,wiki_httyd3,low
+species,buffalord,httyd3,pictured,film,Wiki: pictured only,wiki_httyd3,medium
+species,crimson_goregutter,httyd3,on_screen,film,Wiki: a rescued Goregutter,wiki_httyd3,medium
+species,deathgripper,httyd3,on_screen,film,,wiki_httyd3|claude_knowledge,high
+species,dramillion,httyd3,pictured,film,Wiki: pictured only,wiki_httyd3,medium
+species,firefang,httyd3,background,film,"Wiki lists it with no detail; background is a guess, may be on_screen",wiki_httyd3,low
+species,fireworm,httyd3,background,film,"Wiki lists it with no detail; background is a guess, may be on_screen",wiki_httyd3,low
+species,hobblegrunt,httyd3,background,film,"Wiki lists it with no detail; background is a guess, may be on_screen",wiki_httyd3,low
+species,hobgobbler,httyd3,on_screen,film,Wiki: a rescued Hobgobbler,wiki_httyd3,medium
+species,horrible_hornswoggler,httyd3,background,film,"Wiki lists it with no detail; background is a guess, may be on_screen",wiki_httyd3,low
+species,raincutter,httyd3,background,film,"Wiki lists it with no detail; background is a guess, may be on_screen",wiki_httyd3,low
+species,red_death,httyd3,pictured,film,Wiki: credits only,wiki_httyd3,low
+species,scauldron,httyd3,background,film,"Wiki lists it with no detail; background is a guess, may be on_screen",wiki_httyd3,low
+species,scuttleclaw,httyd3,on_screen,film,Wiki: Scuttleclaw hatchlings,wiki_httyd3,medium
+species,seashocker,httyd3,background,film,"Wiki lists it with no detail; background is a guess, may be on_screen",wiki_httyd3,low
+species,shovelhelm,httyd3,background,film,"Wiki lists it with no detail; background is a guess, may be on_screen",wiki_httyd3,low
+species,singetail,httyd3,pictured,film,Wiki: pictured only,wiki_httyd3,medium
+species,skrill,httyd3,background,film,"Wiki lists it with no detail; background is a guess, may be on_screen",wiki_httyd3,low
+species,smothering_smokebreath,httyd3,pictured,film,Wiki: pictured only,wiki_httyd3,medium
+species,snafflefang,httyd3,on_screen,film,Wiki: Spitelout's Snafflefang,wiki_httyd3,medium
+species,snifflehunch,httyd3,background,film,"Wiki lists it with no detail; background is a guess, may be on_screen",wiki_httyd3,low
+species,stubcrown_stinker,httyd3,background,film,"Wiki lists it with no detail; background is a guess, may be on_screen",wiki_httyd3,low
+species,submaripper,httyd3,pictured,film,Wiki: pictured only,wiki_httyd3,medium
+species,terrible_terror,httyd3,on_screen,film,,wiki_httyd3|claude_knowledge,high
+species,thornridge,httyd3,background,film,"Wiki lists it with no detail; background is a guess, may be on_screen",wiki_httyd3,low
+species,threadtail,httyd3,background,film,"Wiki lists it with no detail; background is a guess, may be on_screen",wiki_httyd3,low
+species,thunderclaw,httyd3,background,film,"Wiki lists it with no detail; background is a guess, may be on_screen",wiki_httyd3,low
+species,timberjack,httyd3,background,film,"Wiki lists it with no detail; background is a guess, may be on_screen",wiki_httyd3,low
+species,windgnasher,httyd3,background,film,"Wiki lists it with no detail; background is a guess, may be on_screen",wiki_httyd3,low
+species,windstriker,httyd3,background,film,"Wiki lists it with no detail; background is a guess, may be on_screen",wiki_httyd3,low

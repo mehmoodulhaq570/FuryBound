@@ -1,0 +1,11 @@
+source_id,title,type,url,accessed_on
+film_httyd1,How to Train Your Dragon (2010),film,,
+film_httyd2,How to Train Your Dragon 2 (2014),film,,
+film_httyd3,How to Train Your Dragon: The Hidden World (2019),film,,
+wiki_httyd1,"How to Train Your Dragon Wiki: How to Train Your Dragon (film), revision 1198568",wiki,https://howtotrainyourdragon.fandom.com/wiki/How_to_Train_Your_Dragon_(film)?oldid=1198568,2026-09-30
+wiki_httyd2,"How to Train Your Dragon Wiki: How to Train Your Dragon 2, revision 1198291",wiki,https://howtotrainyourdragon.fandom.com/wiki/How_to_Train_Your_Dragon_2?oldid=1198291,2026-09-30
+wiki_httyd3,"How to Train Your Dragon Wiki: How to Train Your Dragon: The Hidden World, revision 1198290",wiki,https://howtotrainyourdragon.fandom.com/wiki/How_to_Train_Your_Dragon:_The_Hidden_World?oldid=1198290,2026-09-30
+wiki_dragon_pages,How to Train Your Dragon Wiki: individual dragon pages (species of minor named dragons),wiki,https://howtotrainyourdragon.fandom.com/,2026-09-30
+claude_knowledge,Claude's general knowledge of the films (not checked against the films),other,,
+repo_uokik,uokik/how-to-train-your-dragon-api (dragon classes),other,https://github.com/uokik/how-to-train-your-dragon-api,2026-09-30
+repo_romainchamb,RomainChamb/httydApi (dragon classes),other,https://github.com/RomainChamb/httydApi,2026-09-30

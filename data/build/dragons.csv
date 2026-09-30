@@ -1,0 +1,78 @@
+kind,id,name,species,class,class_scope,size,httyd1,httyd2,httyd3,confidence,sources,description
+species,night_fury,Night Fury,Night Fury,Strike,franchise,medium,on_screen,on_screen,on_screen,high,wiki_httyd1|claude_knowledge|wiki_httyd2|wiki_httyd3|repo_romainchamb|repo_uokik,A sleek black dragon so fast and so rarely seen that Vikings had no record of what it looked like. It fires concentrated blasts and disappears against the night sky.
+species,light_fury,Light Fury,Light Fury,Strike,franchise,medium,,,on_screen,high,wiki_httyd3|claude_knowledge|repo_romainchamb|repo_uokik,A pale relative of the Night Fury that can almost vanish from sight by flying through its own fire. Wild and very wary of people.
+species,night_light,Night Light,Night Light,Strike,franchise,small,,,on_screen,high,wiki_httyd3|claude_knowledge|repo_uokik,"The hatchlings of a Night Fury and a Light Fury, seen at the very end of the third film."
+species,deadly_nadder,Deadly Nadder,Deadly Nadder,Tracker,franchise,medium,on_screen,on_screen,on_screen,high,wiki_httyd1|claude_knowledge|wiki_httyd2|wiki_httyd3|repo_romainchamb|repo_uokik,"A colourful, bird-like dragon with a crown of horns and a tail that fires spines. Quick on its feet and proud of its looks."
+species,gronckle,Gronckle,Gronckle,Boulder,franchise,medium,on_screen,on_screen,on_screen,high,wiki_httyd1|claude_knowledge|wiki_httyd2|wiki_httyd3|repo_romainchamb|repo_uokik,"A round, heavy dragon whose small wings beat fast like a bumblebee's. Slow to anger and much tougher than it looks."
+species,hideous_zippleback,Hideous Zippleback,Hideous Zippleback,Mystery,franchise,large,on_screen,on_screen,on_screen,high,wiki_httyd1|claude_knowledge|wiki_httyd2|wiki_httyd3|repo_romainchamb|repo_uokik,"A two-headed dragon: one head breathes out gas and the other lights it, so both heads have to cooperate."
+species,monstrous_nightmare,Monstrous Nightmare,Monstrous Nightmare,Stoker,franchise,large,on_screen,on_screen,on_screen,high,wiki_httyd1|claude_knowledge|wiki_httyd2|wiki_httyd3|repo_romainchamb|repo_uokik,"A big, hot-tempered dragon that can set its own body on fire. Fierce, loud and hard to handle."
+species,terrible_terror,Terrible Terror,Terrible Terror,Stoker,franchise,tiny,on_screen,on_screen,on_screen,high,wiki_httyd1|claude_knowledge|wiki_httyd2|wiki_httyd3|repo_romainchamb|repo_uokik,A cat-sized dragon that turns up in groups and squabbles over food.
+species,red_death,Red Death,Red Death,Stoker,franchise,titan,on_screen,mentioned,pictured,high,wiki_httyd1|claude_knowledge|wiki_httyd2|wiki_httyd3|repo_uokik,A gigantic dragon that ruled the dragons' nest and forced smaller dragons to bring it food.
+species,boneknapper,Boneknapper,Boneknapper,Mystery,franchise,,mentioned,,,medium,wiki_httyd1|repo_uokik,A dragon that wears the bones of others as armour. One of the entries in Berk's Book of Dragons.
+species,changewing,Changewing,Changewing,Mystery,franchise,,mentioned,pictured,,medium,wiki_httyd1|wiki_httyd2|repo_uokik,A dragon that changes colour to blend into its surroundings. One of the entries in Berk's Book of Dragons.
+species,scauldron,Scauldron,Scauldron,Tidal,franchise,,mentioned,pictured,background,medium,wiki_httyd1|wiki_httyd2|wiki_httyd3|repo_uokik,A sea dragon that sprays scalding water instead of fire. One of the entries in Berk's Book of Dragons.
+species,skrill,Skrill,Skrill,Strike,franchise,,mentioned,,background,medium,wiki_httyd1|wiki_httyd3|repo_romainchamb|repo_uokik,A dragon associated with lightning. One of the entries in Berk's Book of Dragons.
+species,thunderdrum,Thunderdrum,Thunderdrum,Tidal,franchise,,mentioned,background,,medium,wiki_httyd1|wiki_httyd2|repo_romainchamb|repo_uokik,A sea dragon whose roar is loud enough to stun. One of the entries in Berk's Book of Dragons.
+species,timberjack,Timberjack,Timberjack,Sharp,franchise,,mentioned,background,background,medium,wiki_httyd1|wiki_httyd2|wiki_httyd3|repo_romainchamb|repo_uokik,"A dragon with huge, blade-like wings that can slice through trees. One of the entries in Berk's Book of Dragons."
+species,whispering_death,Whispering Death,Whispering Death,Boulder,franchise,,mentioned,mentioned,,medium,wiki_httyd1|wiki_httyd2|repo_romainchamb|repo_uokik,A burrowing dragon with rings of teeth that tunnels through rock. One of the entries in Berk's Book of Dragons.
+species,smothering_smokebreath,Smothering Smokebreath,Smothering Smokebreath,Mystery,franchise,small,pictured,,pictured,medium,wiki_httyd1|wiki_httyd3|repo_uokik,A small dragon that hides inside clouds of smoke it makes itself.
+species,snaptrapper,Snaptrapper,Snaptrapper,Mystery,franchise,,pictured,pictured,,medium,wiki_httyd1|wiki_httyd2|repo_romainchamb|repo_uokik,A many-headed dragon whose jaws open like petals to lure prey in.
+species,speed_stinger,Speed Stinger,Speed Stinger,Sharp,franchise,small,pictured,,,medium,wiki_httyd1|repo_uokik,"A small, flightless dragon that runs very fast and can paralyse with its sting."
+species,grapple_grounder,Grapple Grounder,Grapple Grounder,,,,pictured,,,low,wiki_httyd1,
+species,stormcutter,Stormcutter,Stormcutter,Sharp,franchise,large,,on_screen,on_screen,high,wiki_httyd2|claude_knowledge|wiki_httyd3|repo_romainchamb|repo_uokik,"A large dragon with four wings that can spread into an X, and an owl-like face."
+species,rumblehorn,Rumblehorn,Rumblehorn,Tracker,franchise,large,,on_screen,on_screen,high,wiki_httyd2|claude_knowledge|wiki_httyd3|repo_romainchamb|repo_uokik,"A heavy dragon with a hammer-shaped snout and a strong sense of smell, good at tracking."
+species,hotburple,Hotburple,Hotburple,Boulder,franchise,medium,,on_screen,on_screen,high,wiki_httyd2|claude_knowledge|wiki_httyd3|repo_romainchamb|repo_uokik,"A heavy, sleepy cousin of the Gronckle that swallows rocks and spits out lava."
+species,bewilderbeast,Bewilderbeast,Bewilderbeast,Tidal,franchise,titan,,on_screen,mentioned,high,wiki_httyd2|claude_knowledge|wiki_httyd3|repo_romainchamb|repo_uokik,"A colossal, tusked alpha dragon that breathes ice and can command other dragons."
+species,scuttleclaw,Scuttleclaw,Scuttleclaw,Sharp,franchise,small,,on_screen,on_screen,medium,wiki_httyd2|wiki_httyd3|repo_uokik,"A small, lively dragon; young ones appear in the second and third films."
+species,seashocker,Seashocker,Seashocker,Tidal,franchise,,,on_screen,background,medium,wiki_httyd2|wiki_httyd3|repo_romainchamb|repo_uokik,A sea dragon that can give off electric shocks.
+species,firefang,Firefang,Firefang,,,,,background,background,low,wiki_httyd2|wiki_httyd3,
+species,hobblegrunt,Hobblegrunt,Hobblegrunt,Stoker,franchise,,,background,background,low,wiki_httyd2|wiki_httyd3|repo_uokik,A dragon whose colours change with its mood.
+species,horrible_hornswoggler,Horrible Hornswoggler,Horrible Hornswoggler,,,,,background,background,low,wiki_httyd2|wiki_httyd3,
+species,raincutter,Raincutter,Raincutter,Sharp,franchise,,,background,background,low,wiki_httyd2|wiki_httyd3|repo_uokik,A spiky-framed dragon that prefers rain and grey skies.
+species,shovelhelm,Shovelhelm,Shovelhelm,Boulder,franchise,,,background,background,low,wiki_httyd2|wiki_httyd3|repo_uokik,"A dragon with a broad, shovel-shaped head."
+species,snafflefang,Snafflefang,Snafflefang,Boulder,franchise,,,background,on_screen,medium,wiki_httyd2|wiki_httyd3|repo_uokik,A sharp-toothed dragon that likes to gnaw on rocks.
+species,snifflehunch,Snifflehunch,Snifflehunch,Tracker,franchise,,,background,background,low,wiki_httyd2|wiki_httyd3|repo_uokik,A curious dragon with a keen nose that sniffs out friend or foe.
+species,stubcrown_stinker,Stubcrown Stinker,Stubcrown Stinker,,,,,background,background,low,wiki_httyd2|wiki_httyd3,
+species,thornridge,Thornridge,Thornridge,,,,,background,background,low,wiki_httyd2|wiki_httyd3,
+species,threadtail,Threadtail,Threadtail,Stoker,franchise,,,background,background,low,wiki_httyd2|wiki_httyd3|repo_uokik,"A long, slender dragon with a thin, whip-like tail."
+species,thunderclaw,Thunderclaw,Thunderclaw,Tracker,franchise,,,background,background,low,wiki_httyd2|wiki_httyd3|repo_uokik,
+species,windgnasher,Windgnasher,Windgnasher,Tracker,franchise,,,background,background,low,wiki_httyd2|wiki_httyd3|repo_uokik,A hump-backed dragon that can catch a scent carried on the wind.
+species,windstriker,Windstriker,Windstriker,Sharp,franchise,,,background,background,low,wiki_httyd2|wiki_httyd3|repo_uokik,A dragon that blasts super-heated air instead of flame.
+species,sliquifier,Sliquifier,Sliquifier,,,,,pictured,,medium,wiki_httyd2,
+species,songwing,Songwing,Songwing,Strike,franchise,,,pictured,,medium,wiki_httyd2|repo_uokik,A dragon with a small body and very large wings.
+species,submaripper,Submaripper,Submaripper,Tidal,franchise,,,pictured,pictured,medium,wiki_httyd2|wiki_httyd3|repo_uokik,A huge sea dragon said to drag ships under with whirlpools.
+species,typhoomerang,Typhoomerang,Typhoomerang,Stoker,franchise,,,pictured,,medium,wiki_httyd2|repo_uokik,"A dragon that spins as it flies, leaving a spiral of fire behind it."
+species,deathgripper,Deathgripper,Deathgripper,Strike,franchise,large,,,on_screen,high,wiki_httyd3|claude_knowledge|repo_uokik,"A spiky, aggressive dragon with a venomous, pincer-like tail. The dragon hunter Grimmel uses them as his attack pack."
+species,crimson_goregutter,Crimson Goregutter,Crimson Goregutter,Boulder,franchise,large,,,on_screen,medium,wiki_httyd3|repo_uokik,"A large, antlered dragon that looks fierce but mostly wants to be left alone."
+species,hobgobbler,Hobgobbler,Hobgobbler,Mystery,franchise,small,,,on_screen,medium,wiki_httyd3|repo_uokik,"A small, round dragon that many Vikings believe brings bad luck."
+species,fireworm,Fireworm,Fireworm,Stoker,franchise,tiny,,,background,low,wiki_httyd3|repo_uokik,A tiny dragon whose body burns so hot that it glows.
+species,buffalord,Buffalord,Buffalord,Mystery,franchise,,,,pictured,medium,wiki_httyd3|repo_uokik,"A huge, bison-like dragon."
+species,dramillion,Dramillion,Dramillion,Mystery,franchise,,,,pictured,medium,wiki_httyd3|repo_romainchamb|repo_uokik,A dragon that imitates the fire of other dragons.
+species,singetail,Singetail,Singetail,Stoker,franchise,,,,pictured,medium,wiki_httyd3|repo_uokik,"A territorial dragon that can shoot fire from its mouth, gills and tail."
+individual,toothless,Toothless,Night Fury,,,,featured,featured,featured,high,wiki_httyd1|claude_knowledge|wiki_httyd2|wiki_httyd3,"Hiccup's Night Fury. Loses half of his tail fin, can only fly with Hiccup's help, becomes his closest friend and later the alpha of all dragons."
+individual,stormfly,Stormfly,Deadly Nadder,,,,featured,featured,featured,high,wiki_httyd1|claude_knowledge|wiki_httyd2|wiki_httyd3,"Astrid's Deadly Nadder. Quick, loyal and competitive."
+individual,meatlug,Meatlug,Gronckle,,,,featured,featured,featured,high,wiki_httyd1|claude_knowledge|wiki_httyd2|wiki_httyd3,Fishlegs's Gronckle. Gentle and affectionate.
+individual,hookfang,Hookfang,Monstrous Nightmare,,,,featured,featured,featured,high,wiki_httyd1|claude_knowledge|wiki_httyd2|wiki_httyd3,"Snotlout's Monstrous Nightmare. Stubborn, and often ignores his rider."
+individual,barf_and_belch,Barf & Belch,Hideous Zippleback,,,,featured,featured,featured,high,wiki_httyd1|claude_knowledge|wiki_httyd2|wiki_httyd3,"The Zippleback ridden by the twins Ruffnut and Tuffnut, one twin per head."
+individual,the_red_death,The Red Death,Red Death,,,,featured,mentioned,pictured,high,wiki_httyd1|claude_knowledge|wiki_httyd2|wiki_httyd3,"The giant queen of the dragons' nest, defeated by Hiccup and Toothless at the end of the first film."
+individual,cloudjumper,Cloudjumper,Stormcutter,,,,,featured,featured,high,wiki_httyd2|claude_knowledge|wiki_httyd3,"Valka's Stormcutter, who carried her away from Berk years before the second film."
+individual,skullcrusher,Skullcrusher,Rumblehorn,,,,,featured,featured,high,wiki_httyd2|claude_knowledge|wiki_httyd3,A Rumblehorn ridden by Stoick in the second film and by Eret in the third.
+individual,grump,Grump,Hotburple,,,,,featured,on_screen,high,wiki_httyd2|claude_knowledge|wiki_httyd3,Gobber's sleepy Hotburple.
+individual,valkas_bewilderbeast,Valka's Bewilderbeast,Bewilderbeast,,,,,featured,,high,wiki_httyd2|claude_knowledge,The alpha that sheltered the dragons of Valka's ice sanctuary.
+individual,dragos_bewilderbeast,Drago's Bewilderbeast,Bewilderbeast,,,,,featured,mentioned,high,wiki_httyd2|claude_knowledge|wiki_httyd3,"The alpha controlled by Drago Bludvist, used to take command of other dragons."
+individual,the_light_fury,The Light Fury,Light Fury,,,,,,featured,high,wiki_httyd3|claude_knowledge,A wild Light Fury who becomes Toothless's mate.
+individual,night_lights,The Night Lights,Night Light,,,,,,on_screen,high,wiki_httyd3|claude_knowledge,"Toothless and the Light Fury's three hatchlings, seen at the end of the third film."
+individual,gothis_pet,Gothi's Pet,Terrible Terror,,,,,background,background,low,wiki_httyd2|wiki_httyd3|wiki_dragon_pages,Gothi's Terrible Terror.
+individual,gruff,Gruff,Hobblegrunt,,,,,background,,low,wiki_httyd2|wiki_dragon_pages,A blind Hobblegrunt rescued by Valka.
+individual,thump,Thump,Raincutter,,,,,background,,low,wiki_httyd2|wiki_dragon_pages,One of the dragons living in Valka's sanctuary.
+individual,lump,Lump,Snafflefang,,,,,background,,low,wiki_httyd2|wiki_dragon_pages,One of the dragons living in Valka's sanctuary.
+individual,rumpus,Rumpus,Thunderclaw,,,,,background,,low,wiki_httyd2|wiki_dragon_pages,One of the dragons living in Valka's sanctuary.
+individual,sailback,Sailback,Thunderclaw,,,,,background,,low,wiki_httyd2|wiki_dragon_pages,One of the dragons living in Valka's sanctuary.
+individual,winged_warden,Winged Warden,Windstriker,,,,,background,,low,wiki_httyd2|wiki_dragon_pages,One of the dragons living in Valka's sanctuary.
+individual,pestbud,Pestbud,Snifflehunch,,,,,background,,low,wiki_httyd2|wiki_dragon_pages,One of the dragons living in Valka's sanctuary.
+individual,clawlifter,Clawlifter,Shovelhelm,,,,,background,,low,wiki_httyd2|wiki_dragon_pages,One of the dragons living in Valka's sanctuary.
+individual,gustnudger,Gustnudger,Windgnasher,,,,,background,,low,wiki_httyd2|wiki_dragon_pages,One of the dragons living in Valka's sanctuary.
+individual,valkas_mercy,Valka's Mercy,Monstrous Nightmare,,,,,background,,low,wiki_httyd2|wiki_dragon_pages,One of the dragons living in Valka's sanctuary.
+individual,soaring_sidekick,Soaring Sidekick,Timberjack,,,,,background,,low,wiki_httyd2|wiki_dragon_pages,A Timberjack seen in the second film.
+individual,bonesnarl,Bonesnarl,Thunderclaw,,,,,background,,low,wiki_httyd2|wiki_dragon_pages,A Thunderclaw seen in the second film.
+individual,fishmeat,Fishmeat,Gronckle,,,,,,background,low,wiki_httyd3|wiki_dragon_pages,A Gronckle linked to Fishlegs in the third film.

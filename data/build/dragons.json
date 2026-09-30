@@ -1,0 +1,2557 @@
+[
+  {
+    "kind": "species",
+    "id": "night_fury",
+    "name": "Night Fury",
+    "class": {
+      "value": "Strike",
+      "scope": "franchise"
+    },
+    "size": "medium",
+    "diet": null,
+    "description": "A sleek black dragon so fast and so rarely seen that Vikings had no record of what it looked like. It fires concentrated blasts and disappears against the night sky.",
+    "appearances": [
+      {
+        "movie": "httyd1",
+        "type": "on_screen",
+        "confidence": "high"
+      },
+      {
+        "movie": "httyd2",
+        "type": "on_screen",
+        "confidence": "high"
+      },
+      {
+        "movie": "httyd3",
+        "type": "on_screen",
+        "confidence": "high"
+      }
+    ],
+    "known_individuals": [
+      "toothless"
+    ],
+    "sources": [
+      "wiki_httyd1",
+      "claude_knowledge",
+      "wiki_httyd2",
+      "wiki_httyd3",
+      "repo_romainchamb",
+      "repo_uokik"
+    ],
+    "confidence": "high",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "species",
+    "id": "light_fury",
+    "name": "Light Fury",
+    "class": {
+      "value": "Strike",
+      "scope": "franchise"
+    },
+    "size": "medium",
+    "diet": null,
+    "description": "A pale relative of the Night Fury that can almost vanish from sight by flying through its own fire. Wild and very wary of people.",
+    "appearances": [
+      {
+        "movie": "httyd3",
+        "type": "on_screen",
+        "confidence": "high"
+      }
+    ],
+    "known_individuals": [
+      "the_light_fury"
+    ],
+    "sources": [
+      "wiki_httyd3",
+      "claude_knowledge",
+      "repo_romainchamb",
+      "repo_uokik"
+    ],
+    "confidence": "high",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "species",
+    "id": "night_light",
+    "name": "Night Light",
+    "class": {
+      "value": "Strike",
+      "scope": "franchise"
+    },
+    "size": "small",
+    "diet": null,
+    "description": "The hatchlings of a Night Fury and a Light Fury, seen at the very end of the third film.",
+    "appearances": [
+      {
+        "movie": "httyd3",
+        "type": "on_screen",
+        "confidence": "high"
+      }
+    ],
+    "known_individuals": [
+      "night_lights"
+    ],
+    "sources": [
+      "wiki_httyd3",
+      "claude_knowledge",
+      "repo_uokik"
+    ],
+    "confidence": "high",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "species",
+    "id": "deadly_nadder",
+    "name": "Deadly Nadder",
+    "class": {
+      "value": "Tracker",
+      "scope": "franchise"
+    },
+    "size": "medium",
+    "diet": null,
+    "description": "A colourful, bird-like dragon with a crown of horns and a tail that fires spines. Quick on its feet and proud of its looks.",
+    "appearances": [
+      {
+        "movie": "httyd1",
+        "type": "on_screen",
+        "confidence": "high"
+      },
+      {
+        "movie": "httyd2",
+        "type": "on_screen",
+        "confidence": "high"
+      },
+      {
+        "movie": "httyd3",
+        "type": "on_screen",
+        "confidence": "high"
+      }
+    ],
+    "known_individuals": [
+      "stormfly"
+    ],
+    "sources": [
+      "wiki_httyd1",
+      "claude_knowledge",
+      "wiki_httyd2",
+      "wiki_httyd3",
+      "repo_romainchamb",
+      "repo_uokik"
+    ],
+    "confidence": "high",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "species",
+    "id": "gronckle",
+    "name": "Gronckle",
+    "class": {
+      "value": "Boulder",
+      "scope": "franchise"
+    },
+    "size": "medium",
+    "diet": null,
+    "description": "A round, heavy dragon whose small wings beat fast like a bumblebee's. Slow to anger and much tougher than it looks.",
+    "appearances": [
+      {
+        "movie": "httyd1",
+        "type": "on_screen",
+        "confidence": "high"
+      },
+      {
+        "movie": "httyd2",
+        "type": "on_screen",
+        "confidence": "high"
+      },
+      {
+        "movie": "httyd3",
+        "type": "on_screen",
+        "confidence": "high"
+      }
+    ],
+    "known_individuals": [
+      "meatlug",
+      "fishmeat"
+    ],
+    "sources": [
+      "wiki_httyd1",
+      "claude_knowledge",
+      "wiki_httyd2",
+      "wiki_httyd3",
+      "repo_romainchamb",
+      "repo_uokik"
+    ],
+    "confidence": "high",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "species",
+    "id": "hideous_zippleback",
+    "name": "Hideous Zippleback",
+    "class": {
+      "value": "Mystery",
+      "scope": "franchise"
+    },
+    "size": "large",
+    "diet": null,
+    "description": "A two-headed dragon: one head breathes out gas and the other lights it, so both heads have to cooperate.",
+    "appearances": [
+      {
+        "movie": "httyd1",
+        "type": "on_screen",
+        "confidence": "high"
+      },
+      {
+        "movie": "httyd2",
+        "type": "on_screen",
+        "confidence": "high"
+      },
+      {
+        "movie": "httyd3",
+        "type": "on_screen",
+        "confidence": "high"
+      }
+    ],
+    "known_individuals": [
+      "barf_and_belch"
+    ],
+    "sources": [
+      "wiki_httyd1",
+      "claude_knowledge",
+      "wiki_httyd2",
+      "wiki_httyd3",
+      "repo_romainchamb",
+      "repo_uokik"
+    ],
+    "confidence": "high",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "species",
+    "id": "monstrous_nightmare",
+    "name": "Monstrous Nightmare",
+    "class": {
+      "value": "Stoker",
+      "scope": "franchise"
+    },
+    "size": "large",
+    "diet": null,
+    "description": "A big, hot-tempered dragon that can set its own body on fire. Fierce, loud and hard to handle.",
+    "appearances": [
+      {
+        "movie": "httyd1",
+        "type": "on_screen",
+        "confidence": "high"
+      },
+      {
+        "movie": "httyd2",
+        "type": "on_screen",
+        "confidence": "high"
+      },
+      {
+        "movie": "httyd3",
+        "type": "on_screen",
+        "confidence": "high"
+      }
+    ],
+    "known_individuals": [
+      "hookfang",
+      "valkas_mercy"
+    ],
+    "sources": [
+      "wiki_httyd1",
+      "claude_knowledge",
+      "wiki_httyd2",
+      "wiki_httyd3",
+      "repo_romainchamb",
+      "repo_uokik"
+    ],
+    "confidence": "high",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "species",
+    "id": "terrible_terror",
+    "name": "Terrible Terror",
+    "class": {
+      "value": "Stoker",
+      "scope": "franchise"
+    },
+    "size": "tiny",
+    "diet": null,
+    "description": "A cat-sized dragon that turns up in groups and squabbles over food.",
+    "appearances": [
+      {
+        "movie": "httyd1",
+        "type": "on_screen",
+        "confidence": "high"
+      },
+      {
+        "movie": "httyd2",
+        "type": "on_screen",
+        "confidence": "high"
+      },
+      {
+        "movie": "httyd3",
+        "type": "on_screen",
+        "confidence": "high"
+      }
+    ],
+    "known_individuals": [
+      "gothis_pet"
+    ],
+    "sources": [
+      "wiki_httyd1",
+      "claude_knowledge",
+      "wiki_httyd2",
+      "wiki_httyd3",
+      "repo_romainchamb",
+      "repo_uokik"
+    ],
+    "confidence": "high",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "species",
+    "id": "red_death",
+    "name": "Red Death",
+    "class": {
+      "value": "Stoker",
+      "scope": "franchise"
+    },
+    "size": "titan",
+    "diet": null,
+    "description": "A gigantic dragon that ruled the dragons' nest and forced smaller dragons to bring it food.",
+    "appearances": [
+      {
+        "movie": "httyd1",
+        "type": "on_screen",
+        "confidence": "high"
+      },
+      {
+        "movie": "httyd2",
+        "type": "mentioned",
+        "confidence": "medium"
+      },
+      {
+        "movie": "httyd3",
+        "type": "pictured",
+        "confidence": "low"
+      }
+    ],
+    "known_individuals": [
+      "the_red_death"
+    ],
+    "sources": [
+      "wiki_httyd1",
+      "claude_knowledge",
+      "wiki_httyd2",
+      "wiki_httyd3",
+      "repo_uokik"
+    ],
+    "confidence": "high",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "species",
+    "id": "boneknapper",
+    "name": "Boneknapper",
+    "class": {
+      "value": "Mystery",
+      "scope": "franchise"
+    },
+    "size": null,
+    "diet": null,
+    "description": "A dragon that wears the bones of others as armour. One of the entries in Berk's Book of Dragons.",
+    "appearances": [
+      {
+        "movie": "httyd1",
+        "type": "mentioned",
+        "confidence": "medium"
+      }
+    ],
+    "known_individuals": [],
+    "sources": [
+      "wiki_httyd1",
+      "repo_uokik"
+    ],
+    "confidence": "medium",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "species",
+    "id": "changewing",
+    "name": "Changewing",
+    "class": {
+      "value": "Mystery",
+      "scope": "franchise"
+    },
+    "size": null,
+    "diet": null,
+    "description": "A dragon that changes colour to blend into its surroundings. One of the entries in Berk's Book of Dragons.",
+    "appearances": [
+      {
+        "movie": "httyd1",
+        "type": "mentioned",
+        "confidence": "medium"
+      },
+      {
+        "movie": "httyd2",
+        "type": "pictured",
+        "confidence": "medium"
+      }
+    ],
+    "known_individuals": [],
+    "sources": [
+      "wiki_httyd1",
+      "wiki_httyd2",
+      "repo_uokik"
+    ],
+    "confidence": "medium",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "species",
+    "id": "scauldron",
+    "name": "Scauldron",
+    "class": {
+      "value": "Tidal",
+      "scope": "franchise"
+    },
+    "size": null,
+    "diet": null,
+    "description": "A sea dragon that sprays scalding water instead of fire. One of the entries in Berk's Book of Dragons.",
+    "appearances": [
+      {
+        "movie": "httyd1",
+        "type": "mentioned",
+        "confidence": "medium"
+      },
+      {
+        "movie": "httyd2",
+        "type": "pictured",
+        "confidence": "medium"
+      },
+      {
+        "movie": "httyd3",
+        "type": "background",
+        "confidence": "low"
+      }
+    ],
+    "known_individuals": [],
+    "sources": [
+      "wiki_httyd1",
+      "wiki_httyd2",
+      "wiki_httyd3",
+      "repo_uokik"
+    ],
+    "confidence": "medium",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "species",
+    "id": "skrill",
+    "name": "Skrill",
+    "class": {
+      "value": "Strike",
+      "scope": "franchise"
+    },
+    "size": null,
+    "diet": null,
+    "description": "A dragon associated with lightning. One of the entries in Berk's Book of Dragons.",
+    "appearances": [
+      {
+        "movie": "httyd1",
+        "type": "mentioned",
+        "confidence": "medium"
+      },
+      {
+        "movie": "httyd3",
+        "type": "background",
+        "confidence": "low"
+      }
+    ],
+    "known_individuals": [],
+    "sources": [
+      "wiki_httyd1",
+      "wiki_httyd3",
+      "repo_romainchamb",
+      "repo_uokik"
+    ],
+    "confidence": "medium",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "species",
+    "id": "thunderdrum",
+    "name": "Thunderdrum",
+    "class": {
+      "value": "Tidal",
+      "scope": "franchise"
+    },
+    "size": null,
+    "diet": null,
+    "description": "A sea dragon whose roar is loud enough to stun. One of the entries in Berk's Book of Dragons.",
+    "appearances": [
+      {
+        "movie": "httyd1",
+        "type": "mentioned",
+        "confidence": "medium"
+      },
+      {
+        "movie": "httyd2",
+        "type": "background",
+        "confidence": "low"
+      }
+    ],
+    "known_individuals": [],
+    "sources": [
+      "wiki_httyd1",
+      "wiki_httyd2",
+      "repo_romainchamb",
+      "repo_uokik"
+    ],
+    "confidence": "medium",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "species",
+    "id": "timberjack",
+    "name": "Timberjack",
+    "class": {
+      "value": "Sharp",
+      "scope": "franchise"
+    },
+    "size": null,
+    "diet": null,
+    "description": "A dragon with huge, blade-like wings that can slice through trees. One of the entries in Berk's Book of Dragons.",
+    "appearances": [
+      {
+        "movie": "httyd1",
+        "type": "mentioned",
+        "confidence": "medium"
+      },
+      {
+        "movie": "httyd2",
+        "type": "background",
+        "confidence": "low"
+      },
+      {
+        "movie": "httyd3",
+        "type": "background",
+        "confidence": "low"
+      }
+    ],
+    "known_individuals": [
+      "soaring_sidekick"
+    ],
+    "sources": [
+      "wiki_httyd1",
+      "wiki_httyd2",
+      "wiki_httyd3",
+      "repo_romainchamb",
+      "repo_uokik"
+    ],
+    "confidence": "medium",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "species",
+    "id": "whispering_death",
+    "name": "Whispering Death",
+    "class": {
+      "value": "Boulder",
+      "scope": "franchise"
+    },
+    "size": null,
+    "diet": null,
+    "description": "A burrowing dragon with rings of teeth that tunnels through rock. One of the entries in Berk's Book of Dragons.",
+    "appearances": [
+      {
+        "movie": "httyd1",
+        "type": "mentioned",
+        "confidence": "medium"
+      },
+      {
+        "movie": "httyd2",
+        "type": "mentioned",
+        "confidence": "medium"
+      }
+    ],
+    "known_individuals": [],
+    "sources": [
+      "wiki_httyd1",
+      "wiki_httyd2",
+      "repo_romainchamb",
+      "repo_uokik"
+    ],
+    "confidence": "medium",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "species",
+    "id": "smothering_smokebreath",
+    "name": "Smothering Smokebreath",
+    "class": {
+      "value": "Mystery",
+      "scope": "franchise"
+    },
+    "size": "small",
+    "diet": null,
+    "description": "A small dragon that hides inside clouds of smoke it makes itself.",
+    "appearances": [
+      {
+        "movie": "httyd1",
+        "type": "pictured",
+        "confidence": "medium"
+      },
+      {
+        "movie": "httyd3",
+        "type": "pictured",
+        "confidence": "medium"
+      }
+    ],
+    "known_individuals": [],
+    "sources": [
+      "wiki_httyd1",
+      "wiki_httyd3",
+      "repo_uokik"
+    ],
+    "confidence": "medium",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "species",
+    "id": "snaptrapper",
+    "name": "Snaptrapper",
+    "class": {
+      "value": "Mystery",
+      "scope": "franchise"
+    },
+    "size": null,
+    "diet": null,
+    "description": "A many-headed dragon whose jaws open like petals to lure prey in.",
+    "appearances": [
+      {
+        "movie": "httyd1",
+        "type": "pictured",
+        "confidence": "medium"
+      },
+      {
+        "movie": "httyd2",
+        "type": "pictured",
+        "confidence": "medium"
+      }
+    ],
+    "known_individuals": [],
+    "sources": [
+      "wiki_httyd1",
+      "wiki_httyd2",
+      "repo_romainchamb",
+      "repo_uokik"
+    ],
+    "confidence": "medium",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "species",
+    "id": "speed_stinger",
+    "name": "Speed Stinger",
+    "class": {
+      "value": "Sharp",
+      "scope": "franchise"
+    },
+    "size": "small",
+    "diet": null,
+    "description": "A small, flightless dragon that runs very fast and can paralyse with its sting.",
+    "appearances": [
+      {
+        "movie": "httyd1",
+        "type": "pictured",
+        "confidence": "medium"
+      }
+    ],
+    "known_individuals": [],
+    "sources": [
+      "wiki_httyd1",
+      "repo_uokik"
+    ],
+    "confidence": "medium",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "species",
+    "id": "grapple_grounder",
+    "name": "Grapple Grounder",
+    "class": null,
+    "size": null,
+    "diet": null,
+    "description": "",
+    "appearances": [
+      {
+        "movie": "httyd1",
+        "type": "pictured",
+        "confidence": "low"
+      }
+    ],
+    "known_individuals": [],
+    "sources": [
+      "wiki_httyd1"
+    ],
+    "confidence": "low",
+    "notes": "No description yet."
+  },
+  {
+    "kind": "species",
+    "id": "stormcutter",
+    "name": "Stormcutter",
+    "class": {
+      "value": "Sharp",
+      "scope": "franchise"
+    },
+    "size": "large",
+    "diet": null,
+    "description": "A large dragon with four wings that can spread into an X, and an owl-like face.",
+    "appearances": [
+      {
+        "movie": "httyd2",
+        "type": "on_screen",
+        "confidence": "high"
+      },
+      {
+        "movie": "httyd3",
+        "type": "on_screen",
+        "confidence": "high"
+      }
+    ],
+    "known_individuals": [
+      "cloudjumper"
+    ],
+    "sources": [
+      "wiki_httyd2",
+      "claude_knowledge",
+      "wiki_httyd3",
+      "repo_romainchamb",
+      "repo_uokik"
+    ],
+    "confidence": "high",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "species",
+    "id": "rumblehorn",
+    "name": "Rumblehorn",
+    "class": {
+      "value": "Tracker",
+      "scope": "franchise"
+    },
+    "size": "large",
+    "diet": null,
+    "description": "A heavy dragon with a hammer-shaped snout and a strong sense of smell, good at tracking.",
+    "appearances": [
+      {
+        "movie": "httyd2",
+        "type": "on_screen",
+        "confidence": "high"
+      },
+      {
+        "movie": "httyd3",
+        "type": "on_screen",
+        "confidence": "high"
+      }
+    ],
+    "known_individuals": [
+      "skullcrusher"
+    ],
+    "sources": [
+      "wiki_httyd2",
+      "claude_knowledge",
+      "wiki_httyd3",
+      "repo_romainchamb",
+      "repo_uokik"
+    ],
+    "confidence": "high",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "species",
+    "id": "hotburple",
+    "name": "Hotburple",
+    "class": {
+      "value": "Boulder",
+      "scope": "franchise"
+    },
+    "size": "medium",
+    "diet": null,
+    "description": "A heavy, sleepy cousin of the Gronckle that swallows rocks and spits out lava.",
+    "appearances": [
+      {
+        "movie": "httyd2",
+        "type": "on_screen",
+        "confidence": "high"
+      },
+      {
+        "movie": "httyd3",
+        "type": "on_screen",
+        "confidence": "high"
+      }
+    ],
+    "known_individuals": [
+      "grump"
+    ],
+    "sources": [
+      "wiki_httyd2",
+      "claude_knowledge",
+      "wiki_httyd3",
+      "repo_romainchamb",
+      "repo_uokik"
+    ],
+    "confidence": "high",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "species",
+    "id": "bewilderbeast",
+    "name": "Bewilderbeast",
+    "class": {
+      "value": "Tidal",
+      "scope": "franchise"
+    },
+    "size": "titan",
+    "diet": null,
+    "description": "A colossal, tusked alpha dragon that breathes ice and can command other dragons.",
+    "appearances": [
+      {
+        "movie": "httyd2",
+        "type": "on_screen",
+        "confidence": "high"
+      },
+      {
+        "movie": "httyd3",
+        "type": "mentioned",
+        "confidence": "low"
+      }
+    ],
+    "known_individuals": [
+      "valkas_bewilderbeast",
+      "dragos_bewilderbeast"
+    ],
+    "sources": [
+      "wiki_httyd2",
+      "claude_knowledge",
+      "wiki_httyd3",
+      "repo_romainchamb",
+      "repo_uokik"
+    ],
+    "confidence": "high",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "species",
+    "id": "scuttleclaw",
+    "name": "Scuttleclaw",
+    "class": {
+      "value": "Sharp",
+      "scope": "franchise"
+    },
+    "size": "small",
+    "diet": null,
+    "description": "A small, lively dragon; young ones appear in the second and third films.",
+    "appearances": [
+      {
+        "movie": "httyd2",
+        "type": "on_screen",
+        "confidence": "medium"
+      },
+      {
+        "movie": "httyd3",
+        "type": "on_screen",
+        "confidence": "medium"
+      }
+    ],
+    "known_individuals": [],
+    "sources": [
+      "wiki_httyd2",
+      "wiki_httyd3",
+      "repo_uokik"
+    ],
+    "confidence": "medium",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "species",
+    "id": "seashocker",
+    "name": "Seashocker",
+    "class": {
+      "value": "Tidal",
+      "scope": "franchise"
+    },
+    "size": null,
+    "diet": null,
+    "description": "A sea dragon that can give off electric shocks.",
+    "appearances": [
+      {
+        "movie": "httyd2",
+        "type": "on_screen",
+        "confidence": "medium"
+      },
+      {
+        "movie": "httyd3",
+        "type": "background",
+        "confidence": "low"
+      }
+    ],
+    "known_individuals": [],
+    "sources": [
+      "wiki_httyd2",
+      "wiki_httyd3",
+      "repo_romainchamb",
+      "repo_uokik"
+    ],
+    "confidence": "medium",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "species",
+    "id": "firefang",
+    "name": "Firefang",
+    "class": null,
+    "size": null,
+    "diet": null,
+    "description": "",
+    "appearances": [
+      {
+        "movie": "httyd2",
+        "type": "background",
+        "confidence": "low"
+      },
+      {
+        "movie": "httyd3",
+        "type": "background",
+        "confidence": "low"
+      }
+    ],
+    "known_individuals": [],
+    "sources": [
+      "wiki_httyd2",
+      "wiki_httyd3"
+    ],
+    "confidence": "low",
+    "notes": "No description yet."
+  },
+  {
+    "kind": "species",
+    "id": "hobblegrunt",
+    "name": "Hobblegrunt",
+    "class": {
+      "value": "Stoker",
+      "scope": "franchise"
+    },
+    "size": null,
+    "diet": null,
+    "description": "A dragon whose colours change with its mood.",
+    "appearances": [
+      {
+        "movie": "httyd2",
+        "type": "background",
+        "confidence": "low"
+      },
+      {
+        "movie": "httyd3",
+        "type": "background",
+        "confidence": "low"
+      }
+    ],
+    "known_individuals": [
+      "gruff"
+    ],
+    "sources": [
+      "wiki_httyd2",
+      "wiki_httyd3",
+      "repo_uokik"
+    ],
+    "confidence": "low",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "species",
+    "id": "horrible_hornswoggler",
+    "name": "Horrible Hornswoggler",
+    "class": null,
+    "size": null,
+    "diet": null,
+    "description": "",
+    "appearances": [
+      {
+        "movie": "httyd2",
+        "type": "background",
+        "confidence": "low"
+      },
+      {
+        "movie": "httyd3",
+        "type": "background",
+        "confidence": "low"
+      }
+    ],
+    "known_individuals": [],
+    "sources": [
+      "wiki_httyd2",
+      "wiki_httyd3"
+    ],
+    "confidence": "low",
+    "notes": "No description yet."
+  },
+  {
+    "kind": "species",
+    "id": "raincutter",
+    "name": "Raincutter",
+    "class": {
+      "value": "Sharp",
+      "scope": "franchise"
+    },
+    "size": null,
+    "diet": null,
+    "description": "A spiky-framed dragon that prefers rain and grey skies.",
+    "appearances": [
+      {
+        "movie": "httyd2",
+        "type": "background",
+        "confidence": "low"
+      },
+      {
+        "movie": "httyd3",
+        "type": "background",
+        "confidence": "low"
+      }
+    ],
+    "known_individuals": [
+      "thump"
+    ],
+    "sources": [
+      "wiki_httyd2",
+      "wiki_httyd3",
+      "repo_uokik"
+    ],
+    "confidence": "low",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "species",
+    "id": "shovelhelm",
+    "name": "Shovelhelm",
+    "class": {
+      "value": "Boulder",
+      "scope": "franchise"
+    },
+    "size": null,
+    "diet": null,
+    "description": "A dragon with a broad, shovel-shaped head.",
+    "appearances": [
+      {
+        "movie": "httyd2",
+        "type": "background",
+        "confidence": "low"
+      },
+      {
+        "movie": "httyd3",
+        "type": "background",
+        "confidence": "low"
+      }
+    ],
+    "known_individuals": [
+      "clawlifter"
+    ],
+    "sources": [
+      "wiki_httyd2",
+      "wiki_httyd3",
+      "repo_uokik"
+    ],
+    "confidence": "low",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "species",
+    "id": "snafflefang",
+    "name": "Snafflefang",
+    "class": {
+      "value": "Boulder",
+      "scope": "franchise"
+    },
+    "size": null,
+    "diet": null,
+    "description": "A sharp-toothed dragon that likes to gnaw on rocks.",
+    "appearances": [
+      {
+        "movie": "httyd2",
+        "type": "background",
+        "confidence": "low"
+      },
+      {
+        "movie": "httyd3",
+        "type": "on_screen",
+        "confidence": "medium"
+      }
+    ],
+    "known_individuals": [
+      "lump"
+    ],
+    "sources": [
+      "wiki_httyd2",
+      "wiki_httyd3",
+      "repo_uokik"
+    ],
+    "confidence": "medium",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "species",
+    "id": "snifflehunch",
+    "name": "Snifflehunch",
+    "class": {
+      "value": "Tracker",
+      "scope": "franchise"
+    },
+    "size": null,
+    "diet": null,
+    "description": "A curious dragon with a keen nose that sniffs out friend or foe.",
+    "appearances": [
+      {
+        "movie": "httyd2",
+        "type": "background",
+        "confidence": "low"
+      },
+      {
+        "movie": "httyd3",
+        "type": "background",
+        "confidence": "low"
+      }
+    ],
+    "known_individuals": [
+      "pestbud"
+    ],
+    "sources": [
+      "wiki_httyd2",
+      "wiki_httyd3",
+      "repo_uokik"
+    ],
+    "confidence": "low",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "species",
+    "id": "stubcrown_stinker",
+    "name": "Stubcrown Stinker",
+    "class": null,
+    "size": null,
+    "diet": null,
+    "description": "",
+    "appearances": [
+      {
+        "movie": "httyd2",
+        "type": "background",
+        "confidence": "low"
+      },
+      {
+        "movie": "httyd3",
+        "type": "background",
+        "confidence": "low"
+      }
+    ],
+    "known_individuals": [],
+    "sources": [
+      "wiki_httyd2",
+      "wiki_httyd3"
+    ],
+    "confidence": "low",
+    "notes": "No description yet."
+  },
+  {
+    "kind": "species",
+    "id": "thornridge",
+    "name": "Thornridge",
+    "class": null,
+    "size": null,
+    "diet": null,
+    "description": "",
+    "appearances": [
+      {
+        "movie": "httyd2",
+        "type": "background",
+        "confidence": "low"
+      },
+      {
+        "movie": "httyd3",
+        "type": "background",
+        "confidence": "low"
+      }
+    ],
+    "known_individuals": [],
+    "sources": [
+      "wiki_httyd2",
+      "wiki_httyd3"
+    ],
+    "confidence": "low",
+    "notes": "No description yet."
+  },
+  {
+    "kind": "species",
+    "id": "threadtail",
+    "name": "Threadtail",
+    "class": {
+      "value": "Stoker",
+      "scope": "franchise"
+    },
+    "size": null,
+    "diet": null,
+    "description": "A long, slender dragon with a thin, whip-like tail.",
+    "appearances": [
+      {
+        "movie": "httyd2",
+        "type": "background",
+        "confidence": "low"
+      },
+      {
+        "movie": "httyd3",
+        "type": "background",
+        "confidence": "low"
+      }
+    ],
+    "known_individuals": [],
+    "sources": [
+      "wiki_httyd2",
+      "wiki_httyd3",
+      "repo_uokik"
+    ],
+    "confidence": "low",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "species",
+    "id": "thunderclaw",
+    "name": "Thunderclaw",
+    "class": {
+      "value": "Tracker",
+      "scope": "franchise"
+    },
+    "size": null,
+    "diet": null,
+    "description": "",
+    "appearances": [
+      {
+        "movie": "httyd2",
+        "type": "background",
+        "confidence": "low"
+      },
+      {
+        "movie": "httyd3",
+        "type": "background",
+        "confidence": "low"
+      }
+    ],
+    "known_individuals": [
+      "rumpus",
+      "sailback",
+      "bonesnarl"
+    ],
+    "sources": [
+      "wiki_httyd2",
+      "wiki_httyd3",
+      "repo_uokik"
+    ],
+    "confidence": "low",
+    "notes": "No description yet."
+  },
+  {
+    "kind": "species",
+    "id": "windgnasher",
+    "name": "Windgnasher",
+    "class": {
+      "value": "Tracker",
+      "scope": "franchise"
+    },
+    "size": null,
+    "diet": null,
+    "description": "A hump-backed dragon that can catch a scent carried on the wind.",
+    "appearances": [
+      {
+        "movie": "httyd2",
+        "type": "background",
+        "confidence": "low"
+      },
+      {
+        "movie": "httyd3",
+        "type": "background",
+        "confidence": "low"
+      }
+    ],
+    "known_individuals": [
+      "gustnudger"
+    ],
+    "sources": [
+      "wiki_httyd2",
+      "wiki_httyd3",
+      "repo_uokik"
+    ],
+    "confidence": "low",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "species",
+    "id": "windstriker",
+    "name": "Windstriker",
+    "class": {
+      "value": "Sharp",
+      "scope": "franchise"
+    },
+    "size": null,
+    "diet": null,
+    "description": "A dragon that blasts super-heated air instead of flame.",
+    "appearances": [
+      {
+        "movie": "httyd2",
+        "type": "background",
+        "confidence": "low"
+      },
+      {
+        "movie": "httyd3",
+        "type": "background",
+        "confidence": "low"
+      }
+    ],
+    "known_individuals": [
+      "winged_warden"
+    ],
+    "sources": [
+      "wiki_httyd2",
+      "wiki_httyd3",
+      "repo_uokik"
+    ],
+    "confidence": "low",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "species",
+    "id": "sliquifier",
+    "name": "Sliquifier",
+    "class": null,
+    "size": null,
+    "diet": null,
+    "description": "",
+    "appearances": [
+      {
+        "movie": "httyd2",
+        "type": "pictured",
+        "confidence": "medium"
+      }
+    ],
+    "known_individuals": [],
+    "sources": [
+      "wiki_httyd2"
+    ],
+    "confidence": "medium",
+    "notes": "No description yet."
+  },
+  {
+    "kind": "species",
+    "id": "songwing",
+    "name": "Songwing",
+    "class": {
+      "value": "Strike",
+      "scope": "franchise"
+    },
+    "size": null,
+    "diet": null,
+    "description": "A dragon with a small body and very large wings.",
+    "appearances": [
+      {
+        "movie": "httyd2",
+        "type": "pictured",
+        "confidence": "medium"
+      }
+    ],
+    "known_individuals": [],
+    "sources": [
+      "wiki_httyd2",
+      "repo_uokik"
+    ],
+    "confidence": "medium",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "species",
+    "id": "submaripper",
+    "name": "Submaripper",
+    "class": {
+      "value": "Tidal",
+      "scope": "franchise"
+    },
+    "size": null,
+    "diet": null,
+    "description": "A huge sea dragon said to drag ships under with whirlpools.",
+    "appearances": [
+      {
+        "movie": "httyd2",
+        "type": "pictured",
+        "confidence": "medium"
+      },
+      {
+        "movie": "httyd3",
+        "type": "pictured",
+        "confidence": "medium"
+      }
+    ],
+    "known_individuals": [],
+    "sources": [
+      "wiki_httyd2",
+      "wiki_httyd3",
+      "repo_uokik"
+    ],
+    "confidence": "medium",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "species",
+    "id": "typhoomerang",
+    "name": "Typhoomerang",
+    "class": {
+      "value": "Stoker",
+      "scope": "franchise"
+    },
+    "size": null,
+    "diet": null,
+    "description": "A dragon that spins as it flies, leaving a spiral of fire behind it.",
+    "appearances": [
+      {
+        "movie": "httyd2",
+        "type": "pictured",
+        "confidence": "medium"
+      }
+    ],
+    "known_individuals": [],
+    "sources": [
+      "wiki_httyd2",
+      "repo_uokik"
+    ],
+    "confidence": "medium",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "species",
+    "id": "deathgripper",
+    "name": "Deathgripper",
+    "class": {
+      "value": "Strike",
+      "scope": "franchise"
+    },
+    "size": "large",
+    "diet": null,
+    "description": "A spiky, aggressive dragon with a venomous, pincer-like tail. The dragon hunter Grimmel uses them as his attack pack.",
+    "appearances": [
+      {
+        "movie": "httyd3",
+        "type": "on_screen",
+        "confidence": "high"
+      }
+    ],
+    "known_individuals": [],
+    "sources": [
+      "wiki_httyd3",
+      "claude_knowledge",
+      "repo_uokik"
+    ],
+    "confidence": "high",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "species",
+    "id": "crimson_goregutter",
+    "name": "Crimson Goregutter",
+    "class": {
+      "value": "Boulder",
+      "scope": "franchise"
+    },
+    "size": "large",
+    "diet": null,
+    "description": "A large, antlered dragon that looks fierce but mostly wants to be left alone.",
+    "appearances": [
+      {
+        "movie": "httyd3",
+        "type": "on_screen",
+        "confidence": "medium"
+      }
+    ],
+    "known_individuals": [],
+    "sources": [
+      "wiki_httyd3",
+      "repo_uokik"
+    ],
+    "confidence": "medium",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "species",
+    "id": "hobgobbler",
+    "name": "Hobgobbler",
+    "class": {
+      "value": "Mystery",
+      "scope": "franchise"
+    },
+    "size": "small",
+    "diet": null,
+    "description": "A small, round dragon that many Vikings believe brings bad luck.",
+    "appearances": [
+      {
+        "movie": "httyd3",
+        "type": "on_screen",
+        "confidence": "medium"
+      }
+    ],
+    "known_individuals": [],
+    "sources": [
+      "wiki_httyd3",
+      "repo_uokik"
+    ],
+    "confidence": "medium",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "species",
+    "id": "fireworm",
+    "name": "Fireworm",
+    "class": {
+      "value": "Stoker",
+      "scope": "franchise"
+    },
+    "size": "tiny",
+    "diet": null,
+    "description": "A tiny dragon whose body burns so hot that it glows.",
+    "appearances": [
+      {
+        "movie": "httyd3",
+        "type": "background",
+        "confidence": "low"
+      }
+    ],
+    "known_individuals": [],
+    "sources": [
+      "wiki_httyd3",
+      "repo_uokik"
+    ],
+    "confidence": "low",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "species",
+    "id": "buffalord",
+    "name": "Buffalord",
+    "class": {
+      "value": "Mystery",
+      "scope": "franchise"
+    },
+    "size": null,
+    "diet": null,
+    "description": "A huge, bison-like dragon.",
+    "appearances": [
+      {
+        "movie": "httyd3",
+        "type": "pictured",
+        "confidence": "medium"
+      }
+    ],
+    "known_individuals": [],
+    "sources": [
+      "wiki_httyd3",
+      "repo_uokik"
+    ],
+    "confidence": "medium",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "species",
+    "id": "dramillion",
+    "name": "Dramillion",
+    "class": {
+      "value": "Mystery",
+      "scope": "franchise"
+    },
+    "size": null,
+    "diet": null,
+    "description": "A dragon that imitates the fire of other dragons.",
+    "appearances": [
+      {
+        "movie": "httyd3",
+        "type": "pictured",
+        "confidence": "medium"
+      }
+    ],
+    "known_individuals": [],
+    "sources": [
+      "wiki_httyd3",
+      "repo_romainchamb",
+      "repo_uokik"
+    ],
+    "confidence": "medium",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "species",
+    "id": "singetail",
+    "name": "Singetail",
+    "class": {
+      "value": "Stoker",
+      "scope": "franchise"
+    },
+    "size": null,
+    "diet": null,
+    "description": "A territorial dragon that can shoot fire from its mouth, gills and tail.",
+    "appearances": [
+      {
+        "movie": "httyd3",
+        "type": "pictured",
+        "confidence": "medium"
+      }
+    ],
+    "known_individuals": [],
+    "sources": [
+      "wiki_httyd3",
+      "repo_uokik"
+    ],
+    "confidence": "medium",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "individual",
+    "id": "toothless",
+    "name": "Toothless",
+    "species": {
+      "id": "night_fury",
+      "name": "Night Fury"
+    },
+    "description": "Hiccup's Night Fury. Loses half of his tail fin, can only fly with Hiccup's help, becomes his closest friend and later the alpha of all dragons.",
+    "appearances": [
+      {
+        "movie": "httyd1",
+        "type": "featured",
+        "confidence": "high"
+      },
+      {
+        "movie": "httyd2",
+        "type": "featured",
+        "confidence": "high"
+      },
+      {
+        "movie": "httyd3",
+        "type": "featured",
+        "confidence": "high"
+      }
+    ],
+    "riders": [
+      {
+        "movie": "httyd1",
+        "character_id": "hiccup",
+        "character": "Hiccup Horrendous Haddock III",
+        "relation": "rider",
+        "confidence": "high"
+      },
+      {
+        "movie": "httyd2",
+        "character_id": "hiccup",
+        "character": "Hiccup Horrendous Haddock III",
+        "relation": "rider",
+        "confidence": "high"
+      },
+      {
+        "movie": "httyd3",
+        "character_id": "hiccup",
+        "character": "Hiccup Horrendous Haddock III",
+        "relation": "rider",
+        "confidence": "high"
+      }
+    ],
+    "sources": [
+      "wiki_httyd1",
+      "claude_knowledge",
+      "wiki_httyd2",
+      "wiki_httyd3"
+    ],
+    "confidence": "high",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "individual",
+    "id": "stormfly",
+    "name": "Stormfly",
+    "species": {
+      "id": "deadly_nadder",
+      "name": "Deadly Nadder"
+    },
+    "description": "Astrid's Deadly Nadder. Quick, loyal and competitive.",
+    "appearances": [
+      {
+        "movie": "httyd1",
+        "type": "featured",
+        "confidence": "medium"
+      },
+      {
+        "movie": "httyd2",
+        "type": "featured",
+        "confidence": "high"
+      },
+      {
+        "movie": "httyd3",
+        "type": "featured",
+        "confidence": "high"
+      }
+    ],
+    "riders": [
+      {
+        "movie": "httyd1",
+        "character_id": "astrid",
+        "character": "Astrid Hofferson",
+        "relation": "rider",
+        "confidence": "high"
+      },
+      {
+        "movie": "httyd2",
+        "character_id": "astrid",
+        "character": "Astrid Hofferson",
+        "relation": "rider",
+        "confidence": "high"
+      },
+      {
+        "movie": "httyd3",
+        "character_id": "astrid",
+        "character": "Astrid Hofferson",
+        "relation": "rider",
+        "confidence": "high"
+      }
+    ],
+    "sources": [
+      "wiki_httyd1",
+      "claude_knowledge",
+      "wiki_httyd2",
+      "wiki_httyd3"
+    ],
+    "confidence": "high",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "individual",
+    "id": "meatlug",
+    "name": "Meatlug",
+    "species": {
+      "id": "gronckle",
+      "name": "Gronckle"
+    },
+    "description": "Fishlegs's Gronckle. Gentle and affectionate.",
+    "appearances": [
+      {
+        "movie": "httyd1",
+        "type": "featured",
+        "confidence": "medium"
+      },
+      {
+        "movie": "httyd2",
+        "type": "featured",
+        "confidence": "high"
+      },
+      {
+        "movie": "httyd3",
+        "type": "featured",
+        "confidence": "high"
+      }
+    ],
+    "riders": [
+      {
+        "movie": "httyd1",
+        "character_id": "fishlegs",
+        "character": "Fishlegs Ingerman",
+        "relation": "rider",
+        "confidence": "high"
+      },
+      {
+        "movie": "httyd2",
+        "character_id": "fishlegs",
+        "character": "Fishlegs Ingerman",
+        "relation": "rider",
+        "confidence": "high"
+      },
+      {
+        "movie": "httyd3",
+        "character_id": "fishlegs",
+        "character": "Fishlegs Ingerman",
+        "relation": "rider",
+        "confidence": "high"
+      }
+    ],
+    "sources": [
+      "wiki_httyd1",
+      "claude_knowledge",
+      "wiki_httyd2",
+      "wiki_httyd3"
+    ],
+    "confidence": "high",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "individual",
+    "id": "hookfang",
+    "name": "Hookfang",
+    "species": {
+      "id": "monstrous_nightmare",
+      "name": "Monstrous Nightmare"
+    },
+    "description": "Snotlout's Monstrous Nightmare. Stubborn, and often ignores his rider.",
+    "appearances": [
+      {
+        "movie": "httyd1",
+        "type": "featured",
+        "confidence": "medium"
+      },
+      {
+        "movie": "httyd2",
+        "type": "featured",
+        "confidence": "high"
+      },
+      {
+        "movie": "httyd3",
+        "type": "featured",
+        "confidence": "high"
+      }
+    ],
+    "riders": [
+      {
+        "movie": "httyd1",
+        "character_id": "snotlout",
+        "character": "Snotlout Jorgenson",
+        "relation": "rider",
+        "confidence": "high"
+      },
+      {
+        "movie": "httyd2",
+        "character_id": "snotlout",
+        "character": "Snotlout Jorgenson",
+        "relation": "rider",
+        "confidence": "high"
+      },
+      {
+        "movie": "httyd3",
+        "character_id": "snotlout",
+        "character": "Snotlout Jorgenson",
+        "relation": "rider",
+        "confidence": "high"
+      }
+    ],
+    "sources": [
+      "wiki_httyd1",
+      "claude_knowledge",
+      "wiki_httyd2",
+      "wiki_httyd3"
+    ],
+    "confidence": "high",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "individual",
+    "id": "barf_and_belch",
+    "name": "Barf & Belch",
+    "species": {
+      "id": "hideous_zippleback",
+      "name": "Hideous Zippleback"
+    },
+    "description": "The Zippleback ridden by the twins Ruffnut and Tuffnut, one twin per head.",
+    "appearances": [
+      {
+        "movie": "httyd1",
+        "type": "featured",
+        "confidence": "medium"
+      },
+      {
+        "movie": "httyd2",
+        "type": "featured",
+        "confidence": "high"
+      },
+      {
+        "movie": "httyd3",
+        "type": "featured",
+        "confidence": "high"
+      }
+    ],
+    "riders": [
+      {
+        "movie": "httyd1",
+        "character_id": "ruffnut",
+        "character": "Ruffnut Thorston",
+        "relation": "rider",
+        "confidence": "high"
+      },
+      {
+        "movie": "httyd1",
+        "character_id": "tuffnut",
+        "character": "Tuffnut Thorston",
+        "relation": "rider",
+        "confidence": "high"
+      },
+      {
+        "movie": "httyd2",
+        "character_id": "ruffnut",
+        "character": "Ruffnut Thorston",
+        "relation": "rider",
+        "confidence": "high"
+      },
+      {
+        "movie": "httyd2",
+        "character_id": "tuffnut",
+        "character": "Tuffnut Thorston",
+        "relation": "rider",
+        "confidence": "high"
+      },
+      {
+        "movie": "httyd3",
+        "character_id": "ruffnut",
+        "character": "Ruffnut Thorston",
+        "relation": "rider",
+        "confidence": "high"
+      },
+      {
+        "movie": "httyd3",
+        "character_id": "tuffnut",
+        "character": "Tuffnut Thorston",
+        "relation": "rider",
+        "confidence": "high"
+      }
+    ],
+    "sources": [
+      "wiki_httyd1",
+      "claude_knowledge",
+      "wiki_httyd2",
+      "wiki_httyd3"
+    ],
+    "confidence": "high",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "individual",
+    "id": "the_red_death",
+    "name": "The Red Death",
+    "species": {
+      "id": "red_death",
+      "name": "Red Death"
+    },
+    "description": "The giant queen of the dragons' nest, defeated by Hiccup and Toothless at the end of the first film.",
+    "appearances": [
+      {
+        "movie": "httyd1",
+        "type": "featured",
+        "confidence": "high"
+      },
+      {
+        "movie": "httyd2",
+        "type": "mentioned",
+        "confidence": "medium"
+      },
+      {
+        "movie": "httyd3",
+        "type": "pictured",
+        "confidence": "low"
+      }
+    ],
+    "riders": [],
+    "sources": [
+      "wiki_httyd1",
+      "claude_knowledge",
+      "wiki_httyd2",
+      "wiki_httyd3"
+    ],
+    "confidence": "high",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "individual",
+    "id": "cloudjumper",
+    "name": "Cloudjumper",
+    "species": {
+      "id": "stormcutter",
+      "name": "Stormcutter"
+    },
+    "description": "Valka's Stormcutter, who carried her away from Berk years before the second film.",
+    "appearances": [
+      {
+        "movie": "httyd2",
+        "type": "featured",
+        "confidence": "high"
+      },
+      {
+        "movie": "httyd3",
+        "type": "featured",
+        "confidence": "high"
+      }
+    ],
+    "riders": [
+      {
+        "movie": "httyd2",
+        "character_id": "valka",
+        "character": "Valka",
+        "relation": "rider",
+        "confidence": "high"
+      },
+      {
+        "movie": "httyd3",
+        "character_id": "valka",
+        "character": "Valka",
+        "relation": "rider",
+        "confidence": "high"
+      }
+    ],
+    "sources": [
+      "wiki_httyd2",
+      "claude_knowledge",
+      "wiki_httyd3"
+    ],
+    "confidence": "high",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "individual",
+    "id": "skullcrusher",
+    "name": "Skullcrusher",
+    "species": {
+      "id": "rumblehorn",
+      "name": "Rumblehorn"
+    },
+    "description": "A Rumblehorn ridden by Stoick in the second film and by Eret in the third.",
+    "appearances": [
+      {
+        "movie": "httyd2",
+        "type": "featured",
+        "confidence": "high"
+      },
+      {
+        "movie": "httyd3",
+        "type": "featured",
+        "confidence": "high"
+      }
+    ],
+    "riders": [
+      {
+        "movie": "httyd2",
+        "character_id": "stoick",
+        "character": "Stoick the Vast",
+        "relation": "rider",
+        "confidence": "high"
+      },
+      {
+        "movie": "httyd3",
+        "character_id": "eret",
+        "character": "Eret, son of Eret",
+        "relation": "rider",
+        "confidence": "high"
+      }
+    ],
+    "sources": [
+      "wiki_httyd2",
+      "claude_knowledge",
+      "wiki_httyd3"
+    ],
+    "confidence": "high",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "individual",
+    "id": "grump",
+    "name": "Grump",
+    "species": {
+      "id": "hotburple",
+      "name": "Hotburple"
+    },
+    "description": "Gobber's sleepy Hotburple.",
+    "appearances": [
+      {
+        "movie": "httyd2",
+        "type": "featured",
+        "confidence": "high"
+      },
+      {
+        "movie": "httyd3",
+        "type": "on_screen",
+        "confidence": "medium"
+      }
+    ],
+    "riders": [
+      {
+        "movie": "httyd2",
+        "character_id": "gobber",
+        "character": "Gobber the Belch",
+        "relation": "rider",
+        "confidence": "high"
+      },
+      {
+        "movie": "httyd3",
+        "character_id": "gobber",
+        "character": "Gobber the Belch",
+        "relation": "rider",
+        "confidence": "medium"
+      }
+    ],
+    "sources": [
+      "wiki_httyd2",
+      "claude_knowledge",
+      "wiki_httyd3"
+    ],
+    "confidence": "high",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "individual",
+    "id": "valkas_bewilderbeast",
+    "name": "Valka's Bewilderbeast",
+    "species": {
+      "id": "bewilderbeast",
+      "name": "Bewilderbeast"
+    },
+    "description": "The alpha that sheltered the dragons of Valka's ice sanctuary.",
+    "appearances": [
+      {
+        "movie": "httyd2",
+        "type": "featured",
+        "confidence": "high"
+      }
+    ],
+    "riders": [],
+    "sources": [
+      "wiki_httyd2",
+      "claude_knowledge"
+    ],
+    "confidence": "high",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "individual",
+    "id": "dragos_bewilderbeast",
+    "name": "Drago's Bewilderbeast",
+    "species": {
+      "id": "bewilderbeast",
+      "name": "Bewilderbeast"
+    },
+    "description": "The alpha controlled by Drago Bludvist, used to take command of other dragons.",
+    "appearances": [
+      {
+        "movie": "httyd2",
+        "type": "featured",
+        "confidence": "high"
+      },
+      {
+        "movie": "httyd3",
+        "type": "mentioned",
+        "confidence": "low"
+      }
+    ],
+    "riders": [
+      {
+        "movie": "httyd2",
+        "character_id": "drago",
+        "character": "Drago Bludvist",
+        "relation": "controller",
+        "confidence": "high"
+      }
+    ],
+    "sources": [
+      "wiki_httyd2",
+      "claude_knowledge",
+      "wiki_httyd3"
+    ],
+    "confidence": "high",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "individual",
+    "id": "the_light_fury",
+    "name": "The Light Fury",
+    "species": {
+      "id": "light_fury",
+      "name": "Light Fury"
+    },
+    "description": "A wild Light Fury who becomes Toothless's mate.",
+    "appearances": [
+      {
+        "movie": "httyd3",
+        "type": "featured",
+        "confidence": "high"
+      }
+    ],
+    "riders": [],
+    "sources": [
+      "wiki_httyd3",
+      "claude_knowledge"
+    ],
+    "confidence": "high",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "individual",
+    "id": "night_lights",
+    "name": "The Night Lights",
+    "species": {
+      "id": "night_light",
+      "name": "Night Light"
+    },
+    "description": "Toothless and the Light Fury's three hatchlings, seen at the end of the third film.",
+    "appearances": [
+      {
+        "movie": "httyd3",
+        "type": "on_screen",
+        "confidence": "high"
+      }
+    ],
+    "riders": [],
+    "sources": [
+      "wiki_httyd3",
+      "claude_knowledge"
+    ],
+    "confidence": "high",
+    "notes": "One entry for all three. The wiki names them Dart, Pouncer and Ruffrunner; those names come from outside the films. Description is a draft; review before publishing."
+  },
+  {
+    "kind": "individual",
+    "id": "gothis_pet",
+    "name": "Gothi's Pet",
+    "species": {
+      "id": "terrible_terror",
+      "name": "Terrible Terror"
+    },
+    "description": "Gothi's Terrible Terror.",
+    "appearances": [
+      {
+        "movie": "httyd2",
+        "type": "background",
+        "confidence": "low"
+      },
+      {
+        "movie": "httyd3",
+        "type": "background",
+        "confidence": "low"
+      }
+    ],
+    "riders": [],
+    "sources": [
+      "wiki_httyd2",
+      "wiki_httyd3",
+      "wiki_dragon_pages"
+    ],
+    "confidence": "low",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "individual",
+    "id": "gruff",
+    "name": "Gruff",
+    "species": {
+      "id": "hobblegrunt",
+      "name": "Hobblegrunt"
+    },
+    "description": "A blind Hobblegrunt rescued by Valka.",
+    "appearances": [
+      {
+        "movie": "httyd2",
+        "type": "background",
+        "confidence": "low"
+      }
+    ],
+    "riders": [],
+    "sources": [
+      "wiki_httyd2",
+      "wiki_dragon_pages"
+    ],
+    "confidence": "low",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "individual",
+    "id": "thump",
+    "name": "Thump",
+    "species": {
+      "id": "raincutter",
+      "name": "Raincutter"
+    },
+    "description": "One of the dragons living in Valka's sanctuary.",
+    "appearances": [
+      {
+        "movie": "httyd2",
+        "type": "background",
+        "confidence": "low"
+      }
+    ],
+    "riders": [],
+    "sources": [
+      "wiki_httyd2",
+      "wiki_dragon_pages"
+    ],
+    "confidence": "low",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "individual",
+    "id": "lump",
+    "name": "Lump",
+    "species": {
+      "id": "snafflefang",
+      "name": "Snafflefang"
+    },
+    "description": "One of the dragons living in Valka's sanctuary.",
+    "appearances": [
+      {
+        "movie": "httyd2",
+        "type": "background",
+        "confidence": "low"
+      }
+    ],
+    "riders": [],
+    "sources": [
+      "wiki_httyd2",
+      "wiki_dragon_pages"
+    ],
+    "confidence": "low",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "individual",
+    "id": "rumpus",
+    "name": "Rumpus",
+    "species": {
+      "id": "thunderclaw",
+      "name": "Thunderclaw"
+    },
+    "description": "One of the dragons living in Valka's sanctuary.",
+    "appearances": [
+      {
+        "movie": "httyd2",
+        "type": "background",
+        "confidence": "low"
+      }
+    ],
+    "riders": [],
+    "sources": [
+      "wiki_httyd2",
+      "wiki_dragon_pages"
+    ],
+    "confidence": "low",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "individual",
+    "id": "sailback",
+    "name": "Sailback",
+    "species": {
+      "id": "thunderclaw",
+      "name": "Thunderclaw"
+    },
+    "description": "One of the dragons living in Valka's sanctuary.",
+    "appearances": [
+      {
+        "movie": "httyd2",
+        "type": "background",
+        "confidence": "low"
+      }
+    ],
+    "riders": [],
+    "sources": [
+      "wiki_httyd2",
+      "wiki_dragon_pages"
+    ],
+    "confidence": "low",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "individual",
+    "id": "winged_warden",
+    "name": "Winged Warden",
+    "species": {
+      "id": "windstriker",
+      "name": "Windstriker"
+    },
+    "description": "One of the dragons living in Valka's sanctuary.",
+    "appearances": [
+      {
+        "movie": "httyd2",
+        "type": "background",
+        "confidence": "low"
+      }
+    ],
+    "riders": [],
+    "sources": [
+      "wiki_httyd2",
+      "wiki_dragon_pages"
+    ],
+    "confidence": "low",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "individual",
+    "id": "pestbud",
+    "name": "Pestbud",
+    "species": {
+      "id": "snifflehunch",
+      "name": "Snifflehunch"
+    },
+    "description": "One of the dragons living in Valka's sanctuary.",
+    "appearances": [
+      {
+        "movie": "httyd2",
+        "type": "background",
+        "confidence": "low"
+      }
+    ],
+    "riders": [],
+    "sources": [
+      "wiki_httyd2",
+      "wiki_dragon_pages"
+    ],
+    "confidence": "low",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "individual",
+    "id": "clawlifter",
+    "name": "Clawlifter",
+    "species": {
+      "id": "shovelhelm",
+      "name": "Shovelhelm"
+    },
+    "description": "One of the dragons living in Valka's sanctuary.",
+    "appearances": [
+      {
+        "movie": "httyd2",
+        "type": "background",
+        "confidence": "low"
+      }
+    ],
+    "riders": [],
+    "sources": [
+      "wiki_httyd2",
+      "wiki_dragon_pages"
+    ],
+    "confidence": "low",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "individual",
+    "id": "gustnudger",
+    "name": "Gustnudger",
+    "species": {
+      "id": "windgnasher",
+      "name": "Windgnasher"
+    },
+    "description": "One of the dragons living in Valka's sanctuary.",
+    "appearances": [
+      {
+        "movie": "httyd2",
+        "type": "background",
+        "confidence": "low"
+      }
+    ],
+    "riders": [],
+    "sources": [
+      "wiki_httyd2",
+      "wiki_dragon_pages"
+    ],
+    "confidence": "low",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "individual",
+    "id": "valkas_mercy",
+    "name": "Valka's Mercy",
+    "species": {
+      "id": "monstrous_nightmare",
+      "name": "Monstrous Nightmare"
+    },
+    "description": "One of the dragons living in Valka's sanctuary.",
+    "appearances": [
+      {
+        "movie": "httyd2",
+        "type": "background",
+        "confidence": "low"
+      }
+    ],
+    "riders": [],
+    "sources": [
+      "wiki_httyd2",
+      "wiki_dragon_pages"
+    ],
+    "confidence": "low",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "individual",
+    "id": "soaring_sidekick",
+    "name": "Soaring Sidekick",
+    "species": {
+      "id": "timberjack",
+      "name": "Timberjack"
+    },
+    "description": "A Timberjack seen in the second film.",
+    "appearances": [
+      {
+        "movie": "httyd2",
+        "type": "background",
+        "confidence": "low"
+      }
+    ],
+    "riders": [],
+    "sources": [
+      "wiki_httyd2",
+      "wiki_dragon_pages"
+    ],
+    "confidence": "low",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "individual",
+    "id": "bonesnarl",
+    "name": "Bonesnarl",
+    "species": {
+      "id": "thunderclaw",
+      "name": "Thunderclaw"
+    },
+    "description": "A Thunderclaw seen in the second film.",
+    "appearances": [
+      {
+        "movie": "httyd2",
+        "type": "background",
+        "confidence": "low"
+      }
+    ],
+    "riders": [],
+    "sources": [
+      "wiki_httyd2",
+      "wiki_dragon_pages"
+    ],
+    "confidence": "low",
+    "notes": "Description is a draft; review before publishing."
+  },
+  {
+    "kind": "individual",
+    "id": "fishmeat",
+    "name": "Fishmeat",
+    "species": {
+      "id": "gronckle",
+      "name": "Gronckle"
+    },
+    "description": "A Gronckle linked to Fishlegs in the third film.",
+    "appearances": [
+      {
+        "movie": "httyd3",
+        "type": "background",
+        "confidence": "low"
+      }
+    ],
+    "riders": [],
+    "sources": [
+      "wiki_httyd3",
+      "wiki_dragon_pages"
+    ],
+    "confidence": "low",
+    "notes": "Description is a draft; review before publishing."
+  }
+]

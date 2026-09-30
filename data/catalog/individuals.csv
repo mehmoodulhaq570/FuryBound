@@ -1,0 +1,28 @@
+individual_id,name,species_id,description,notes,source_ids,confidence
+toothless,Toothless,night_fury,"Hiccup's Night Fury. Loses half of his tail fin, can only fly with Hiccup's help, becomes his closest friend and later the alpha of all dragons.",Description is a draft; review before publishing.,wiki_httyd1|claude_knowledge|wiki_httyd2|wiki_httyd3,high
+stormfly,Stormfly,deadly_nadder,"Astrid's Deadly Nadder. Quick, loyal and competitive.",Description is a draft; review before publishing.,wiki_httyd1|claude_knowledge|wiki_httyd2|wiki_httyd3,high
+meatlug,Meatlug,gronckle,Fishlegs's Gronckle. Gentle and affectionate.,Description is a draft; review before publishing.,wiki_httyd1|claude_knowledge|wiki_httyd2|wiki_httyd3,high
+hookfang,Hookfang,monstrous_nightmare,"Snotlout's Monstrous Nightmare. Stubborn, and often ignores his rider.",Description is a draft; review before publishing.,wiki_httyd1|claude_knowledge|wiki_httyd2|wiki_httyd3,high
+barf_and_belch,Barf & Belch,hideous_zippleback,"The Zippleback ridden by the twins Ruffnut and Tuffnut, one twin per head.",Description is a draft; review before publishing.,wiki_httyd1|claude_knowledge|wiki_httyd2|wiki_httyd3,high
+the_red_death,The Red Death,red_death,"The giant queen of the dragons' nest, defeated by Hiccup and Toothless at the end of the first film.",Description is a draft; review before publishing.,wiki_httyd1|claude_knowledge|wiki_httyd2|wiki_httyd3,high
+cloudjumper,Cloudjumper,stormcutter,"Valka's Stormcutter, who carried her away from Berk years before the second film.",Description is a draft; review before publishing.,wiki_httyd2|claude_knowledge|wiki_httyd3,high
+skullcrusher,Skullcrusher,rumblehorn,A Rumblehorn ridden by Stoick in the second film and by Eret in the third.,Description is a draft; review before publishing.,wiki_httyd2|claude_knowledge|wiki_httyd3,high
+grump,Grump,hotburple,Gobber's sleepy Hotburple.,Description is a draft; review before publishing.,wiki_httyd2|claude_knowledge|wiki_httyd3,high
+valkas_bewilderbeast,Valka's Bewilderbeast,bewilderbeast,The alpha that sheltered the dragons of Valka's ice sanctuary.,Description is a draft; review before publishing.,wiki_httyd2|claude_knowledge,high
+dragos_bewilderbeast,Drago's Bewilderbeast,bewilderbeast,"The alpha controlled by Drago Bludvist, used to take command of other dragons.",Description is a draft; review before publishing.,wiki_httyd2|claude_knowledge|wiki_httyd3,high
+the_light_fury,The Light Fury,light_fury,A wild Light Fury who becomes Toothless's mate.,Description is a draft; review before publishing.,wiki_httyd3|claude_knowledge,high
+night_lights,The Night Lights,night_light,"Toothless and the Light Fury's three hatchlings, seen at the end of the third film.","One entry for all three. The wiki names them Dart, Pouncer and Ruffrunner; those names come from outside the films. Description is a draft; review before publishing.",wiki_httyd3|claude_knowledge,high
+gothis_pet,Gothi's Pet,terrible_terror,Gothi's Terrible Terror.,Description is a draft; review before publishing.,wiki_httyd2|wiki_httyd3|wiki_dragon_pages,low
+gruff,Gruff,hobblegrunt,A blind Hobblegrunt rescued by Valka.,Description is a draft; review before publishing.,wiki_httyd2|wiki_dragon_pages,low
+thump,Thump,raincutter,One of the dragons living in Valka's sanctuary.,Description is a draft; review before publishing.,wiki_httyd2|wiki_dragon_pages,low
+lump,Lump,snafflefang,One of the dragons living in Valka's sanctuary.,Description is a draft; review before publishing.,wiki_httyd2|wiki_dragon_pages,low
+rumpus,Rumpus,thunderclaw,One of the dragons living in Valka's sanctuary.,Description is a draft; review before publishing.,wiki_httyd2|wiki_dragon_pages,low
+sailback,Sailback,thunderclaw,One of the dragons living in Valka's sanctuary.,Description is a draft; review before publishing.,wiki_httyd2|wiki_dragon_pages,low
+winged_warden,Winged Warden,windstriker,One of the dragons living in Valka's sanctuary.,Description is a draft; review before publishing.,wiki_httyd2|wiki_dragon_pages,low
+pestbud,Pestbud,snifflehunch,One of the dragons living in Valka's sanctuary.,Description is a draft; review before publishing.,wiki_httyd2|wiki_dragon_pages,low
+clawlifter,Clawlifter,shovelhelm,One of the dragons living in Valka's sanctuary.,Description is a draft; review before publishing.,wiki_httyd2|wiki_dragon_pages,low
+gustnudger,Gustnudger,windgnasher,One of the dragons living in Valka's sanctuary.,Description is a draft; review before publishing.,wiki_httyd2|wiki_dragon_pages,low
+valkas_mercy,Valka's Mercy,monstrous_nightmare,One of the dragons living in Valka's sanctuary.,Description is a draft; review before publishing.,wiki_httyd2|wiki_dragon_pages,low
+soaring_sidekick,Soaring Sidekick,timberjack,A Timberjack seen in the second film.,Description is a draft; review before publishing.,wiki_httyd2|wiki_dragon_pages,low
+bonesnarl,Bonesnarl,thunderclaw,A Thunderclaw seen in the second film.,Description is a draft; review before publishing.,wiki_httyd2|wiki_dragon_pages,low
+fishmeat,Fishmeat,gronckle,A Gronckle linked to Fishlegs in the third film.,Description is a draft; review before publishing.,wiki_httyd3|wiki_dragon_pages,low

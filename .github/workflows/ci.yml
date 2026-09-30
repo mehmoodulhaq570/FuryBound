@@ -31,6 +31,31 @@ jobs:
           uv run python -m scripts.export_openapi
           git diff --exit-code -- openapi.json || (echo "::error::Run 'uv run python -m scripts.export_openapi' in apps/api and commit openapi.json" && exit 1)
 
+  data:
+    name: Data (catalog check and build)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/api
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+      - run: uv sync --locked
+      - run: uv run ruff check --config pyproject.toml ../../scripts
+      - run: uv run ruff format --config pyproject.toml --check ../../scripts
+      - run: uv run mypy --strict ../../scripts
+      - run: uv run python ../../scripts/validate_catalog.py
+      - name: Catalog and scene logs agree
+        run: |
+          uv run python ../../scripts/import_scene_logs.py
+          git diff --exit-code -- ../../data/catalog || (echo "::error::Run 'pnpm catalog:import' and commit data/catalog" && exit 1)
+      - name: Build outputs are up to date
+        run: |
+          uv run python ../../scripts/build_catalog.py
+          git diff --exit-code -- ../../data/build || (echo "::error::Run 'pnpm catalog:build' and commit data/build" && exit 1)
+
   web:
     name: Web (lint, types, tests)
     runs-on: ubuntu-latest
