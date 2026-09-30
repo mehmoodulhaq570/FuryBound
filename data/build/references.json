@@ -1,0 +1,94 @@
+{
+  "movies": [
+    {
+      "movie_id": "httyd1",
+      "title": "How to Train Your Dragon",
+      "year": 2010,
+      "ordinal": 1
+    },
+    {
+      "movie_id": "httyd2",
+      "title": "How to Train Your Dragon 2",
+      "year": 2014,
+      "ordinal": 2
+    },
+    {
+      "movie_id": "httyd3",
+      "title": "How to Train Your Dragon: The Hidden World",
+      "year": 2019,
+      "ordinal": 3
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "film_httyd1",
+      "title": "How to Train Your Dragon (2010)",
+      "type": "film",
+      "url": null,
+      "accessed_on": null
+    },
+    {
+      "source_id": "film_httyd2",
+      "title": "How to Train Your Dragon 2 (2014)",
+      "type": "film",
+      "url": null,
+      "accessed_on": null
+    },
+    {
+      "source_id": "film_httyd3",
+      "title": "How to Train Your Dragon: The Hidden World (2019)",
+      "type": "film",
+      "url": null,
+      "accessed_on": null
+    },
+    {
+      "source_id": "wiki_httyd1",
+      "title": "How to Train Your Dragon Wiki: How to Train Your Dragon (film), revision 1198568",
+      "type": "wiki",
+      "url": "https://howtotrainyourdragon.fandom.com/wiki/How_to_Train_Your_Dragon_(film)?oldid=1198568",
+      "accessed_on": "2026-09-30"
+    },
+    {
+      "source_id": "wiki_httyd2",
+      "title": "How to Train Your Dragon Wiki: How to Train Your Dragon 2, revision 1198291",
+      "type": "wiki",
+      "url": "https://howtotrainyourdragon.fandom.com/wiki/How_to_Train_Your_Dragon_2?oldid=1198291",
+      "accessed_on": "2026-09-30"
+    },
+    {
+      "source_id": "wiki_httyd3",
+      "title": "How to Train Your Dragon Wiki: How to Train Your Dragon: The Hidden World, revision 1198290",
+      "type": "wiki",
+      "url": "https://howtotrainyourdragon.fandom.com/wiki/How_to_Train_Your_Dragon:_The_Hidden_World?oldid=1198290",
+      "accessed_on": "2026-09-30"
+    },
+    {
+      "source_id": "wiki_dragon_pages",
+      "title": "How to Train Your Dragon Wiki: individual dragon pages (species of minor named dragons)",
+      "type": "wiki",
+      "url": "https://howtotrainyourdragon.fandom.com/",
+      "accessed_on": "2026-09-30"
+    },
+    {
+      "source_id": "claude_knowledge",
+      "title": "Claude's general knowledge of the films (not checked against the films)",
+      "type": "other",
+      "url": null,
+      "accessed_on": null
+    },
+    {
+      "source_id": "repo_uokik",
+      "title": "uokik/how-to-train-your-dragon-api (dragon classes)",
+      "type": "other",
+      "url": "https://github.com/uokik/how-to-train-your-dragon-api",
+      "accessed_on": "2026-09-30"
+    },
+    {
+      "source_id": "repo_romainchamb",
+      "title": "RomainChamb/httydApi (dragon classes)",
+      "type": "other",
+      "url": "https://github.com/RomainChamb/httydApi",
+      "accessed_on": "2026-09-30"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 # Tech stack
 
-What Dragon Academy is built with as of **Phase 1 (dragon database)**. Versions come from `apps/web/package.json`, `apps/api/pyproject.toml` and the local Supabase stack. See [Plan.md §6](Plan.md#6-tech-stack) for the full planned stack.
+What Dragon Academy is built with as of **Phase 2 (Dragon Book)**. Versions come from `apps/web/package.json`, `apps/api/pyproject.toml` and the local Supabase stack. See [Plan.md §6](Plan.md#6-tech-stack) for the full planned stack.
 
 ## Frontend (`apps/web`)
 
@@ -15,6 +15,9 @@ What Dragon Academy is built with as of **Phase 1 (dragon database)**. Versions 
 | openapi-fetch | 0.17 | Typed API client |
 | openapi-typescript | 7.13 | Generates API types from the backend's OpenAPI schema |
 | @supabase/supabase-js, @supabase/ssr | 2.117, 0.12 | Sign-in from the browser |
+| Fuse.js | 7.5 | Typo-tolerant Dragon Book search, in the browser |
+
+The Dragon Book (`/dragon-book`) is statically generated from `data/build/dragons.json` and `references.json` at build time; it doesn't call the API.
 
 ## Backend (`apps/api`)
 
@@ -79,7 +82,6 @@ What Dragon Academy is built with as of **Phase 1 (dragon database)**. Versions 
 
 | Technology | Phase | Role |
 |---|---|---|
-| Fuse.js | 2 | Client-side Dragon Book search |
 | Hypothesis | 3 | Property tests for the game engines |
 | scikit-learn, NumPy, pandas | 3 | Matching calibration and analysis |
 | Motion | 4 | Reveal animation and transitions |

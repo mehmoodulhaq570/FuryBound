@@ -86,7 +86,12 @@ def dragons(tables: dict[str, list[Row]]) -> list[dict[str, object]]:
 
     def appears(kind: str, entity_id: str) -> list[dict[str, object]]:
         return [
-            {"movie": a.movie_id, "type": a.appearance_type.value, "confidence": a.confidence.value}
+            {
+                "movie": a.movie_id,
+                "type": a.appearance_type.value,
+                "confidence": a.confidence.value,
+                "evidence": a.evidence,
+            }
             for a in appearances
             if a.entity_kind == kind and a.entity_id == entity_id
         ]
@@ -179,6 +184,19 @@ def write_flat_csv(entries: list[dict[str, object]]) -> None:
             )
 
 
+def references(tables: dict[str, list[Row]]) -> dict[str, list[dict[str, object]]]:
+    """Films and sources that dragons.json refers to by id (for the Dragon Book)."""
+    return {
+        "movies": [m.model_dump(mode="json") for m in tables["movies.csv"]],
+        "sources": [s.model_dump(mode="json") for s in tables["sources.csv"]],
+    }
+
+
+def write_json(file_name: str, data: object) -> None:
+    text = json.dumps(data, indent=2, ensure_ascii=False) + "\n"
+    (BUILD / file_name).write_text(text, encoding="utf-8", newline="\n")
+
+
 def main() -> int:
     errors: list[str] = []
     tables = load(errors)
@@ -191,13 +209,12 @@ def main() -> int:
     BUILD.mkdir(exist_ok=True)
     (BUILD / "seed.sql").write_text(seed_sql(tables), encoding="utf-8", newline="\n")
     entries = dragons(tables)
-    (BUILD / "dragons.json").write_text(
-        json.dumps(entries, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n"
-    )
+    write_json("dragons.json", entries)
+    write_json("references.json", references(tables))
     write_flat_csv(entries)
     kinds = [e["kind"] for e in entries]
     print(
-        f"Built data/build/: seed.sql, dragons.json and dragons.csv "
+        f"Built data/build/: seed.sql, dragons.json, references.json and dragons.csv "
         f"({kinds.count('species')} species, {kinds.count('individual')} individuals)."
     )
     return 0

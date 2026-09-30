@@ -1,17 +1,27 @@
+import Link from "next/link";
+
 import { SystemCheck } from "@/components/system-check";
 
 export default function Home() {
   return (
     <div className="space-y-10">
       <section className="space-y-3">
-        <p className="text-accent text-sm font-medium tracking-widest uppercase">Phase 0</p>
+        <p className="text-accent text-sm font-medium tracking-widest uppercase">Phase 2</p>
         <h1 className="text-4xl font-semibold tracking-tight">Dragon Academy</h1>
         <p className="text-muted max-w-prose">
           The dragon chooses you. Take the quiz, meet your dragon, train it, talk to it and go on
-          adventures together. Nothing is playable yet: this page checks that the web app, API and
-          auth are wired together.
+          adventures together. The game isn&apos;t playable yet, but the Dragon Book is open.
         </p>
       </section>
+      <Link
+        href="/dragon-book"
+        className="border-line bg-surface hover:border-accent block rounded-xl border p-5 transition-colors"
+      >
+        <h2 className="text-lg font-semibold">Open the Dragon Book →</h2>
+        <p className="text-muted text-sm">
+          Every species and named dragon from the three films, with where each one appears.
+        </p>
+      </Link>
       <SystemCheck />
     </div>
   );

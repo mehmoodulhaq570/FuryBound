@@ -2,7 +2,7 @@
 
 An interactive AI, game and ML project built on a sourced dataset of every dragon in the three *How to Train Your Dragon* animated films. See [Plan.md](Plan.md) for the full plan and [TECH_STACK.md](TECH_STACK.md) for what it's built with.
 
-**Status:** Phase 1 (dragon database). The catalog is pre-filled and in the database; film verification is in progress. See [data/README.md](data/README.md).
+**Status:** Phase 2 (Dragon Book). The Dragon Book is live at `/dragon-book`. The dragon catalog is pre-filled; film verification is in progress. See [data/README.md](data/README.md).
 
 ## Layout
 

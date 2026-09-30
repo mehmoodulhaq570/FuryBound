@@ -76,6 +76,9 @@ def check(tables: dict[str, list[Row]], errors: list[str]) -> None:
     abilities = cast(list[Ability], tables["abilities.csv"])
     ability_ids = unique("abilities.csv", [a.ability_id for a in abilities])
     unique("species.csv (names)", [s.name for s in species])
+    # Species and individuals share one URL space (/dragon-book/<id>); Plan.md §8.1 `the_` rule.
+    for clash in sorted(species_ids & individual_ids):
+        errors.append(f"individuals.csv: {clash!r} is also a species id; use the_{clash}")
     source_type = {s.source_id: s.type for s in sources}
 
     def ref(where: str, kind: str, value: str, known: set[str]) -> None:

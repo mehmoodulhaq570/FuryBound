@@ -14,17 +14,20 @@
       {
         "movie": "httyd1",
         "type": "on_screen",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": ""
       },
       {
         "movie": "httyd2",
         "type": "on_screen",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": ""
       },
       {
         "movie": "httyd3",
         "type": "on_screen",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": ""
       }
     ],
     "known_individuals": [
@@ -56,7 +59,8 @@
       {
         "movie": "httyd3",
         "type": "on_screen",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": ""
       }
     ],
     "known_individuals": [
@@ -86,7 +90,8 @@
       {
         "movie": "httyd3",
         "type": "on_screen",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": ""
       }
     ],
     "known_individuals": [
@@ -115,17 +120,20 @@
       {
         "movie": "httyd1",
         "type": "on_screen",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": "Also in the training arena"
       },
       {
         "movie": "httyd2",
         "type": "on_screen",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": ""
       },
       {
         "movie": "httyd3",
         "type": "on_screen",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": ""
       }
     ],
     "known_individuals": [
@@ -157,17 +165,20 @@
       {
         "movie": "httyd1",
         "type": "on_screen",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": "Also in the training arena"
       },
       {
         "movie": "httyd2",
         "type": "on_screen",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": ""
       },
       {
         "movie": "httyd3",
         "type": "on_screen",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": ""
       }
     ],
     "known_individuals": [
@@ -200,17 +211,20 @@
       {
         "movie": "httyd1",
         "type": "on_screen",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": "Also in the training arena"
       },
       {
         "movie": "httyd2",
         "type": "on_screen",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": ""
       },
       {
         "movie": "httyd3",
         "type": "on_screen",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": ""
       }
     ],
     "known_individuals": [
@@ -242,17 +256,20 @@
       {
         "movie": "httyd1",
         "type": "on_screen",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": "Also in the training arena"
       },
       {
         "movie": "httyd2",
         "type": "on_screen",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": ""
       },
       {
         "movie": "httyd3",
         "type": "on_screen",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": ""
       }
     ],
     "known_individuals": [
@@ -285,17 +302,20 @@
       {
         "movie": "httyd1",
         "type": "on_screen",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": ""
       },
       {
         "movie": "httyd2",
         "type": "on_screen",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": ""
       },
       {
         "movie": "httyd3",
         "type": "on_screen",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": ""
       }
     ],
     "known_individuals": [
@@ -327,17 +347,20 @@
       {
         "movie": "httyd1",
         "type": "on_screen",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": ""
       },
       {
         "movie": "httyd2",
         "type": "mentioned",
-        "confidence": "medium"
+        "confidence": "medium",
+        "evidence": "Wiki: pictured and mentioned"
       },
       {
         "movie": "httyd3",
         "type": "pictured",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Wiki: credits only"
       }
     ],
     "known_individuals": [
@@ -368,7 +391,8 @@
       {
         "movie": "httyd1",
         "type": "mentioned",
-        "confidence": "medium"
+        "confidence": "medium",
+        "evidence": "Wiki: mentioned and pictured (Book of Dragons)"
       }
     ],
     "known_individuals": [],
@@ -394,12 +418,14 @@
       {
         "movie": "httyd1",
         "type": "mentioned",
-        "confidence": "medium"
+        "confidence": "medium",
+        "evidence": "Wiki: mentioned and pictured (Book of Dragons)"
       },
       {
         "movie": "httyd2",
         "type": "pictured",
-        "confidence": "medium"
+        "confidence": "medium",
+        "evidence": "Wiki: pictured only"
       }
     ],
     "known_individuals": [],
@@ -426,17 +452,20 @@
       {
         "movie": "httyd1",
         "type": "mentioned",
-        "confidence": "medium"
+        "confidence": "medium",
+        "evidence": "Wiki: mentioned and pictured (Book of Dragons)"
       },
       {
         "movie": "httyd2",
         "type": "pictured",
-        "confidence": "medium"
+        "confidence": "medium",
+        "evidence": "Wiki: pictured only"
       },
       {
         "movie": "httyd3",
         "type": "background",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Wiki lists it with no detail; background is a guess, may be on_screen"
       }
     ],
     "known_individuals": [],
@@ -464,12 +493,14 @@
       {
         "movie": "httyd1",
         "type": "mentioned",
-        "confidence": "medium"
+        "confidence": "medium",
+        "evidence": "Wiki: mentioned and pictured (Book of Dragons)"
       },
       {
         "movie": "httyd3",
         "type": "background",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Wiki lists it with no detail; background is a guess, may be on_screen"
       }
     ],
     "known_individuals": [],
@@ -497,12 +528,14 @@
       {
         "movie": "httyd1",
         "type": "mentioned",
-        "confidence": "medium"
+        "confidence": "medium",
+        "evidence": "Wiki: mentioned and pictured (Book of Dragons)"
       },
       {
         "movie": "httyd2",
         "type": "background",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Wiki lists it with no detail; background is a guess, may be on_screen"
       }
     ],
     "known_individuals": [],
@@ -530,17 +563,20 @@
       {
         "movie": "httyd1",
         "type": "mentioned",
-        "confidence": "medium"
+        "confidence": "medium",
+        "evidence": "Wiki: mentioned and pictured (Book of Dragons)"
       },
       {
         "movie": "httyd2",
         "type": "background",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Wiki lists it with no detail; background is a guess, may be on_screen"
       },
       {
         "movie": "httyd3",
         "type": "background",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Wiki lists it with no detail; background is a guess, may be on_screen"
       }
     ],
     "known_individuals": [
@@ -571,12 +607,14 @@
       {
         "movie": "httyd1",
         "type": "mentioned",
-        "confidence": "medium"
+        "confidence": "medium",
+        "evidence": "Wiki: mentioned and pictured (Book of Dragons)"
       },
       {
         "movie": "httyd2",
         "type": "mentioned",
-        "confidence": "medium"
+        "confidence": "medium",
+        "evidence": "Wiki: mentioned"
       }
     ],
     "known_individuals": [],
@@ -604,12 +642,14 @@
       {
         "movie": "httyd1",
         "type": "pictured",
-        "confidence": "medium"
+        "confidence": "medium",
+        "evidence": "Wiki: pictured only"
       },
       {
         "movie": "httyd3",
         "type": "pictured",
-        "confidence": "medium"
+        "confidence": "medium",
+        "evidence": "Wiki: pictured only"
       }
     ],
     "known_individuals": [],
@@ -636,12 +676,14 @@
       {
         "movie": "httyd1",
         "type": "pictured",
-        "confidence": "medium"
+        "confidence": "medium",
+        "evidence": "Wiki: pictured only"
       },
       {
         "movie": "httyd2",
         "type": "pictured",
-        "confidence": "medium"
+        "confidence": "medium",
+        "evidence": "Wiki: pictured only"
       }
     ],
     "known_individuals": [],
@@ -669,7 +711,8 @@
       {
         "movie": "httyd1",
         "type": "pictured",
-        "confidence": "medium"
+        "confidence": "medium",
+        "evidence": "Wiki: pictured only"
       }
     ],
     "known_individuals": [],
@@ -692,7 +735,8 @@
       {
         "movie": "httyd1",
         "type": "pictured",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Wiki: 'possible statue'. Needs a close look"
       }
     ],
     "known_individuals": [],
@@ -717,12 +761,14 @@
       {
         "movie": "httyd2",
         "type": "on_screen",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": ""
       },
       {
         "movie": "httyd3",
         "type": "on_screen",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": ""
       }
     ],
     "known_individuals": [
@@ -753,12 +799,14 @@
       {
         "movie": "httyd2",
         "type": "on_screen",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": ""
       },
       {
         "movie": "httyd3",
         "type": "on_screen",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": ""
       }
     ],
     "known_individuals": [
@@ -789,12 +837,14 @@
       {
         "movie": "httyd2",
         "type": "on_screen",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": ""
       },
       {
         "movie": "httyd3",
         "type": "on_screen",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": ""
       }
     ],
     "known_individuals": [
@@ -825,12 +875,14 @@
       {
         "movie": "httyd2",
         "type": "on_screen",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": ""
       },
       {
         "movie": "httyd3",
         "type": "mentioned",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Wiki lists it; check how it appears"
       }
     ],
     "known_individuals": [
@@ -862,12 +914,14 @@
       {
         "movie": "httyd2",
         "type": "on_screen",
-        "confidence": "medium"
+        "confidence": "medium",
+        "evidence": "Wiki: Scuttleclaw hatchlings"
       },
       {
         "movie": "httyd3",
         "type": "on_screen",
-        "confidence": "medium"
+        "confidence": "medium",
+        "evidence": "Wiki: Scuttleclaw hatchlings"
       }
     ],
     "known_individuals": [],
@@ -894,12 +948,14 @@
       {
         "movie": "httyd2",
         "type": "on_screen",
-        "confidence": "medium"
+        "confidence": "medium",
+        "evidence": "Wiki: Valka's Seashockers"
       },
       {
         "movie": "httyd3",
         "type": "background",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Wiki lists it with no detail; background is a guess, may be on_screen"
       }
     ],
     "known_individuals": [],
@@ -924,12 +980,14 @@
       {
         "movie": "httyd2",
         "type": "background",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Wiki lists it with no detail; background is a guess, may be on_screen"
       },
       {
         "movie": "httyd3",
         "type": "background",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Wiki lists it with no detail; background is a guess, may be on_screen"
       }
     ],
     "known_individuals": [],
@@ -955,12 +1013,14 @@
       {
         "movie": "httyd2",
         "type": "background",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Wiki lists it with no detail; background is a guess, may be on_screen"
       },
       {
         "movie": "httyd3",
         "type": "background",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Wiki lists it with no detail; background is a guess, may be on_screen"
       }
     ],
     "known_individuals": [
@@ -986,12 +1046,14 @@
       {
         "movie": "httyd2",
         "type": "background",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Wiki lists it with no detail; background is a guess, may be on_screen"
       },
       {
         "movie": "httyd3",
         "type": "background",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Wiki lists it with no detail; background is a guess, may be on_screen"
       }
     ],
     "known_individuals": [],
@@ -1017,12 +1079,14 @@
       {
         "movie": "httyd2",
         "type": "background",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Wiki lists it with no detail; background is a guess, may be on_screen"
       },
       {
         "movie": "httyd3",
         "type": "background",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Wiki lists it with no detail; background is a guess, may be on_screen"
       }
     ],
     "known_individuals": [
@@ -1051,12 +1115,14 @@
       {
         "movie": "httyd2",
         "type": "background",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Wiki lists it with no detail; background is a guess, may be on_screen"
       },
       {
         "movie": "httyd3",
         "type": "background",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Wiki lists it with no detail; background is a guess, may be on_screen"
       }
     ],
     "known_individuals": [
@@ -1085,12 +1151,14 @@
       {
         "movie": "httyd2",
         "type": "background",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Wiki lists it with no detail; background is a guess, may be on_screen"
       },
       {
         "movie": "httyd3",
         "type": "on_screen",
-        "confidence": "medium"
+        "confidence": "medium",
+        "evidence": "Wiki: Spitelout's Snafflefang"
       }
     ],
     "known_individuals": [
@@ -1119,12 +1187,14 @@
       {
         "movie": "httyd2",
         "type": "background",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Wiki lists it with no detail; background is a guess, may be on_screen"
       },
       {
         "movie": "httyd3",
         "type": "background",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Wiki lists it with no detail; background is a guess, may be on_screen"
       }
     ],
     "known_individuals": [
@@ -1150,12 +1220,14 @@
       {
         "movie": "httyd2",
         "type": "background",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Wiki lists it with no detail; background is a guess, may be on_screen"
       },
       {
         "movie": "httyd3",
         "type": "background",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Wiki lists it with no detail; background is a guess, may be on_screen"
       }
     ],
     "known_individuals": [],
@@ -1178,12 +1250,14 @@
       {
         "movie": "httyd2",
         "type": "background",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Wiki lists it with no detail; background is a guess, may be on_screen"
       },
       {
         "movie": "httyd3",
         "type": "background",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Wiki lists it with no detail; background is a guess, may be on_screen"
       }
     ],
     "known_individuals": [],
@@ -1209,12 +1283,14 @@
       {
         "movie": "httyd2",
         "type": "background",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Wiki lists it with no detail; background is a guess, may be on_screen"
       },
       {
         "movie": "httyd3",
         "type": "background",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Wiki lists it with no detail; background is a guess, may be on_screen"
       }
     ],
     "known_individuals": [],
@@ -1241,12 +1317,14 @@
       {
         "movie": "httyd2",
         "type": "background",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Wiki lists it with no detail; background is a guess, may be on_screen"
       },
       {
         "movie": "httyd3",
         "type": "background",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Wiki lists it with no detail; background is a guess, may be on_screen"
       }
     ],
     "known_individuals": [
@@ -1277,12 +1355,14 @@
       {
         "movie": "httyd2",
         "type": "background",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Wiki lists it with no detail; background is a guess, may be on_screen"
       },
       {
         "movie": "httyd3",
         "type": "background",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Wiki lists it with no detail; background is a guess, may be on_screen"
       }
     ],
     "known_individuals": [
@@ -1311,12 +1391,14 @@
       {
         "movie": "httyd2",
         "type": "background",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Wiki lists it with no detail; background is a guess, may be on_screen"
       },
       {
         "movie": "httyd3",
         "type": "background",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Wiki lists it with no detail; background is a guess, may be on_screen"
       }
     ],
     "known_individuals": [
@@ -1342,7 +1424,8 @@
       {
         "movie": "httyd2",
         "type": "pictured",
-        "confidence": "medium"
+        "confidence": "medium",
+        "evidence": "Wiki: pictured only"
       }
     ],
     "known_individuals": [],
@@ -1367,7 +1450,8 @@
       {
         "movie": "httyd2",
         "type": "pictured",
-        "confidence": "medium"
+        "confidence": "medium",
+        "evidence": "Wiki: pictured only"
       }
     ],
     "known_individuals": [],
@@ -1393,12 +1477,14 @@
       {
         "movie": "httyd2",
         "type": "pictured",
-        "confidence": "medium"
+        "confidence": "medium",
+        "evidence": "Wiki: pictured only"
       },
       {
         "movie": "httyd3",
         "type": "pictured",
-        "confidence": "medium"
+        "confidence": "medium",
+        "evidence": "Wiki: pictured only"
       }
     ],
     "known_individuals": [],
@@ -1425,7 +1511,8 @@
       {
         "movie": "httyd2",
         "type": "pictured",
-        "confidence": "medium"
+        "confidence": "medium",
+        "evidence": "Wiki: pictured only"
       }
     ],
     "known_individuals": [],
@@ -1451,7 +1538,8 @@
       {
         "movie": "httyd3",
         "type": "on_screen",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": ""
       }
     ],
     "known_individuals": [],
@@ -1478,7 +1566,8 @@
       {
         "movie": "httyd3",
         "type": "on_screen",
-        "confidence": "medium"
+        "confidence": "medium",
+        "evidence": "Wiki: a rescued Goregutter"
       }
     ],
     "known_individuals": [],
@@ -1504,7 +1593,8 @@
       {
         "movie": "httyd3",
         "type": "on_screen",
-        "confidence": "medium"
+        "confidence": "medium",
+        "evidence": "Wiki: a rescued Hobgobbler"
       }
     ],
     "known_individuals": [],
@@ -1530,7 +1620,8 @@
       {
         "movie": "httyd3",
         "type": "background",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Wiki lists it with no detail; background is a guess, may be on_screen"
       }
     ],
     "known_individuals": [],
@@ -1556,7 +1647,8 @@
       {
         "movie": "httyd3",
         "type": "pictured",
-        "confidence": "medium"
+        "confidence": "medium",
+        "evidence": "Wiki: pictured only"
       }
     ],
     "known_individuals": [],
@@ -1582,7 +1674,8 @@
       {
         "movie": "httyd3",
         "type": "pictured",
-        "confidence": "medium"
+        "confidence": "medium",
+        "evidence": "Wiki: pictured only"
       }
     ],
     "known_individuals": [],
@@ -1609,7 +1702,8 @@
       {
         "movie": "httyd3",
         "type": "pictured",
-        "confidence": "medium"
+        "confidence": "medium",
+        "evidence": "Wiki: pictured only"
       }
     ],
     "known_individuals": [],
@@ -1633,17 +1727,20 @@
       {
         "movie": "httyd1",
         "type": "featured",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": "Named on screen by Hiccup"
       },
       {
         "movie": "httyd2",
         "type": "featured",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": ""
       },
       {
         "movie": "httyd3",
         "type": "featured",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": ""
       }
     ],
     "riders": [
@@ -1691,17 +1788,20 @@
       {
         "movie": "httyd1",
         "type": "featured",
-        "confidence": "medium"
+        "confidence": "medium",
+        "evidence": "Astrid's Nadder. Check whether the name Stormfly is used in this film"
       },
       {
         "movie": "httyd2",
         "type": "featured",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": ""
       },
       {
         "movie": "httyd3",
         "type": "featured",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": ""
       }
     ],
     "riders": [
@@ -1749,17 +1849,20 @@
       {
         "movie": "httyd1",
         "type": "featured",
-        "confidence": "medium"
+        "confidence": "medium",
+        "evidence": "Fishlegs's Gronckle. Check whether the name Meatlug is used in this film"
       },
       {
         "movie": "httyd2",
         "type": "featured",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": ""
       },
       {
         "movie": "httyd3",
         "type": "featured",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": ""
       }
     ],
     "riders": [
@@ -1807,17 +1910,20 @@
       {
         "movie": "httyd1",
         "type": "featured",
-        "confidence": "medium"
+        "confidence": "medium",
+        "evidence": "Snotlout's Nightmare. Check whether the name Hookfang is used in this film"
       },
       {
         "movie": "httyd2",
         "type": "featured",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": ""
       },
       {
         "movie": "httyd3",
         "type": "featured",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": ""
       }
     ],
     "riders": [
@@ -1865,17 +1971,20 @@
       {
         "movie": "httyd1",
         "type": "featured",
-        "confidence": "medium"
+        "confidence": "medium",
+        "evidence": "The twins' Zippleback. Check whether the names are used in this film"
       },
       {
         "movie": "httyd2",
         "type": "featured",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": ""
       },
       {
         "movie": "httyd3",
         "type": "featured",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": ""
       }
     ],
     "riders": [
@@ -1944,17 +2053,20 @@
       {
         "movie": "httyd1",
         "type": "featured",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": "Nest queen and final battle. Check whether 'Red Death' is said in the film"
       },
       {
         "movie": "httyd2",
         "type": "mentioned",
-        "confidence": "medium"
+        "confidence": "medium",
+        "evidence": "Wiki: mentioned"
       },
       {
         "movie": "httyd3",
         "type": "pictured",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Wiki: credits only"
       }
     ],
     "riders": [],
@@ -1980,12 +2092,14 @@
       {
         "movie": "httyd2",
         "type": "featured",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": ""
       },
       {
         "movie": "httyd3",
         "type": "featured",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": ""
       }
     ],
     "riders": [
@@ -2025,12 +2139,14 @@
       {
         "movie": "httyd2",
         "type": "featured",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": "Plan: rider is Stoick in 2, Eret in 3"
       },
       {
         "movie": "httyd3",
         "type": "featured",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": "Plan: rider is Stoick in 2, Eret in 3"
       }
     ],
     "riders": [
@@ -2070,12 +2186,14 @@
       {
         "movie": "httyd2",
         "type": "featured",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": ""
       },
       {
         "movie": "httyd3",
         "type": "on_screen",
-        "confidence": "medium"
+        "confidence": "medium",
+        "evidence": "Wiki lists him for this film (Plan had it unverified)"
       }
     ],
     "riders": [
@@ -2115,7 +2233,8 @@
       {
         "movie": "httyd2",
         "type": "featured",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": ""
       }
     ],
     "riders": [],
@@ -2139,12 +2258,14 @@
       {
         "movie": "httyd2",
         "type": "featured",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": ""
       },
       {
         "movie": "httyd3",
         "type": "mentioned",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Wiki lists it with no detail; check how it appears"
       }
     ],
     "riders": [
@@ -2177,7 +2298,8 @@
       {
         "movie": "httyd3",
         "type": "featured",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": ""
       }
     ],
     "riders": [],
@@ -2201,7 +2323,8 @@
       {
         "movie": "httyd3",
         "type": "on_screen",
-        "confidence": "high"
+        "confidence": "high",
+        "evidence": "Toothless and the Light Fury's hatchlings, final scene. Wiki names them Dart, Pouncer and Ruffrunner; check if any name is said or shown"
       }
     ],
     "riders": [],
@@ -2225,12 +2348,14 @@
       {
         "movie": "httyd2",
         "type": "background",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Name may come from outside the film (art book, credits or TV); check if it's said or shown"
       },
       {
         "movie": "httyd3",
         "type": "background",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Name may come from outside the film (art book, credits or TV); check if it's said or shown"
       }
     ],
     "riders": [],
@@ -2255,7 +2380,8 @@
       {
         "movie": "httyd2",
         "type": "background",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Name may come from outside the film (art book, credits or TV); check if it's said or shown"
       }
     ],
     "riders": [],
@@ -2279,7 +2405,8 @@
       {
         "movie": "httyd2",
         "type": "background",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Name may come from outside the film (art book, credits or TV); check if it's said or shown"
       }
     ],
     "riders": [],
@@ -2303,7 +2430,8 @@
       {
         "movie": "httyd2",
         "type": "background",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Name may come from outside the film (art book, credits or TV); check if it's said or shown"
       }
     ],
     "riders": [],
@@ -2327,7 +2455,8 @@
       {
         "movie": "httyd2",
         "type": "background",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Name may come from outside the film (art book, credits or TV); check if it's said or shown"
       }
     ],
     "riders": [],
@@ -2351,7 +2480,8 @@
       {
         "movie": "httyd2",
         "type": "background",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Name may come from outside the film (art book, credits or TV); check if it's said or shown"
       }
     ],
     "riders": [],
@@ -2375,7 +2505,8 @@
       {
         "movie": "httyd2",
         "type": "background",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Name may come from outside the film (art book, credits or TV); check if it's said or shown"
       }
     ],
     "riders": [],
@@ -2399,7 +2530,8 @@
       {
         "movie": "httyd2",
         "type": "background",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Name may come from outside the film (art book, credits or TV); check if it's said or shown"
       }
     ],
     "riders": [],
@@ -2423,7 +2555,8 @@
       {
         "movie": "httyd2",
         "type": "background",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Name may come from outside the film (art book, credits or TV); check if it's said or shown"
       }
     ],
     "riders": [],
@@ -2447,7 +2580,8 @@
       {
         "movie": "httyd2",
         "type": "background",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Name may come from outside the film (art book, credits or TV); check if it's said or shown"
       }
     ],
     "riders": [],
@@ -2471,7 +2605,8 @@
       {
         "movie": "httyd2",
         "type": "background",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Name may come from outside the film (art book, credits or TV); check if it's said or shown"
       }
     ],
     "riders": [],
@@ -2495,7 +2630,8 @@
       {
         "movie": "httyd2",
         "type": "background",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Name may come from outside the film (art book, credits or TV); check if it's said or shown"
       }
     ],
     "riders": [],
@@ -2519,7 +2655,8 @@
       {
         "movie": "httyd2",
         "type": "background",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Name may come from outside the film (art book, credits or TV); check if it's said or shown"
       }
     ],
     "riders": [],
@@ -2543,7 +2680,8 @@
       {
         "movie": "httyd3",
         "type": "background",
-        "confidence": "low"
+        "confidence": "low",
+        "evidence": "Wiki: Fishlegs's Gronckle. Name may come from outside the film (art book, credits or TV); check if it's said or shown"
       }
     ],
     "riders": [],

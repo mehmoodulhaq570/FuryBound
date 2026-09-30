@@ -31,12 +31,23 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               <Link href="/" className="font-semibold tracking-tight">
                 Dragon Academy
               </Link>
-              <Link href="/login" className="text-muted hover:text-foreground text-sm">
-                Sign in
-              </Link>
+              <div className="flex items-center gap-5 text-sm">
+                <Link href="/dragon-book" className="text-muted hover:text-foreground">
+                  Dragon Book
+                </Link>
+                <Link href="/login" className="text-muted hover:text-foreground">
+                  Sign in
+                </Link>
+              </div>
             </nav>
           </header>
           <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-10">{children}</main>
+          <footer className="border-line text-muted border-t">
+            <p className="mx-auto max-w-5xl px-4 py-6 text-xs">
+              Fan project. Not affiliated with or endorsed by DreamWorks Animation or Universal
+              Pictures. How to Train Your Dragon names and characters belong to their owners.
+            </p>
+          </footer>
         </Providers>
       </body>
     </html>
