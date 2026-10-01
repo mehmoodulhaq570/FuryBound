@@ -7,8 +7,8 @@ An interactive AI, game and ML project built on a sourced dataset of every drago
 ## Layout
 
 ```
-apps/web     Next.js 16 (App Router) + Tailwind 4 + TanStack Query
-apps/api     FastAPI (Python 3.14, managed with uv)
+apps/web     Next.js 16 (App Router) + Tailwind 4 + TanStack Query; the Dragon Book
+apps/api     FastAPI (Python 3.14, managed with uv); canon endpoints over the database
 supabase/    Local Supabase config and SQL migrations (the schema source of truth)
 data/        Research notes, catalog CSVs, game YAML, build outputs (see data/README.md)
 scripts/     Catalog validation and build scripts (Phase 1+)
@@ -45,6 +45,22 @@ pnpm dev:web    # http://localhost:3000
 Open http://localhost:3000. The **System check** panel shows whether the API is reachable, whether you're signed in, and whether the protected `/api/v1/me` route accepts your token. Create an account at `/login` to turn all three green.
 
 Supabase Studio runs at http://localhost:54323.
+
+## What's there
+
+**Dragon Book** at http://localhost:3000/dragon-book: every species and named dragon from the three films, with search, filters (film, kind, appearance type, class) and a page per dragon showing its films, riders and sources. It's built from `data/build/dragons.json` and `references.json`, so it only needs `pnpm dev:web`: no API or database.
+
+**API** (try them at http://localhost:8000/api/v1/docs). The dragon endpoints are public and read-only:
+
+| Endpoint | Returns |
+|---|---|
+| `GET /api/v1/movies` | The three films |
+| `GET /api/v1/species` · `/species/{id}` | Species (filter with `?movie=httyd2`), or one with its films, named dragons and sources |
+| `GET /api/v1/individuals` · `/individuals/{id}` | Named dragons (same filter), or one with its species, films, riders per film and sources |
+| `GET /api/v1/search?q=` | Species and named dragons by name |
+| `GET /api/v1/me` | The signed-in user (needs a token) |
+
+The dragon data is a first pass from the fan wiki and general knowledge, not yet checked against the films. Every entry shows a confidence level and its sources; see [data/README.md](data/README.md).
 
 ## Common tasks
 
