@@ -37,7 +37,7 @@ species:
     summary: Wild, wary and fiercely free; trusts very few.
     traits: { courage: 55, curiosity: 45, loyalty: 60, aggression: 45, patience: 40, independence: 85, intelligence: 80 }
     weights: { independence: 2.0, intelligence: 1.5 }
-    requirements: { independence: 65, patience: 55 }
+    requirements: { independence: 65, patience: 50 }
     approach_pref: gentle
     diet_likes: [fish]
     diet_dislikes: [eel, bread]
@@ -60,7 +60,7 @@ species:
     summary: Ferocious and restless; only the boldest riders earn its respect.
     traits: { courage: 85, curiosity: 30, loyalty: 20, aggression: 95, patience: 15, independence: 80, intelligence: 35 }
     weights: { aggression: 1.5, courage: 1.5 }
-    requirements: { courage: 40 }
+    requirements: { courage: 60 }
     approach_pref: bold
     diet_likes: [mutton]
     diet_dislikes: [bread]
@@ -150,7 +150,7 @@ species:
     summary: Hot-tempered and proud; it respects courage above all.
     traits: { courage: 80, curiosity: 35, loyalty: 55, aggression: 85, patience: 20, independence: 60, intelligence: 40 }
     weights: { aggression: 1.5, courage: 1.5 }
-    requirements: { courage: 50 }
+    requirements: { courage: 45 }
     approach_pref: bold
     diet_likes: [mutton, fish]
     diet_dislikes: [eel]
@@ -182,7 +182,7 @@ species:
     rarity: common
     summary: A lively youngster that wants to see and chase everything.
     traits: { courage: 55, curiosity: 85, loyalty: 50, aggression: 40, patience: 25, independence: 50, intelligence: 45 }
-    weights: { curiosity: 2.0 }
+    weights: { curiosity: 1.5 }
     requirements: {}
     approach_pref: playful
     diet_likes: [fish, chicken]

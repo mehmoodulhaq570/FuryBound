@@ -12,7 +12,7 @@ questions:
     options:
       - id: a
         label: "Cut it free right away"
-        deltas: { courage: 10, loyalty: 6, intelligence: -4 }
+        deltas: { courage: 10, loyalty: 6, intelligence: 2 }
       - id: b
         label: "Watch it quietly to see how it behaves"
         deltas: { patience: 10, intelligence: 6, courage: -4 }
@@ -145,7 +145,7 @@ questions:
         label: "Follow it to find out why it's raiding"
         deltas: { curiosity: 10, intelligence: 6, aggression: -6 }
       - id: c
-        label: "Leave fish out in the woods so it stops coming"
+        label: "Leave fish deep in the woods to lure it away from the village"
         deltas: { intelligence: 8, patience: 6, courage: -4 }
       - id: d
         label: "Help the villagers build stronger stores"
@@ -193,7 +193,7 @@ questions:
         label: "Out flying for fun to clear your head"
         deltas: { independence: 8, curiosity: 6, patience: -4 }
       - id: c
-        label: "Helping a nervous friend prepare"
+        label: "Sitting up late with a friend who's panicking, even though you haven't studied either"
         deltas: { loyalty: 12, patience: 4, independence: -6 }
       - id: d
         label: "Planning exactly how you'll beat the top student"

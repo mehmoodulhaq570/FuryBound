@@ -42,7 +42,8 @@ Summary of the Claude Code sessions of **2026-09-30 → 2026-10-01** (Phase 3 st
 - `engines/matching.py`: pure quiz scoring + matching per Plan §9.3, explanations, displayed 60–99% compatibility.
 - `pnpm match:calibrate`: 100,000 random players, writes `data/build/matching_calibration.json`. CI (Data job) runs `--check`. It takes ~2–3 minutes. The engine refuses a stale calibration (fingerprint of the game data).
 - 16 tests in `tests/test_matching.py`, including 6 archetype fixtures (cautious scholar, reckless daredevil, loyal friend, lone wolf, curious explorer, calm homebody). No database needed.
-- Current shares: Scuttleclaw 15.2% (highest) … Light Fury 2.1%, Night Fury 0.7%.
+- Current shares: Scuttleclaw 14.2% (highest) … Light Fury 2.5%, Night Fury 0.7%.
+- 2026-10-01 review fixes: Deathgripper courage min 40→60, Nightmare 50→45; Light Fury patience min 55→50; Scuttleclaw curiosity weight 2.0→1.5; Q1a intelligence −4→+2; Q9c and Q12c reworded.
 
 ## Decisions and deviations from Plan.md
 
@@ -66,7 +67,7 @@ Summary of the Claude Code sessions of **2026-09-30 → 2026-10-01** (Phase 3 st
 
 ## Next steps
 
-> **Resume here (paused 2026-10-01):** the matching engine is finished, and the user chose to continue later. First ask whether they want to (a) review the dragon personalities and quiz wording, or (b) go straight to the Phase 3 screens. Nothing from Phase 3 is committed yet; the user commits themselves.
+> **Resume here (paused 2026-10-01):** the matching engine is finished, and the user chose to continue later. The personality/quiz review is done (fixes applied, recalibrated, tests green). Next: the Phase 3 screens. Nothing from Phase 3 is committed yet; the user commits themselves.
 
 1. **User:** review the quiz wording and the dragon personalities in `data/game/` (after any edit to `data/game/`, run `pnpm match:calibrate` and the tests).
 2. **Phase 3 UI:** quiz page (one question per screen, progress bar), the 3 encounter scenes, the result screen; plus API endpoints and DB tables (`species_game_profile`, quiz tables) for them.
