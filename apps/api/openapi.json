@@ -377,6 +377,110 @@
           }
         }
       }
+    },
+    "/api/v1/quiz": {
+      "get": {
+        "tags": [
+          "quiz"
+        ],
+        "summary": "Get Quiz",
+        "description": "The active quiz: questions and options (no scores), options shuffled for this player.",
+        "operationId": "get_quiz",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Quiz"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/quiz/attempts": {
+      "post": {
+        "tags": [
+          "quiz"
+        ],
+        "summary": "Create Quiz Attempt",
+        "description": "Score a finished quiz and save it. The encounter (next step) completes the attempt.",
+        "operationId": "create_quiz_attempt",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuizAttemptCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuizAttempt"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The quiz version is no longer the active one",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "A question is unanswered, unknown or has an unknown option",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
     }
   },
   "components": {
@@ -701,6 +805,132 @@
           "ordinal"
         ],
         "title": "Movie"
+      },
+      "Quiz": {
+        "properties": {
+          "version": {
+            "type": "string",
+            "title": "Version",
+            "examples": [
+              "quiz_v1"
+            ]
+          },
+          "questions": {
+            "items": {
+              "$ref": "#/components/schemas/QuizQuestion"
+            },
+            "type": "array",
+            "title": "Questions"
+          }
+        },
+        "type": "object",
+        "required": [
+          "version",
+          "questions"
+        ],
+        "title": "Quiz"
+      },
+      "QuizAttempt": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "quiz_version": {
+            "type": "string",
+            "title": "Quiz Version"
+          },
+          "traits": {
+            "items": {
+              "$ref": "#/components/schemas/TraitScore"
+            },
+            "type": "array",
+            "title": "Traits"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "quiz_version",
+          "traits"
+        ],
+        "title": "QuizAttempt"
+      },
+      "QuizAttemptCreate": {
+        "properties": {
+          "quiz_version": {
+            "type": "string",
+            "title": "Quiz Version",
+            "examples": [
+              "quiz_v1"
+            ]
+          },
+          "answers": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Answers",
+            "description": "Chosen option id per question id; every question exactly once",
+            "examples": [
+              {
+                "q01_injured_dragon": "a"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "quiz_version",
+          "answers"
+        ],
+        "title": "QuizAttemptCreate"
+      },
+      "QuizOption": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "label"
+        ],
+        "title": "QuizOption"
+      },
+      "QuizQuestion": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "prompt": {
+            "type": "string",
+            "title": "Prompt"
+          },
+          "options": {
+            "items": {
+              "$ref": "#/components/schemas/QuizOption"
+            },
+            "type": "array",
+            "title": "Options",
+            "description": "In this player's shuffled order"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "prompt",
+          "options"
+        ],
+        "title": "QuizQuestion"
       },
       "Rider": {
         "properties": {
@@ -1036,6 +1266,50 @@
           "movies"
         ],
         "title": "SpeciesSummary"
+      },
+      "TraitScore": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id",
+            "examples": [
+              "courage"
+            ]
+          },
+          "label": {
+            "type": "string",
+            "title": "Label",
+            "examples": [
+              "Courage"
+            ]
+          },
+          "score": {
+            "type": "integer",
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "title": "Score",
+            "description": "0-100 within what this quiz allows"
+          },
+          "low": {
+            "type": "string",
+            "title": "Low",
+            "description": "What a low score means"
+          },
+          "high": {
+            "type": "string",
+            "title": "High",
+            "description": "What a high score means"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "label",
+          "score",
+          "low",
+          "high"
+        ],
+        "title": "TraitScore"
       },
       "ValidationError": {
         "properties": {

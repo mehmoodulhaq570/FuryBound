@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState, type FormEvent } from "react";
 
 import { createClient } from "@/lib/supabase/client";
@@ -11,6 +11,9 @@ import { useSession } from "@/lib/supabase/use-session";
 export function LoginForm() {
   const router = useRouter();
   const session = useSession();
+  // Only same-site paths, so a crafted link can't send the player elsewhere after sign-in.
+  const requested = useSearchParams().get("next");
+  const next = requested?.startsWith("/") && !requested.startsWith("//") ? requested : "/";
   const [mode, setMode] = useState<"sign-in" | "sign-up">("sign-in");
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
@@ -36,7 +39,7 @@ export function LoginForm() {
       setError(error.message);
       return;
     }
-    router.push("/");
+    router.push(next);
     router.refresh();
   }
 

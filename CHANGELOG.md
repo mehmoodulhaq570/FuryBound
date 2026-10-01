@@ -4,6 +4,13 @@ All notable changes to FuryBound / Dragon Academy. The format follows [Keep a Ch
 
 ## [Unreleased]
 
+### Added
+- **Quiz page** at `/academy/quiz`: one question per screen, a progress bar, a Back button, and progress that survives a reload in the same tab. When the quiz is done it shows the player's trait bars. Linked from the header and home page.
+- **Quiz API**: `GET /api/v1/quiz` (the active quiz without its scores; options shuffled per player but stable across reloads) and `POST /api/v1/quiz/attempts` (scores and saves the answers). Both need sign-in.
+- `quiz_attempts` table (migration `20261001120000_quiz_attempts.sql`), so players can only read their own attempts. It references `auth.users` until profiles arrive in Phase 4. The quiz stays in YAML, so there are no quiz tables.
+- Sign-in now returns to the page that sent you there (`/login?next=…`).
+- Tests: 7 API tests for the quiz endpoints and 8 web tests for the quiz screen and its progress logic.
+
 ### Changed
 - **Dragon personalities** (`data/game/species_profiles.yaml`), after a review of the game data:
   - Deathgripper's courage minimum raised from 40 to 60, and Monstrous Nightmare's lowered from 50 to 45, so the scarier dragon asks more of the rider.

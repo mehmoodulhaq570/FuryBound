@@ -161,6 +161,46 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/quiz": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Quiz
+         * @description The active quiz: questions and options (no scores), options shuffled for this player.
+         */
+        get: operations["get_quiz"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/quiz/attempts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Create Quiz Attempt
+         * @description Score a finished quiz and save it. The encounter (next step) completes the attempt.
+         */
+        post: operations["create_quiz_attempt"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -285,6 +325,65 @@ export interface components {
             /** Ordinal */
             ordinal: number;
         };
+        /** Quiz */
+        Quiz: {
+            /**
+             * Version
+             * @example quiz_v1
+             */
+            version: string;
+            /** Questions */
+            questions: components["schemas"]["QuizQuestion"][];
+        };
+        /** QuizAttempt */
+        QuizAttempt: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Quiz Version */
+            quiz_version: string;
+            /** Traits */
+            traits: components["schemas"]["TraitScore"][];
+        };
+        /** QuizAttemptCreate */
+        QuizAttemptCreate: {
+            /**
+             * Quiz Version
+             * @example quiz_v1
+             */
+            quiz_version: string;
+            /**
+             * Answers
+             * @description Chosen option id per question id; every question exactly once
+             * @example {
+             *       "q01_injured_dragon": "a"
+             *     }
+             */
+            answers: {
+                [key: string]: string;
+            };
+        };
+        /** QuizOption */
+        QuizOption: {
+            /** Id */
+            id: string;
+            /** Label */
+            label: string;
+        };
+        /** QuizQuestion */
+        QuizQuestion: {
+            /** Id */
+            id: string;
+            /** Prompt */
+            prompt: string;
+            /**
+             * Options
+             * @description In this player's shuffled order
+             */
+            options: components["schemas"]["QuizOption"][];
+        };
         /** Rider */
         Rider: {
             /** Movie Id */
@@ -385,6 +484,34 @@ export interface components {
              * @description Films the species appears in, in film order
              */
             movies: string[];
+        };
+        /** TraitScore */
+        TraitScore: {
+            /**
+             * Id
+             * @example courage
+             */
+            id: string;
+            /**
+             * Label
+             * @example Courage
+             */
+            label: string;
+            /**
+             * Score
+             * @description 0-100 within what this quiz allows
+             */
+            score: number;
+            /**
+             * Low
+             * @description What a low score means
+             */
+            low: string;
+            /**
+             * High
+             * @description What a high score means
+             */
+            high: string;
         };
         /** ValidationError */
         ValidationError: {
@@ -650,6 +777,86 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_quiz: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Quiz"];
+                };
+            };
+            /** @description Missing or invalid token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    create_quiz_attempt: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["QuizAttemptCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["QuizAttempt"];
+                };
+            };
+            /** @description Missing or invalid token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description The quiz version is no longer the active one */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description A question is unanswered, unknown or has an unknown option */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
         };

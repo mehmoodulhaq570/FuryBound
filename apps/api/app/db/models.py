@@ -1,13 +1,15 @@
-"""SQLAlchemy mappings for the canon tables.
+"""SQLAlchemy mappings for the canon tables and player data.
 
 The schema itself lives in supabase/migrations/; these classes only describe it for queries.
 """
 
-from datetime import date
+from datetime import date, datetime
 from enum import StrEnum
+from typing import Any
+from uuid import UUID
 
-from sqlalchemy import Enum, ForeignKey, Text
-from sqlalchemy.dialects.postgresql import ARRAY
+from sqlalchemy import Enum, ForeignKey, Text, text
+from sqlalchemy.dialects.postgresql import ARRAY, JSONB
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
 from app.schemas.canon import AppearanceType, Confidence, Relation, Scope, Size, SourceType
@@ -100,3 +102,21 @@ class RiderLinkRow(Base):
     relation: Mapped[Relation] = mapped_column(Text)  # values checked by the table's constraint
     source_ids: Mapped[list[str]] = mapped_column(ARRAY(Text))
     confidence: Mapped[Confidence] = mapped_column(_pg_enum(Confidence, "confidence"))
+
+
+# ── player data (layer 4) ────────────────────────────────────────────────────
+
+
+class QuizAttemptRow(Base):
+    __tablename__ = "quiz_attempts"
+
+    id: Mapped[UUID] = mapped_column(primary_key=True, server_default=text("gen_random_uuid()"))
+    user_id: Mapped[UUID]
+    quiz_id: Mapped[str]
+    answers: Mapped[dict[str, str]] = mapped_column(JSONB)
+    trait_scores: Mapped[dict[str, float] | None] = mapped_column(JSONB)
+    encounter_signals: Mapped[dict[str, Any] | None] = mapped_column(JSONB)
+    ranking: Mapped[list[dict[str, Any]] | None] = mapped_column(JSONB)
+    algorithm_version: Mapped[str]
+    created_at: Mapped[datetime] = mapped_column(server_default=text("now()"))
+    completed_at: Mapped[datetime | None]

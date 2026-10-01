@@ -9,7 +9,7 @@ Summary of the Claude Code sessions of **2026-09-30 → 2026-10-01** (Phase 3 st
 | 0 Foundations | ✅ Done. CI green on GitHub |
 | 1 Dragon database | ✅ Code done. ⏳ Film verification by the user (scene logs) |
 | 2 Dragon Book | ✅ Done locally (Milestone M1). Not deployed yet |
-| 3 Quiz + matching | 🔨 Engine done (quiz, profiles, matching, calibration, tests). ⏭️ Next: quiz UI, encounter and result screens |
+| 3 Quiz + matching | 🔨 Engine done. Quiz page + quiz API done (2026-10-01). ⏭️ Next: encounter scenes, then the result screen |
 
 - **Repo:** https://github.com/mehmoodulhaq570/FuryBound (public, branch `main`). The user commits and pushes **themselves**; don't push.
 - **Package / Supabase project name:** `dragon-academy` (the GitHub repo name is FuryBound).
@@ -70,7 +70,7 @@ Summary of the Claude Code sessions of **2026-09-30 → 2026-10-01** (Phase 3 st
 > **Resume here (paused 2026-10-01):** the matching engine is finished, and the user chose to continue later. The personality/quiz review is done (fixes applied, recalibrated, tests green). Next: the Phase 3 screens. The Phase 3 engine is committed (98e9812); the review fixes and CHANGELOG.md are not yet. The user commits themselves.
 
 1. ✅ Quiz wording and dragon personality review (done 2026-10-01). After any later edit to `data/game/`, run `pnpm match:calibrate` and the tests, and add a line to CHANGELOG.md.
-2. **Phase 3 UI:** quiz page (one question per screen, progress bar), the 3 encounter scenes, the result screen; plus API endpoints and DB tables (`species_game_profile`, quiz tables) for them.
+2. **Phase 3 UI:** ✅ quiz page (`/academy/quiz`, `GET /quiz`, `POST /quiz/attempts`, `quiz_attempts` table). Next: the 3 encounter scenes (`/academy/encounter`, `POST /quiz/attempts/{id}/encounter`, which fills `ranking` and `completed_at`), then the result screen. The quiz-done screen has a disabled "encounter is coming next" button to replace.
 3. Polish: extreme personalities only reach ~76–80% compatibility; runner-up explanations fall back to vague text.
 4. **User:** watch the films and confirm the scene logs (`yes?` → `yes`, source → `film`), then run `pnpm catalog:import && pnpm catalog:build && pnpm db:reset`.
 5. Optional: deploy the Dragon Book (Vercel), keep filters in the URL, and fill in abilities and diet in the catalog.

@@ -35,6 +35,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
                 <Link href="/dragon-book" className="text-muted hover:text-foreground">
                   Dragon Book
                 </Link>
+                <Link href="/academy/quiz" className="text-muted hover:text-foreground">
+                  Find your dragon
+                </Link>
                 <Link href="/login" className="text-muted hover:text-foreground">
                   Sign in
                 </Link>
