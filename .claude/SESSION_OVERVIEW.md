@@ -1,6 +1,6 @@
 # Session overview: FuryBound / Dragon Academy
 
-Summary of the Claude Code sessions of **2026-09-30 → 2026-10-01** (Phase 3 started on 10-01). Read this first when picking the project back up. The full plan is [Plan.md](../Plan.md); tools are in [TECH_STACK.md](../TECH_STACK.md); the data workflow is in [data/README.md](../data/README.md).
+Summary of the Claude Code sessions of **2026-09-30 → 2026-10-01** (Phase 3 started on 10-01). Read this first when picking the project back up. The full plan is [Plan.md](../Plan.md); what changed when is in [CHANGELOG.md](../CHANGELOG.md); tools are in [TECH_STACK.md](../TECH_STACK.md); the data workflow is in [data/README.md](../data/README.md).
 
 ## Where things stand
 
@@ -67,9 +67,9 @@ Summary of the Claude Code sessions of **2026-09-30 → 2026-10-01** (Phase 3 st
 
 ## Next steps
 
-> **Resume here (paused 2026-10-01):** the matching engine is finished, and the user chose to continue later. The personality/quiz review is done (fixes applied, recalibrated, tests green). Next: the Phase 3 screens. Nothing from Phase 3 is committed yet; the user commits themselves.
+> **Resume here (paused 2026-10-01):** the matching engine is finished, and the user chose to continue later. The personality/quiz review is done (fixes applied, recalibrated, tests green). Next: the Phase 3 screens. The Phase 3 engine is committed (98e9812); the review fixes and CHANGELOG.md are not yet. The user commits themselves.
 
-1. **User:** review the quiz wording and the dragon personalities in `data/game/` (after any edit to `data/game/`, run `pnpm match:calibrate` and the tests).
+1. ✅ Quiz wording and dragon personality review (done 2026-10-01). After any later edit to `data/game/`, run `pnpm match:calibrate` and the tests, and add a line to CHANGELOG.md.
 2. **Phase 3 UI:** quiz page (one question per screen, progress bar), the 3 encounter scenes, the result screen; plus API endpoints and DB tables (`species_game_profile`, quiz tables) for them.
 3. Polish: extreme personalities only reach ~76–80% compatibility; runner-up explanations fall back to vague text.
 4. **User:** watch the films and confirm the scene logs (`yes?` → `yes`, source → `film`), then run `pnpm catalog:import && pnpm catalog:build && pnpm db:reset`.

@@ -1,6 +1,6 @@
 # Dragon Academy
 
-An interactive AI, game and ML project built on a sourced dataset of every dragon in the three *How to Train Your Dragon* animated films. See [Plan.md](Plan.md) for the full plan and [TECH_STACK.md](TECH_STACK.md) for what it's built with.
+An interactive AI, game and ML project built on a sourced dataset of every dragon in the three *How to Train Your Dragon* animated films. See [Plan.md](Plan.md) for the full plan and [TECH_STACK.md](TECH_STACK.md) for what it's built with. Notable changes are listed in [CHANGELOG.md](CHANGELOG.md).
 
 **Status:** Phase 2 (Dragon Book). The Dragon Book is live at `/dragon-book`. The dragon catalog is pre-filled; film verification is in progress. See [data/README.md](data/README.md).
 
