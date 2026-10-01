@@ -1,0 +1,200 @@
+# LAYER 3: game data (invented, not canon).
+# Personality quiz, version 1. See Plan §9.2.
+# Rules: 4 options per question, deltas −10..+15, every trait touched by
+# at least 4 questions, no obviously "good" answer.
+# Once players have taken it, never edit this file: copy it to quiz_v2.yaml.
+
+version: quiz_v1
+
+questions:
+  - id: q01_injured_dragon
+    prompt: "You discover an injured dragon tangled in a net. What do you do?"
+    options:
+      - id: a
+        label: "Cut it free right away"
+        deltas: { courage: 10, loyalty: 6, intelligence: -4 }
+      - id: b
+        label: "Watch it quietly to see how it behaves"
+        deltas: { patience: 10, intelligence: 6, courage: -4 }
+      - id: c
+        label: "Crouch down and try to communicate with it"
+        deltas: { curiosity: 12, intelligence: 4, aggression: -4 }
+      - id: d
+        label: "Run back to the Academy for help"
+        deltas: { loyalty: 8, intelligence: 6, independence: -6 }
+
+  - id: q02_rival_mocks
+    prompt: "During flight training, a rival student mocks your flying in front of everyone."
+    options:
+      - id: a
+        label: "Challenge them to a race, right now"
+        deltas: { aggression: 12, courage: 6, intelligence: -5 }
+      - id: b
+        label: "Laugh it off and keep practising"
+        deltas: { patience: 10, independence: 4, aggression: -6 }
+      - id: c
+        label: "Ask them what they'd do differently"
+        deltas: { curiosity: 8, intelligence: 8, aggression: -4 }
+      - id: d
+        label: "Ignore them. You don't need their approval"
+        deltas: { independence: 12, courage: 3, loyalty: -5 }
+
+  - id: q03_old_map
+    prompt: "You find an old map that marks an island no one has explored."
+    options:
+      - id: a
+        label: "Set off alone at first light"
+        deltas: { independence: 12, courage: 8, loyalty: -6 }
+      - id: b
+        label: "Gather your friends and plan the trip together"
+        deltas: { loyalty: 10, intelligence: 5, independence: -6 }
+      - id: c
+        label: "Study the map to work out who drew it and why"
+        deltas: { intelligence: 12, patience: 6, courage: -4 }
+      - id: d
+        label: "Go tonight, before anyone else hears about it"
+        deltas: { curiosity: 10, courage: 6, patience: -6 }
+
+  - id: q04_trappers
+    prompt: "Dragon trappers have taken a friend's dragon. What's your move?"
+    options:
+      - id: a
+        label: "Fly after them immediately"
+        deltas: { aggression: 10, loyalty: 8, patience: -6 }
+      - id: b
+        label: "Track them carefully and wait for the right moment"
+        deltas: { patience: 10, intelligence: 6, aggression: -4 }
+      - id: c
+        label: "Sneak into their camp on your own at night"
+        deltas: { courage: 10, independence: 8, patience: -4 }
+      - id: d
+        label: "Find out who they sell to and stop the whole operation"
+        deltas: { intelligence: 10, curiosity: 6, loyalty: -4 }
+
+  - id: q05_free_day
+    prompt: "You have a free day on Academy Isle. How do you spend it?"
+    options:
+      - id: a
+        label: "Exploring caves no one has mapped"
+        deltas: { curiosity: 12, courage: 4, loyalty: -4 }
+      - id: b
+        label: "Helping a friend repair their saddle"
+        deltas: { loyalty: 10, patience: 6, curiosity: -5 }
+      - id: c
+        label: "Sparring in the arena"
+        deltas: { aggression: 10, courage: 6, patience: -6 }
+      - id: d
+        label: "Reading the old dragon manuals in the library"
+        deltas: { intelligence: 12, patience: 4, courage: -4 }
+
+  - id: q06_instructor_wrong
+    prompt: "An instructor teaches something about dragons that you're sure is wrong."
+    options:
+      - id: a
+        label: "Say so, in front of the whole class"
+        deltas: { courage: 8, aggression: 6, patience: -6 }
+      - id: b
+        label: "Test it yourself before saying anything"
+        deltas: { intelligence: 10, curiosity: 6, aggression: -4 }
+      - id: c
+        label: "Talk to them quietly after the lesson"
+        deltas: { patience: 8, loyalty: 6, courage: -4 }
+      - id: d
+        label: "Say nothing and keep doing it your own way"
+        deltas: { independence: 12, intelligence: 3, loyalty: -6 }
+
+  - id: q07_wont_fly
+    prompt: "Your dragon refuses to fly today, no matter what you try."
+    options:
+      - id: a
+        label: "Give it the day off and keep it company"
+        deltas: { loyalty: 8, patience: 8, independence: -4 }
+      - id: b
+        label: "Invent a new trick to coax it into the air"
+        deltas: { curiosity: 8, intelligence: 6, patience: -4 }
+      - id: c
+        label: "Stay firm until it does what you ask"
+        deltas: { aggression: 10, independence: 4, curiosity: -5 }
+      - id: d
+        label: "Borrow another dragon and fly anyway"
+        deltas: { independence: 10, courage: 4, loyalty: -8 }
+
+  - id: q08_lost_in_fog
+    prompt: "You're lost in thick fog over the open sea."
+    options:
+      - id: a
+        label: "Climb higher and look for a landmark"
+        deltas: { courage: 8, curiosity: 6, patience: -4 }
+      - id: b
+        label: "Land on the nearest rock and wait for it to clear"
+        deltas: { patience: 12, intelligence: 4, courage: -6 }
+      - id: c
+        label: "Trust your dragon's senses and let it lead"
+        deltas: { loyalty: 10, curiosity: 4, independence: -6 }
+      - id: d
+        label: "Work out your position from the wind and the waves"
+        deltas: { intelligence: 12, independence: 4, curiosity: -4 }
+
+  - id: q09_fish_raider
+    prompt: "A wild dragon keeps raiding the village's fish stores."
+    options:
+      - id: a
+        label: "Stand guard and drive it off"
+        deltas: { aggression: 10, courage: 6, curiosity: -4 }
+      - id: b
+        label: "Follow it to find out why it's raiding"
+        deltas: { curiosity: 10, intelligence: 6, aggression: -6 }
+      - id: c
+        label: "Leave fish out in the woods so it stops coming"
+        deltas: { intelligence: 8, patience: 6, courage: -4 }
+      - id: d
+        label: "Help the villagers build stronger stores"
+        deltas: { loyalty: 10, patience: 4, curiosity: -5 }
+
+  - id: q10_race_plan
+    prompt: "Halfway through a team race, your team's plan is clearly failing."
+    options:
+      - id: a
+        label: "Stick to the plan. The team agreed on it"
+        deltas: { loyalty: 10, patience: 6, curiosity: -5 }
+      - id: b
+        label: "Break away and try your own route"
+        deltas: { independence: 10, courage: 6, loyalty: -6 }
+      - id: c
+        label: "Shout out a new plan to everyone"
+        deltas: { intelligence: 10, aggression: 4, patience: -4 }
+      - id: d
+        label: "Push harder and fly faster"
+        deltas: { aggression: 10, courage: 6, intelligence: -4 }
+
+  - id: q11_unclaimed_egg
+    prompt: "You find a dragon egg that no one has claimed."
+    options:
+      - id: a
+        label: "Keep it warm and raise the hatchling yourself"
+        deltas: { independence: 10, loyalty: 6, patience: -2 }
+      - id: b
+        label: "Take it to the Academy to find out what species it is"
+        deltas: { intelligence: 8, curiosity: 6, independence: -6 }
+      - id: c
+        label: "Put it back and watch for the mother to return"
+        deltas: { patience: 10, intelligence: 4, courage: -4 }
+      - id: d
+        label: "Search for its nest, whatever might be guarding it"
+        deltas: { courage: 12, curiosity: 6, intelligence: -5 }
+
+  - id: q12_night_before_test
+    prompt: "It's the night before your final Academy test. Where are you?"
+    options:
+      - id: a
+        label: "In the training ring, practising one last time"
+        deltas: { patience: 8, intelligence: 4, curiosity: -4 }
+      - id: b
+        label: "Out flying for fun to clear your head"
+        deltas: { independence: 8, curiosity: 6, patience: -4 }
+      - id: c
+        label: "Helping a nervous friend prepare"
+        deltas: { loyalty: 12, patience: 4, independence: -6 }
+      - id: d
+        label: "Planning exactly how you'll beat the top student"
+        deltas: { aggression: 8, intelligence: 8, loyalty: -4 }

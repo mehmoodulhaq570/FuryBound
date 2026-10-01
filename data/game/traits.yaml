@@ -1,0 +1,56 @@
+# LAYER 3: game data (invented, not canon).
+# The 7 traits that both players (from the quiz) and species (in
+# species_profiles.yaml) are scored on, 0–100. See Plan §9.2.
+# Keep ids stable: quiz deltas, profiles and stored attempts refer to them.
+
+version: traits_v1
+
+traits:
+  - id: courage
+    label: Courage
+    player: Faces danger and takes risks.
+    dragon: Bold; confronts threats instead of fleeing.
+    low: Cautious, prefers safety.
+    high: Fearless, sometimes reckless.
+
+  - id: curiosity
+    label: Curiosity
+    player: Explores, asks questions, wants to know why.
+    dragon: Investigates new things, wanders off.
+    low: Sticks to what it knows.
+    high: Can't leave a mystery alone.
+
+  - id: loyalty
+    label: Loyalty
+    player: Sticks with friends and the team.
+    dragon: Bonds deeply and protects its rider.
+    low: Keeps others at arm's length.
+    high: Would follow you anywhere.
+
+  - id: aggression
+    label: Aggression
+    player: Direct and confrontational; acts first.
+    dragon: Quick to fight or defend.
+    low: Avoids conflict.
+    high: Hot-tempered, charges in.
+
+  - id: patience
+    label: Patience
+    player: Calm and persistent; waits for the right moment.
+    dragon: Tolerant and slow to anger.
+    low: Restless, wants action now.
+    high: Unshakeably calm.
+
+  - id: independence
+    label: Independence
+    player: Self-reliant; makes their own way.
+    dragon: Resists commands; happy alone.
+    low: Thrives with others.
+    high: A lone wolf.
+
+  - id: intelligence
+    label: Intelligence
+    player: Analytical and strategic; plans ahead.
+    dragon: Solves problems and learns fast.
+    low: Goes on instinct.
+    high: Always three steps ahead.
