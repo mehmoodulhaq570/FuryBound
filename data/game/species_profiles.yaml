@@ -1,0 +1,190 @@
+# LAYER 3: game data (invented balancing values, not canon).
+# Personality and game profile for every MATCHABLE species. See Plan §9.3–9.5.
+#
+# - A species missing from this file is not matchable (titans such as the Red
+#   Death and Bewilderbeast stay out on purpose; so do background-only species).
+# - traits: the same 7 traits as the quiz (traits.yaml), 0–100.
+# - weights: how much each trait counts when matching (default 1.0).
+# - requirements: soft minimums for the PLAYER's traits. Missing them costs
+#   score (Plan §9.3 step 3); it never blocks a match outright.
+# - approach_pref: which first-contact choice it likes (calm | bold | gentle | playful).
+# - diet_likes / diet_dislikes: from the food list below.
+# - stat_caps: the ceiling for each game stat. A new dragon starts at 30–40%
+#   of each cap (this replaces the Plan's separate base_stats).
+# - Calibration (scripts/calibrate_matching.py) is expected to adjust
+#   traits and weights; the personalities below are the starting draft.
+
+version: profiles_v1
+
+foods: [fish, chicken, mutton, rock, bread, eel]
+stats: [speed, agility, strength, firepower, stamina, intelligence, obedience]
+
+species:
+  # ── Legendary ────────────────────────────────────────────────
+  - id: night_fury
+    rarity: legendary
+    summary: Brilliant and fiercely loyal once trust is earned, but nobody's pet.
+    traits: { courage: 70, curiosity: 60, loyalty: 85, aggression: 50, patience: 45, independence: 65, intelligence: 90 }
+    weights: { intelligence: 2.0, loyalty: 1.5, independence: 1.5 }
+    requirements: { intelligence: 60, loyalty: 55 }
+    approach_pref: calm
+    diet_likes: [fish]
+    diet_dislikes: [eel]
+    stat_caps: { speed: 100, agility: 95, strength: 70, firepower: 95, stamina: 85, intelligence: 95, obedience: 60 }
+
+  - id: light_fury
+    rarity: legendary
+    summary: Wild, wary and fiercely free; trusts very few.
+    traits: { courage: 55, curiosity: 45, loyalty: 60, aggression: 45, patience: 40, independence: 85, intelligence: 80 }
+    weights: { independence: 2.0, intelligence: 1.5 }
+    requirements: { independence: 65, patience: 55 }
+    approach_pref: gentle
+    diet_likes: [fish]
+    diet_dislikes: [eel, bread]
+    stat_caps: { speed: 100, agility: 95, strength: 60, firepower: 85, stamina: 85, intelligence: 90, obedience: 45 }
+
+  # ── Rare ─────────────────────────────────────────────────────
+  - id: stormcutter
+    rarity: rare
+    summary: A wise, watchful dragon that bonds for life with a patient rider.
+    traits: { courage: 55, curiosity: 70, loyalty: 80, aggression: 25, patience: 75, independence: 55, intelligence: 85 }
+    weights: { patience: 1.5, intelligence: 1.5 }
+    requirements: { patience: 50 }
+    approach_pref: calm
+    diet_likes: [fish]
+    diet_dislikes: [eel]
+    stat_caps: { speed: 80, agility: 85, strength: 75, firepower: 75, stamina: 85, intelligence: 90, obedience: 75 }
+
+  - id: deathgripper
+    rarity: rare
+    summary: Ferocious and restless; only the boldest riders earn its respect.
+    traits: { courage: 85, curiosity: 30, loyalty: 20, aggression: 95, patience: 15, independence: 80, intelligence: 35 }
+    weights: { aggression: 1.5, courage: 1.5 }
+    requirements: { courage: 40 }
+    approach_pref: bold
+    diet_likes: [mutton]
+    diet_dislikes: [bread]
+    stat_caps: { speed: 85, agility: 75, strength: 85, firepower: 90, stamina: 75, intelligence: 60, obedience: 30 }
+
+  # ── Uncommon ─────────────────────────────────────────────────
+  - id: rumblehorn
+    rarity: uncommon
+    summary: A stubborn, loyal tracker that never loses a scent.
+    traits: { courage: 70, curiosity: 50, loyalty: 70, aggression: 60, patience: 50, independence: 35, intelligence: 55 }
+    weights: { courage: 1.5, loyalty: 1.5 }
+    requirements: {}
+    approach_pref: bold
+    diet_likes: [mutton, fish]
+    diet_dislikes: [eel]
+    stat_caps: { speed: 65, agility: 55, strength: 90, firepower: 70, stamina: 80, intelligence: 65, obedience: 75 }
+
+  - id: crimson_goregutter
+    rarity: uncommon
+    summary: Looks terrifying, but mostly wants peace and quiet.
+    traits: { courage: 55, curiosity: 30, loyalty: 50, aggression: 35, patience: 70, independence: 85, intelligence: 45 }
+    weights: { independence: 1.5, patience: 1.5 }
+    requirements: {}
+    approach_pref: calm
+    diet_likes: [mutton]
+    diet_dislikes: [eel]
+    stat_caps: { speed: 60, agility: 50, strength: 95, firepower: 70, stamina: 85, intelligence: 55, obedience: 50 }
+
+  - id: snafflefang
+    rarity: uncommon
+    summary: Happiest gnawing rock somewhere out of the way, on its own terms.
+    traits: { courage: 45, curiosity: 65, loyalty: 35, aggression: 50, patience: 55, independence: 70, intelligence: 40 }
+    weights: { independence: 1.5, curiosity: 1.5 }
+    requirements: {}
+    approach_pref: gentle
+    diet_likes: [rock]
+    diet_dislikes: [bread]
+    stat_caps: { speed: 55, agility: 60, strength: 75, firepower: 60, stamina: 75, intelligence: 50, obedience: 60 }
+
+  - id: hobgobbler
+    rarity: uncommon
+    summary: Called bad luck by Vikings; in truth a sweet, clingy little dragon.
+    traits: { courage: 35, curiosity: 70, loyalty: 75, aggression: 30, patience: 50, independence: 30, intelligence: 40 }
+    weights: { loyalty: 1.5, curiosity: 1.5 }
+    requirements: {}
+    approach_pref: gentle
+    diet_likes: [fish, bread]
+    diet_dislikes: [eel]
+    stat_caps: { speed: 50, agility: 70, strength: 35, firepower: 45, stamina: 60, intelligence: 55, obedience: 70 }
+
+  # ── Common ───────────────────────────────────────────────────
+  - id: deadly_nadder
+    rarity: common
+    summary: Proud, quick and fiercely protective of its rider.
+    traits: { courage: 60, curiosity: 45, loyalty: 70, aggression: 55, patience: 30, independence: 40, intelligence: 50 }
+    weights: { loyalty: 1.5, aggression: 1.2 }
+    requirements: {}
+    approach_pref: bold
+    diet_likes: [chicken, fish]
+    diet_dislikes: [eel]
+    stat_caps: { speed: 85, agility: 90, strength: 60, firepower: 80, stamina: 70, intelligence: 60, obedience: 65 }
+
+  - id: gronckle
+    rarity: common
+    summary: Gentle, steady and endlessly good-natured.
+    traits: { courage: 50, curiosity: 35, loyalty: 75, aggression: 25, patience: 80, independence: 30, intelligence: 35 }
+    weights: { patience: 2.0, loyalty: 1.5 }
+    requirements: {}
+    approach_pref: gentle
+    diet_likes: [rock]
+    diet_dislikes: [eel]
+    stat_caps: { speed: 45, agility: 45, strength: 90, firepower: 70, stamina: 85, intelligence: 45, obedience: 80 }
+
+  - id: hideous_zippleback
+    rarity: common
+    summary: Two heads, twice the mischief; curious and chaotic.
+    traits: { courage: 60, curiosity: 70, loyalty: 65, aggression: 50, patience: 25, independence: 20, intelligence: 20 }
+    weights: { curiosity: 1.5, intelligence: 1.5 }
+    requirements: {}
+    approach_pref: playful
+    diet_likes: [fish, chicken]
+    diet_dislikes: [eel]
+    stat_caps: { speed: 70, agility: 65, strength: 70, firepower: 80, stamina: 70, intelligence: 50, obedience: 55 }
+
+  - id: monstrous_nightmare
+    rarity: common
+    summary: Hot-tempered and proud; it respects courage above all.
+    traits: { courage: 80, curiosity: 35, loyalty: 55, aggression: 85, patience: 20, independence: 60, intelligence: 40 }
+    weights: { aggression: 1.5, courage: 1.5 }
+    requirements: { courage: 50 }
+    approach_pref: bold
+    diet_likes: [mutton, fish]
+    diet_dislikes: [eel]
+    stat_caps: { speed: 70, agility: 60, strength: 90, firepower: 95, stamina: 75, intelligence: 50, obedience: 40 }
+
+  - id: terrible_terror
+    rarity: common
+    summary: Tiny, cheeky and always squabbling over snacks.
+    traits: { courage: 45, curiosity: 70, loyalty: 40, aggression: 60, patience: 20, independence: 60, intelligence: 35 }
+    weights: { patience: 1.5, aggression: 1.2 }
+    requirements: {}
+    approach_pref: playful
+    diet_likes: [fish, chicken]
+    diet_dislikes: [eel]
+    stat_caps: { speed: 70, agility: 90, strength: 25, firepower: 50, stamina: 55, intelligence: 50, obedience: 50 }
+
+  - id: hotburple
+    rarity: common
+    summary: Sleepy, slow and utterly unbothered by anything.
+    traits: { courage: 30, curiosity: 25, loyalty: 60, aggression: 20, patience: 90, independence: 55, intelligence: 25 }
+    weights: { patience: 2.0, curiosity: 1.2 }
+    requirements: {}
+    approach_pref: calm
+    diet_likes: [rock]
+    diet_dislikes: [eel]
+    stat_caps: { speed: 35, agility: 35, strength: 90, firepower: 75, stamina: 80, intelligence: 40, obedience: 65 }
+
+  - id: scuttleclaw
+    rarity: common
+    summary: A lively youngster that wants to see and chase everything.
+    traits: { courage: 55, curiosity: 85, loyalty: 50, aggression: 40, patience: 25, independence: 50, intelligence: 45 }
+    weights: { curiosity: 2.0 }
+    requirements: {}
+    approach_pref: playful
+    diet_likes: [fish, chicken]
+    diet_dislikes: [eel]
+    stat_caps: { speed: 80, agility: 85, strength: 50, firepower: 60, stamina: 65, intelligence: 55, obedience: 60 }

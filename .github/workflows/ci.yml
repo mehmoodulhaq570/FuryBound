@@ -69,6 +69,8 @@ jobs:
         run: |
           uv run python ../../scripts/build_catalog.py
           git diff --exit-code -- ../../data/build || (echo "::error::Run 'pnpm catalog:build' and commit data/build" && exit 1)
+      - name: Matching calibration meets its targets and is up to date
+        run: uv run python -m scripts.calibrate_matching --check
 
   web:
     name: Web (lint, types, tests)

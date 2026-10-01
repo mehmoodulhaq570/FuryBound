@@ -1,0 +1,23 @@
+# LAYER 3: game data (invented, not canon).
+# Complement rules: pairings that work BECAUSE trainer and dragon differ. See Plan §9.3 step 2.
+# A rule fires when the dragon's trait passes the test; it then rewards the
+# trainer's `reward` trait. `reason` finishes the sentence "…; <reason>." in the
+# match explanation and is only shown when the trainer is strong in that trait.
+
+version: complements_v1
+
+rules:
+  - id: fiery_needs_patience
+    when: { dragon: aggression, gte: 70 }
+    reward: { trainer: patience }
+    reason: "your patience balances its fiery temper"
+
+  - id: free_spirit_needs_curiosity
+    when: { dragon: independence, gte: 75 }
+    reward: { trainer: curiosity }
+    reason: "your curiosity keeps pace with its free spirit"
+
+  - id: aloof_needs_loyalty
+    when: { dragon: loyalty, lte: 40 }
+    reward: { trainer: loyalty }
+    reason: "your loyalty can win over a dragon that rarely bonds"

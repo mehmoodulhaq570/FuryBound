@@ -1,0 +1,38 @@
+# LAYER 3: game data (invented, not canon).
+# "The Dragon Chooses You": three short scenes after the quiz. See Plan §9.4.
+# - first_contact: each option is an approach, compared with the species' approach_pref.
+# - offering: each option is a food, compared with diet_likes / diet_dislikes.
+# - startle: small trait nudges, scaled by startle_weight and added to the player's traits.
+# Once players have taken it, never edit this file: copy it to encounter_v2.yaml.
+
+version: encounter_v1
+
+startle_weight: 0.2
+
+# Choosing the opposite of a dragon's preferred approach counts against the match.
+approach_opposites: { calm: playful, playful: calm, bold: gentle, gentle: bold }
+
+scenes:
+  first_contact:
+    prompt: "Mist rolls over the cliffs of Academy Isle. A young dragon steps out of the fog and freezes when it sees you."
+    options:
+      - { id: reach_out, label: "Reach out a hand", approach: bold }
+      - { id: stay_still, label: "Stay still, eyes down", approach: calm }
+      - { id: speak_softly, label: "Kneel and speak softly", approach: gentle }
+      - { id: toss_pebble, label: "Toss a pebble for it to chase", approach: playful }
+
+  offering:
+    prompt: "It edges closer and sniffs at your satchel. What do you offer?"
+    options:
+      - { id: fish, label: "A fish", food: fish }
+      - { id: rock, label: "A smooth rock", food: rock }
+      - { id: chicken, label: "A piece of chicken", food: chicken }
+      - { id: bread, label: "A crust of bread", food: bread }
+
+  startle:
+    prompt: "Thunder cracks overhead. The dragon flinches and looks at you."
+    options:
+      - { id: calm_it, label: "Calm it with a steady voice", deltas: { patience: 10, loyalty: 5 } }
+      - { id: shield_it, label: "Step in front to shield it", deltas: { courage: 10, loyalty: 8 } }
+      - { id: run_for_cover, label: "Lead it to cover under the rocks", deltas: { intelligence: 8, courage: -5 } }
+      - { id: laugh_it_off, label: "Laugh it off", deltas: { independence: 8, courage: 5, patience: -4 } }

@@ -1200,11 +1200,11 @@ Phase 8  AI adventures          ░░░░░░░░░░░░░░░░
 ### Phase 3: Quiz + matching (2 weeks)
 
 **Build**
-- [ ] Trait definitions and `quiz_v1.yaml` (12 questions), validated against the authoring rules.
-- [ ] `species_profiles.yaml` for all matchable species (traits, weights, requirements, approach preference, diet, base stats, caps, rarity).
-- [ ] `engines/matching.py` (pure) + `complements.yaml`.
-- [ ] `calibrate_matching.py` with a Monte Carlo report and percentile table.
-- [ ] Archetype fixtures as tests.
+- [x] Trait definitions and `quiz_v1.yaml` (12 questions), validated against the authoring rules.
+- [x] `species_profiles.yaml` for all matchable species (traits, weights, requirements, approach preference, diet, base stats, caps, rarity).
+- [x] `engines/matching.py` (pure) + `complements.yaml`.
+- [x] `calibrate_matching.py` with a Monte Carlo report and percentile table.
+- [x] Archetype fixtures as tests.
 - [ ] Quiz UI (progress bar, one question per screen) and encounter scenes (simple illustrated version).
 - [ ] Result screen: top match, compatibility %, trait bars, explanation, 2 runner-ups.
 

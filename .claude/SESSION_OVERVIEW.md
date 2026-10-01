@@ -1,6 +1,6 @@
 # Session overview: FuryBound / Dragon Academy
 
-Summary of the Claude Code sessions of **2026-09-30 → 2026-10-01**. Read this first when picking the project back up. The full plan is [Plan.md](../Plan.md); tools are in [TECH_STACK.md](../TECH_STACK.md); the data workflow is in [data/README.md](../data/README.md).
+Summary of the Claude Code sessions of **2026-09-30 → 2026-10-01** (Phase 3 started on 10-01). Read this first when picking the project back up. The full plan is [Plan.md](../Plan.md); tools are in [TECH_STACK.md](../TECH_STACK.md); the data workflow is in [data/README.md](../data/README.md).
 
 ## Where things stand
 
@@ -9,7 +9,7 @@ Summary of the Claude Code sessions of **2026-09-30 → 2026-10-01**. Read this 
 | 0 Foundations | ✅ Done. CI green on GitHub |
 | 1 Dragon database | ✅ Code done. ⏳ Film verification by the user (scene logs) |
 | 2 Dragon Book | ✅ Done locally (Milestone M1). Not deployed yet |
-| 3 Quiz + matching | ⏭️ Next: starts with writing the 12 quiz questions together |
+| 3 Quiz + matching | 🔨 Engine done (quiz, profiles, matching, calibration, tests). ⏭️ Next: quiz UI, encounter and result screens |
 
 - **Repo:** https://github.com/mehmoodulhaq570/FuryBound (public, branch `main`). The user commits and pushes **themselves**; don't push.
 - **Package / Supabase project name:** `dragon-academy` (the GitHub repo name is FuryBound).
@@ -37,6 +37,13 @@ Summary of the Claude Code sessions of **2026-09-30 → 2026-10-01**. Read this 
 - Franchise classes always carry a "franchise" tag. There's a confidence meter everywhere and a fan disclaimer in the footer.
 - 19 Vitest tests, including checks of the real `dragons.json` against the TypeScript types.
 
+**Phase 3: quiz + matching engine** (`data/game/`, `apps/api/app/engines/`, `apps/api/scripts/calibrate_matching.py`)
+- `traits.yaml` (7 traits), `quiz_v1.yaml` (12 questions; every trait touched 9–12 times), `species_profiles.yaml` (15 matchable species), `complements.yaml` (3 rules), `encounter_v1.yaml` (the 3 scenes). All validated on load by `engines/game_data.py` (Pydantic).
+- `engines/matching.py`: pure quiz scoring + matching per Plan §9.3, explanations, displayed 60–99% compatibility.
+- `pnpm match:calibrate`: 100,000 random players, writes `data/build/matching_calibration.json`. CI (Data job) runs `--check`. It takes ~2–3 minutes. The engine refuses a stale calibration (fingerprint of the game data).
+- 16 tests in `tests/test_matching.py`, including 6 archetype fixtures (cautious scholar, reckless daredevil, loyal friend, lone wolf, curious explorer, calm homebody). No database needed.
+- Current shares: Scuttleclaw 15.2% (highest) … Light Fury 2.1%, Night Fury 0.7%.
+
 ## Decisions and deviations from Plan.md
 
 - **Local Supabase only** during development, so the user can learn it. Hosted Supabase comes at launch.
@@ -44,6 +51,9 @@ Summary of the Claude Code sessions of **2026-09-30 → 2026-10-01**. Read this 
 - `appearances` and `rider_links` also carry `source_ids` and `confidence`. Plan §8.3 didn't have them, but they're needed so every fact is traceable.
 - Scene logs are the source of truth for `appearances.csv` and `rider_links.csv`: **edit the logs, not those two CSVs**.
 - Species and individual ids share one namespace (`/dragon-book/<id>`). The validator enforces the Plan's `the_` rule (`light_fury` vs `the_light_fury`).
+- **Player traits are converted to percentiles before matching** (exact, assuming random answers), because summed quiz scores cluster in the middle and the strong-personality dragons could never win. The Plan's min–max scores are still used for display.
+- Dropped `base_stats`; only `stat_caps` (a new dragon starts at 30–40% of caps). Removed two complement rules (restless→patience, timid→courage) that pulled everyone toward a few dragons.
+- Matchable pool: on-screen, trainable film species minus titans, the Night Light hatchlings and the Seashocker. Legendary target is 0.5–3% (the Plan's "≥3%" for every species can't also hold for legendaries). Calibration script lives in `apps/api/scripts/` (not root `scripts/`) because it imports the engine.
 - CI has three jobs: API (starts `supabase db start` and loads the seed if it's empty), Data (catalog check, and checks that scene logs, catalog and build agree), and Web.
 
 ## Working with this user
@@ -56,7 +66,10 @@ Summary of the Claude Code sessions of **2026-09-30 → 2026-10-01**. Read this 
 
 ## Next steps
 
-1. **Phase 3: quiz + matching.** Write the 7 trait definitions and 12 quiz questions (Plan §9.2), `species_profiles.yaml`, `engines/matching.py`, and the calibration script.
-2. **User:** watch the films and confirm the scene logs (`yes?` → `yes`, source → `film`), then run `pnpm catalog:import && pnpm catalog:build && pnpm db:reset`.
-3. Optional: deploy the Dragon Book (Vercel), keep filters in the URL, and fill in abilities and diet in the catalog.
-4. Confirm or override the open decisions in Plan §18 before Phase 3 (the defaults are fine).
+> **Resume here (paused 2026-10-01):** the matching engine is finished, and the user chose to continue later. First ask whether they want to (a) review the dragon personalities and quiz wording, or (b) go straight to the Phase 3 screens. Nothing from Phase 3 is committed yet; the user commits themselves.
+
+1. **User:** review the quiz wording and the dragon personalities in `data/game/` (after any edit to `data/game/`, run `pnpm match:calibrate` and the tests).
+2. **Phase 3 UI:** quiz page (one question per screen, progress bar), the 3 encounter scenes, the result screen; plus API endpoints and DB tables (`species_game_profile`, quiz tables) for them.
+3. Polish: extreme personalities only reach ~76–80% compatibility; runner-up explanations fall back to vague text.
+4. **User:** watch the films and confirm the scene logs (`yes?` → `yes`, source → `film`), then run `pnpm catalog:import && pnpm catalog:build && pnpm db:reset`.
+5. Optional: deploy the Dragon Book (Vercel), keep filters in the URL, and fill in abilities and diet in the catalog.
