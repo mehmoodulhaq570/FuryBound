@@ -71,6 +71,7 @@ The Dragon Book (`/dragon-book`) is statically generated from `data/build/dragon
 | Vitest | 5 | Frontend unit tests |
 | Testing Library + jsdom | 16, 30 | React component tests |
 | pytest | 9.1 | Backend tests |
+| Pillow | 12 | Converts the species artwork to small WebP images (`pnpm art:build`) |
 | Hypothesis | 6 | Property tests for the game engines (e.g. a higher score never gives less XP) |
 | httpx2 | 2.13 | HTTP client for backend tests |
 

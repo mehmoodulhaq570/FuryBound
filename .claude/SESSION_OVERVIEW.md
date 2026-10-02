@@ -67,6 +67,11 @@ Summary of the Claude Code sessions of **2026-09-30 → 2026-10-02**. Read this 
 - Web: `components/training/` (`dragon-gate.tsx` = signed in + has a dragon; `train-home.tsx` with `XpBar`/`ActivityList`; `train-activity.tsx` with intro → playing (`TimedGame` times from mount) → result + level-up celebration; `stat-history.tsx` = small multiples, one hue, shared 0–100 scale, crosshair, table view, following the dataviz skill), `games/` (5 games + `use-timers.ts` with `useTimers`/`useFrames`, which clean up on unmount), `lib/training/` (`scoring.ts` pure scoring, `history.ts`, `api.ts`).
 - Hypothesis was added as an API dev dependency.
 
+**Species artwork** (2026-10-02)
+- `scripts/build_species_images.py` (`pnpm art:build`, Pillow as an API dev dependency) → `apps/web/public/dragons/<species_id>.webp` (640 px, quality 80, about 53 KB each) + `apps/web/src/lib/art/species-images.json`. Files are matched to species by exact catalog name.
+- `lib/art/images.ts` (`speciesImage`) + `components/art/dragon-portrait.tsx` (next/image, or the silhouette as fallback). Used in Dragon Book cards and detail pages, the reveal result and runners-up, and the `/dragon` card (+ a colour swatch).
+- Screenshots of `/dragon-book` and `/dragon-book/toothless` checked; the reveal and `/dragon` need sign-in, so the user should check those.
+
 **Migrations** (applied locally with `supabase migration up`, which keeps the user's account; `db:reset` would wipe it)
 `20260930063434_init_extensions` · `20260930150000_canon_tables` · `20261001120000_quiz_attempts` · `20261002120000_profiles_and_dragons` · `20261003120000_dragon_events` · `20261004120000_discoveries` (back-filled; the user's account has Light Fury, Stormcutter and Crimson Goregutter) · `20261005120000_training_sessions` (extra columns: `mood`, `needs_at_start`, `duration_ms`, `stats_after`).
 
@@ -82,7 +87,7 @@ Summary of the Claude Code sessions of **2026-09-30 → 2026-10-02**. Read this 
 - **Discoveries are per species**; named dragons unlock with their species; the counter counts species; "new" = discovered in the last 24 h.
 - Care refusals are 409s, not events; a dragon can't be fed when full or play when exhausted. **Training** refusals are 409s *and* `refused` events.
 - Training: the "activity in likes → +happiness" rule was skipped (likes are foods and things, not activities); "overtraining" isn't defined yet. Scores are computed in the browser and only sanity-checked by duration, as the Plan says.
-- **Art:** no film assets or copied designs (Plan §16). Original part-based silhouettes now, fan wiki links, commissioned art later. The user is making images with GPT in `dragons_images/` (gitignored by the user). Claude advised describing original dragons instead of naming film species, and keeping the images out of git until that's settled.
+- **Art:** no film assets or copied designs (Plan §16). The user made 77 original GPT images in `dragons_images/` (gitignored; "original interpretations, not the DreamWorks designs"). Claude reviewed all 50 species images (contact sheets: fine, no text or logos) and **uses only the 50 species images**. The 27 named-dragon images are deliberately unused (e.g. the "Toothless" one is a purple feathered dragon); named dragons show their species' art with a caption. Locked Academy cards and the reveal's circling animation keep silhouettes.
 - CI has three jobs: API (starts `supabase db start`, loads the seed if empty), Data (catalog and calibration checks) and Web.
 
 ## Working with this user

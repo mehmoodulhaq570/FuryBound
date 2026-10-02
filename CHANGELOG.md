@@ -5,7 +5,11 @@ All notable changes to FuryBound / Dragon Academy. The format follows [Keep a Ch
 ## [Unreleased]
 
 ### Added
-- **Artwork policy** (README "Artwork"). Species artwork is being made as original AI-generated interpretations of each species' general traits, colours and personality. The images deliberately don't reproduce DreamWorks' character designs. They're used per species, never for named film characters, and contain no logos or film text. They're kept out of git (`dragons_images/` is ignored) until reviewed and added to the app; until then the original silhouettes are shown.
+- **Species artwork** for all 50 species: original AI-generated interpretations of each species' general traits, colours and personality (README "Artwork"). They deliberately don't reproduce DreamWorks' character designs and contain no logos or film text. All 50 were reviewed before being added.
+  - Shown in the Dragon Book (thumbnails on the list; a large image with a caption on each page), on the reveal (the dragon that chose you and the runners-up) and on My dragon (with a swatch of your dragon's own colour).
+  - **Named dragons use their species' artwork** (Toothless's page shows the Night Fury image, captioned as species art). The 27 named-dragon images were made but are deliberately not used.
+  - Locked "???" cards in Academy mode keep the silhouette, so art isn't spoiled. Any species without an image falls back to its silhouette; the reveal's circling animation still uses silhouettes.
+  - `pnpm art:build` (`scripts/build_species_images.py`, Pillow) turns the originals in `dragons_images/` (2–3 MB PNGs, not committed) into 640 px WebP files in `apps/web/public/dragons/` (about 53 KB each, 2.6 MB in total) and writes the list of species with art. Rerun it after adding or replacing an image.
 
 ## Phase 5: Training (2026-10-02)
 

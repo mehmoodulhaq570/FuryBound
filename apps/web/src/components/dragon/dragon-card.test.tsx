@@ -52,11 +52,20 @@ describe("DragonCard", () => {
     expect(screen.getByText("eel")).toBeTruthy();
   });
 
-  it("draws the dragon in its species' shape and its own colour", () => {
+  it("shows the species artwork and a swatch of the dragon's own colour", () => {
     const { container } = render(<DragonCard dragon={dragon} />);
-    const art = container.querySelector("svg[data-species]");
-    expect(art?.getAttribute("data-species")).toBe("deadly_nadder");
-    expect((art as SVGElement).style.color).toBe("rgb(74, 144, 200)");
+    const art = screen.getByRole("img", { name: "Artwork of a Deadly Nadder" });
+    expect(art.getAttribute("src")).toContain("deadly_nadder.webp");
+    const swatch = container.querySelector<HTMLElement>("span[aria-hidden][style]");
+    expect(swatch?.style.background).toBe("rgb(74, 144, 200)");
+  });
+
+  it("falls back to the silhouette for a species without artwork", () => {
+    const { container } = render(
+      <DragonCard dragon={{ ...dragon, species_id: "no_art_yet", species_name: "Mystery" }} />,
+    );
+    expect(screen.queryByRole("img", { name: /Artwork/ })).toBeNull();
+    expect(container.querySelector("svg[data-species='no_art_yet']")).toBeTruthy();
   });
 
   it("shows needs, trust, stats and personality as meters", () => {
