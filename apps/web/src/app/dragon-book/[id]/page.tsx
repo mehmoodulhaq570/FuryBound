@@ -24,6 +24,16 @@ export async function generateMetadata(props: PageProps<"/dragon-book/[id]">): P
   };
 }
 
+/**
+ * The fan wiki's page for a name. We link instead of showing film images (Plan.md §16).
+ * The wiki's "go" search opens the page when the title matches and lists results when not,
+ * so a name that differs slightly from the wiki's title still lands somewhere useful.
+ */
+function wikiUrl(name: string): string {
+  const query = new URLSearchParams({ query: name, go: "Go" });
+  return `https://howtotrainyourdragon.fandom.com/wiki/Special:Search?${query}`;
+}
+
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section className="space-y-3">
@@ -92,10 +102,19 @@ export default async function DragonPage(props: PageProps<"/dragon-book/[id]">) 
           ) : (
             <p className="text-muted max-w-prose">No description yet.</p>
           )}
+          <a
+            href={wikiUrl(entry.name)}
+            target="_blank"
+            rel="noreferrer"
+            className="text-accent inline-block text-sm underline-offset-2 hover:underline"
+          >
+            See what it looks like on the fan wiki ↗
+          </a>
         </div>
         <Silhouette
+          speciesId={entry.kind === "species" ? entry.id : entry.species.id}
           size={species?.size ?? null}
-          className="text-muted/40 hidden size-28 shrink-0 sm:block"
+          className="text-muted hidden size-28 shrink-0 opacity-40 sm:block"
         />
       </header>
 

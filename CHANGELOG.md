@@ -5,6 +5,9 @@ All notable changes to FuryBound / Dragon Academy. The format follows [Keep a Ch
 ## [Unreleased]
 
 ### Added
+- **Species silhouettes** (`apps/web/src/lib/art/shapes.ts`, `components/art/dragon-silhouette.tsx`): original placeholder art for each of the 15 matchable species, built from parts (wings, head, tail, legs). For example, the Zippleback has two heads and the Gronckle a club tail. Other species use a generic shape. They're used in the Dragon Book (named dragons take their species' shape), the reveal (the actual top 3 circle overhead) and on `/dragon`, where your dragon is drawn in its own colour. No film designs are copied (Plan §16).
+- Dragon Book pages link to the fan wiki ("See what it looks like on the fan wiki"), through the wiki's search so no link goes dead. We link to the wiki and don't copy its images.
+- Colour variants in `adoption.yaml` now have a `hex` colour, and `PlayerDragon` returns `color_hex`.
 - **Naming and adoption** (Phase 4 start): the reveal now ends with "Name your <dragon>". Naming adopts the top match as your dragon and opens `/dragon`, a first dragon card (name, colour, species, compatibility, level, quirks, likes and dislikes, needs, trust, stats, personality). "My dragon" is in the header. One dragon per player.
 - **Dragon API**: `POST /api/v1/dragons` (adopt from a finished attempt; 409 if the encounter isn't done or you already have a dragon, 422 with a reason for a refused name) and `GET /api/v1/dragons/me`.
 - `data/game/adoption.yaml` (invented): starting needs and trust, the personality spread (σ = 6), starting stats (30–40% of caps), name rules, 12 quirks and 2–3 colour variants per matchable species. It's separate from the matching data, so editing it needs no recalibration.

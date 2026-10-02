@@ -7,6 +7,7 @@ function card(overrides: Partial<DragonCard> & Pick<DragonCard, "id" | "name">):
   return {
     kind: "species",
     speciesName: null,
+    speciesId: overrides.id,
     dragonClass: null,
     size: null,
     appearances: [],
@@ -45,6 +46,7 @@ const CARDS: DragonCard[] = [
     name: "Toothless",
     kind: "individual",
     speciesName: "Night Fury",
+    speciesId: "night_fury",
     dragonClass: "Strike",
     appearances: [{ movie: "httyd1", type: "featured" }],
   }),

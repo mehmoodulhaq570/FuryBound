@@ -26,7 +26,11 @@ export function DragonCard({
           </p>
           <h2 className="group-hover:text-accent truncate font-semibold">{card.name}</h2>
         </div>
-        <Silhouette size={card.size} className="text-muted/50 size-12 shrink-0" />
+        <Silhouette
+          speciesId={card.speciesId}
+          size={card.size}
+          className="text-muted size-12 shrink-0 opacity-50"
+        />
       </div>
       <div className="mt-auto flex flex-wrap items-center justify-between gap-2">
         <FilmChips movies={movies} appearances={card.appearances} />

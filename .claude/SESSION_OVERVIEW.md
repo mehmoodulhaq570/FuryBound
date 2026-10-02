@@ -69,6 +69,11 @@ Summary of the Claude Code sessions of **2026-09-30 → 2026-10-01** (Phase 3 st
 - Web: `components/reveal/name-dragon.tsx` (passed into `Reveal` as its `naming` slot, so the reveal tests need no data client), `lib/dragon/name.ts` (quick client-side name check), `lib/dragon/my-dragon.ts`, `/dragon` → `components/dragon/dragon-home.tsx` + `dragon-card.tsx`.
 - 139 API tests and 51 web tests pass. **Naming hasn't been tried in a browser yet.**
 
+**Art: species silhouettes + wiki links** (2026-10-02)
+- The user asked for "the exact image of each dragon". That isn't allowed (Plan §16: no film assets, no copied designs). Agreed instead: original part-based silhouettes now + fan wiki links; commissioned art later (the Plan's final art pass).
+- `lib/art/shapes.ts` (`BUILDS` per matchable species: wings/head/tail/legs/body) → `components/art/dragon-silhouette.tsx` (`speciesId`, `color`, `scale`, `outline`). The old generic silhouettes are gone (`components/dragon-book/silhouette.tsx` is now a size-scaling wrapper). The Dragon Book `DragonCard` type has `speciesId`.
+- To preview the shapes: render them to HTML and screenshot with headless Chrome (`chrome.exe --headless --screenshot`). That's how they were checked. Fade silhouettes with `opacity-*`, not `text-x/40`, or the overlapping parts show through.
+
 ## Decisions and deviations from Plan.md
 
 - **Local Supabase only** during development, so the user can learn it. Hosted Supabase comes at launch.

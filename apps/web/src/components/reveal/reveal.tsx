@@ -4,11 +4,11 @@ import { motion } from "motion/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+import { DragonSilhouette } from "@/components/art/dragon-silhouette";
 import { TraitBars } from "@/components/quiz/trait-bars";
 import type { DragonMatch, QuizAttemptDetail, QuizMatch } from "@/lib/quiz/encounter";
 
 import { RevealStage, type StagePhase } from "./reveal-stage";
-import { Silhouette } from "./silhouette";
 
 type Phase = StagePhase | "landed";
 
@@ -80,7 +80,7 @@ function Result({
     <div className="mx-auto max-w-xl space-y-10">
       <Appear entrance={entrance} delay={0}>
         <section className="bg-surface border-line space-y-4 rounded-xl border p-6">
-          <Silhouette className="text-accent mx-auto w-20" />
+          <DragonSilhouette speciesId={top.species_id} className="text-accent mx-auto w-28" />
           <p className="text-accent text-center text-sm font-medium tracking-widest uppercase">
             It chose you
           </p>
@@ -180,7 +180,11 @@ export function Reveal({
           <p className="text-muted">
             {phase === "circling" ? "Three dragons circle overhead…" : "Two of them peel away…"}
           </p>
-          <RevealStage phase={phase} />
+          <RevealStage
+            phase={phase}
+            chosen={match.top.species_id}
+            others={match.runners_up.map((d) => d.species_id)}
+          />
           <button
             type="button"
             onClick={() => setPhase("landed")}

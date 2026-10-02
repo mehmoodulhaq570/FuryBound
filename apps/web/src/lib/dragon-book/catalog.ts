@@ -30,6 +30,7 @@ export function toCard(entry: DragonEntry): DragonCard {
     kind: entry.kind,
     name: entry.name,
     speciesName: entry.kind === "individual" ? entry.species.name : null,
+    speciesId: entry.kind === "individual" ? entry.species.id : entry.id,
     dragonClass: species?.class?.value ?? null,
     size: species?.size ?? null,
     appearances: entry.appearances.map(({ movie, type }) => ({ movie, type })),

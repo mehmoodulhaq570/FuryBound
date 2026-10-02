@@ -66,6 +66,7 @@ def test_adopt_the_dragon_that_chose_you(
         "happiness": 60,
     }
     assert dragon["trust"] == 20
+    assert dragon["color_variant"] and dragon["color_hex"].startswith("#")
     assert dragon["level"] == 1 and dragon["stage"] == "newborn"
     assert 1 <= len(dragon["quirks"]) <= 2 and all(q["label"] for q in dragon["quirks"])
 

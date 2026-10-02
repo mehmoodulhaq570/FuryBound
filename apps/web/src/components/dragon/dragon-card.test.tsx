@@ -13,6 +13,7 @@ const dragon: PlayerDragon = {
   rarity: "common",
   compatibility: 91,
   color_variant: "sky blue",
+  color_hex: "#4a90c8",
   personality: [{ id: "courage", label: "Courage", value: 72 }],
   stats: [{ id: "speed", label: "Speed", value: 33 }],
   needs: [
@@ -41,6 +42,13 @@ describe("DragonCard", () => {
     expect(screen.getByText("Hoards shiny things")).toBeTruthy();
     expect(screen.getByText("shiny things")).toBeTruthy();
     expect(screen.getByText("eel")).toBeTruthy();
+  });
+
+  it("draws the dragon in its species' shape and its own colour", () => {
+    const { container } = render(<DragonCard dragon={dragon} />);
+    const art = container.querySelector("svg[data-species]");
+    expect(art?.getAttribute("data-species")).toBe("deadly_nadder");
+    expect((art as SVGElement).style.color).toBe("rgb(74, 144, 200)");
   });
 
   it("shows needs, trust, stats and personality as meters", () => {

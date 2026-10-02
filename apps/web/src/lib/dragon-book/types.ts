@@ -63,6 +63,8 @@ export type DragonCard = {
   kind: DragonEntry["kind"];
   name: string;
   speciesName: string | null;
+  /** The species to draw: its own id, or a named dragon's species. */
+  speciesId: string;
   dragonClass: string | null;
   size: Size | null;
   appearances: { movie: string; type: AppearanceType }[];

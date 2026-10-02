@@ -39,6 +39,7 @@ async def present(
         rarity=profile.rarity,
         compatibility=row.compatibility,
         color_variant=row.color_variant,
+        color_hex=adoption.color_hex(row.species_id, row.color_variant),
         personality=[
             Labelled(id=t, label=trait_labels[t], value=row.personality[t]) for t in TRAITS
         ],

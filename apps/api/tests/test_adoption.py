@@ -49,7 +49,7 @@ def test_rolled_values_stay_within_the_rules(data: GameData, adoption: Adoption,
         for stat, cap in species.stat_caps.items():
             assert round(cap * 0.30) <= dragon.stats[stat] <= round(cap * 0.40)
         assert 1 <= len(dragon.quirks) <= 2
-        assert dragon.color_variant in adoption.color_variants[species.id]
+        assert adoption.color_hex(species.id, dragon.color_variant) is not None
         assert set(species.diet_likes) <= set(dragon.likes)
         assert set(species.diet_dislikes) <= set(dragon.dislikes)
         assert dragon.needs == {"hunger": 30, "energy": 80, "happiness": 60}

@@ -66,6 +66,11 @@ class Quirk(_Model):
     dislikes: tuple[str, ...] = ()
 
 
+class ColorVariant(_Model):
+    name: str
+    hex: Annotated[str, Field(pattern=r"^#[0-9a-f]{6}$")]
+
+
 class Adoption(_Model):
     version: str
     personality_sigma: Annotated[float, Field(ge=0, le=25)]
@@ -74,7 +79,7 @@ class Adoption(_Model):
     start: Start
     name: NameRules
     quirks: tuple[Quirk, ...]
-    color_variants: dict[str, tuple[str, ...]]
+    color_variants: dict[str, tuple[ColorVariant, ...]]
 
     @model_validator(mode="after")
     def _consistent(self) -> Self:
@@ -87,6 +92,11 @@ class Adoption(_Model):
         if empty := [s for s, colors in self.color_variants.items() if not colors]:
             raise ValueError(f"no color variants for {empty}")
         return self
+
+    def color_hex(self, species_id: str, name: str | None) -> str | None:
+        """The drawing colour of a stored variant name (None if unknown or renamed)."""
+        variants = self.color_variants.get(species_id, ())
+        return next((v.hex for v in variants if v.name == name), None)
 
     def check_species(self, data: GameData) -> Self:
         """Every matchable species needs colours (and only matchable species have them)."""
@@ -141,7 +151,7 @@ def roll_dragon(adoption: Adoption, species: SpeciesProfile, seed: str) -> NewDr
         species_id=species.id,
         personality=personality,
         stats=stats,
-        color_variant=rng.choice(adoption.color_variants[species.id]),
+        color_variant=rng.choice(adoption.color_variants[species.id]).name,
         quirks=tuple(q.id for q in quirks),
         likes=_unique((*species.diet_likes, *(like for q in quirks for like in q.likes))),
         dislikes=_unique((*species.diet_dislikes, *(d for q in quirks for d in q.dislikes))),

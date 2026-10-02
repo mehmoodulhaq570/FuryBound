@@ -1,4 +1,4 @@
-import { Silhouette } from "@/components/reveal/silhouette";
+import { DragonSilhouette } from "@/components/art/dragon-silhouette";
 import type { Labelled, PlayerDragon } from "@/lib/dragon/my-dragon";
 
 function Bars({ title, items }: { title: string; items: Labelled[] }) {
@@ -49,7 +49,12 @@ export function DragonCard({ dragon }: { dragon: PlayerDragon }) {
   return (
     <div className="mx-auto max-w-xl space-y-10">
       <section className="bg-surface border-line space-y-4 rounded-xl border p-6">
-        <Silhouette className="text-accent mx-auto w-20" />
+        <DragonSilhouette
+          speciesId={dragon.species_id}
+          color={dragon.color_hex ?? undefined}
+          outline
+          className="text-accent mx-auto w-32"
+        />
         <div className="text-center">
           <h1 className="text-3xl font-semibold tracking-tight">{dragon.name}</h1>
           <p className="text-muted">

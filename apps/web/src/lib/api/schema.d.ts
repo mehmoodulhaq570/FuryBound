@@ -553,8 +553,17 @@ export interface components {
              * @description From the quiz match, 60-99%
              */
             compatibility: number | null;
-            /** Color Variant */
+            /**
+             * Color Variant
+             * @example sky blue
+             */
             color_variant: string | null;
+            /**
+             * Color Hex
+             * @description For drawing the dragon
+             * @example #4a90c8
+             */
+            color_hex: string | null;
             /**
              * Personality
              * @description Traits in the quiz's order

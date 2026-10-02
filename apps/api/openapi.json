@@ -1371,7 +1371,25 @@
                 "type": "null"
               }
             ],
-            "title": "Color Variant"
+            "title": "Color Variant",
+            "examples": [
+              "sky blue"
+            ]
+          },
+          "color_hex": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Color Hex",
+            "description": "For drawing the dragon",
+            "examples": [
+              "#4a90c8"
+            ]
           },
           "personality": {
             "items": {
@@ -1446,6 +1464,7 @@
           "rarity",
           "compatibility",
           "color_variant",
+          "color_hex",
           "personality",
           "stats",
           "needs",

@@ -29,7 +29,8 @@ class PlayerDragon(BaseModel):
     species_name: str = Field(examples=["Deadly Nadder"])
     rarity: str
     compatibility: int | None = Field(description="From the quiz match, 60-99%")
-    color_variant: str | None
+    color_variant: str | None = Field(examples=["sky blue"])
+    color_hex: str | None = Field(examples=["#4a90c8"], description="For drawing the dragon")
     personality: list[Labelled] = Field(description="Traits in the quiz's order")
     stats: list[Labelled]
     needs: list[Labelled] = Field(description="Hunger, energy and happiness")
