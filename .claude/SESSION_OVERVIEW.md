@@ -1,6 +1,6 @@
 # Session overview: FuryBound / Dragon Academy
 
-Summary of the Claude Code sessions of **2026-09-30 → 2026-10-01** (Phase 3 started on 10-01; the quiz page was built late on 10-01). Read this first when picking the project back up. The full plan is [Plan.md](../Plan.md); what changed when is in [CHANGELOG.md](../CHANGELOG.md); tools are in [TECH_STACK.md](../TECH_STACK.md); the data workflow is in [data/README.md](../data/README.md).
+Summary of the Claude Code sessions of **2026-09-30 → 2026-10-02**. Read this first when picking the project back up. The full plan is [Plan.md](../Plan.md); what changed when is in [CHANGELOG.md](../CHANGELOG.md) (one section per phase); tools are in [TECH_STACK.md](../TECH_STACK.md); the data workflow is in [data/README.md](../data/README.md); setup and commands are in [README.md](../README.md).
 
 ## Where things stand
 
@@ -8,113 +8,88 @@ Summary of the Claude Code sessions of **2026-09-30 → 2026-10-01** (Phase 3 st
 |---|---|
 | 0 Foundations | ✅ Done. CI green on GitHub |
 | 1 Dragon database | ✅ Code done. ⏳ Film verification by the user (scene logs) |
-| 2 Dragon Book | ✅ Done locally (Milestone M1). Not deployed yet |
-| 3 Quiz + matching | ✅ Engine, quiz, encounter and reveal done (2026-10-02) |
-| 4 Profile + your dragon | ✅ Profiles, naming, species silhouettes, living dragon, discoveries (2026-10-02). **Milestone M2 (MVP) reached in code**; not deployed. ⏭️ Next: Phase 5 training, or polish/deploy |
+| 2 Dragon Book | ✅ Done (Milestone M1). Not deployed |
+| 3 Quiz + matching | ✅ Engine, quiz, encounter and animated reveal |
+| 4 Profile + your dragon | ✅ Profiles, naming/adoption, species silhouettes, care + mood, discoveries. **Milestone M2 (MVP) reached in code**; not deployed |
+| 5 Training | ⏭️ Next candidate |
 
+- **Tests:** 165 API (pytest) + 63 web (Vitest), all passing on 2026-10-02.
 - **Repo:** https://github.com/mehmoodulhaq570/FuryBound (public, branch `main`). The user commits and pushes **themselves**; don't push.
-- **Package / Supabase project name:** `dragon-academy` (the GitHub repo name is FuryBound).
+- **Names:** package and Supabase project `dragon-academy`; GitHub repo FuryBound; the app is called "Dragon Academy".
+- **Docs refreshed 2026-10-02:** README rewritten as a professional project README; CHANGELOG regrouped into Phase 3 and Phase 4 sections (Unreleased is empty).
 
-## What was built
+## The player flow (all built)
 
-**Phase 0: machine and setup fixes**
-- Docker Desktop's WSL data moved to `D:\DevTools\docker\wsl`. The disk file had become owned by Administrators (it was moved from an admin shell), so WSL got `E_ACCESSDENIED`; fixed with a user-owned copy. `docker_data.admin-owned.bak` there can be deleted.
-- RAM crash: Supabase + WSL filled the 16 GB RAM and Windows grew `C:\pagefile.sys` until C: was full. Fixes: `C:\Users\mehmo\.wslconfig` caps WSL at 4 GB (swap on D:), the page file mostly moved to D: (Windows keeps a fixed 4 GB one on C:), hibernation off.
-- The crash corrupted the `storage-api` image (0-byte `package.json`), which broke `supabase start`. The image was re-pulled.
-- `.env` files created from the examples, using the standard local Supabase keys.
-- `httpx2` in the API's dev dependencies is **legitimate and needed** (the official successor to httpx, by Pydantic; Starlette's TestClient wants it). Don't remove it.
+`/login` → `/academy/quiz` (12 questions) → "Step into the fog" → `/academy/encounter?attempt=<id>` (3 scenes) → `/academy/reveal?attempt=<id>` (top 3 circle, 2 peel away, "It chose you", name it) → `/dragon` (card, mood, thought, needs, feed/rest/play) and `/dragon-book` (Academy mode: "???" for unmet dragons).
 
-**Phase 1: dragon data** (`data/`, `scripts/`, `supabase/migrations/`)
-- Scene logs `data/research/httyd{1,2,3}_scene_log.md`, **pre-filled by Claude** from the fan wiki's film pages (pinned revisions) and general knowledge. Rows are marked `yes?` / `no?` for the user to confirm while watching. No timestamps, because only a viewer can add those.
-- `data/research/external_candidates.csv`: names and classes from two fan repos (uokik/how-to-train-your-dragon-api, RomainChamb/httydApi). Both are unlicensed, so descriptions and stats were **not** copied.
-- Catalog `data/catalog/*.csv`: 50 species, 27 named dragons, 138 appearances, 25 rider links, 10 sources. Descriptions are Claude's drafts; nine obscure species have none on purpose.
-- Pipeline: `pnpm catalog:import` (scene logs → appearances and riders), `catalog:check` (validator), `catalog:build` (→ `data/build/seed.sql`, `dragons.json`, `references.json`, `dragons.csv`). The output is deterministic.
-- Migration `20260930150000_canon_tables.sql`: canon tables with public-read RLS. The seed loads on `pnpm db:reset` (`supabase/config.toml` points at `../data/build/seed.sql`).
-- API (`apps/api/app/canon.py`, `routers/canon.py`, `db/`, `schemas/`): `/movies`, `/species[/{id}]`, `/individuals[/{id}]`, `/search`. SQLAlchemy 2.1 async + asyncpg. 34 pytest tests run against the seeded database; they skip locally if it's down and fail on CI.
+## What was built, by area
 
-**Phase 2: Dragon Book** (`apps/web/src/app/dragon-book/`, `components/dragon-book/`, `lib/dragon-book/`)
-- Static pages built from `@data/dragons.json` (a tsconfig alias to `data/build/`): a list page with Fuse.js search and filters, plus 77 pre-built detail pages (`dynamicParams = false`).
-- Search has **word-aware re-ranking** on top of Fuse, because on its own Fuse ranked "Thunderdrum" above "Deadly Nadder" for "nader". A test covers it.
-- Franchise classes always carry a "franchise" tag. There's a confidence meter everywhere and a fan disclaimer in the footer.
-- 19 Vitest tests, including checks of the real `dragons.json` against the TypeScript types.
+**Machine and setup (Phase 0)**
+- Docker Desktop's WSL data is in `D:\DevTools\docker\wsl` (`docker_data.admin-owned.bak` there can be deleted). `C:\Users\mehmo\.wslconfig` caps WSL at 4 GB; the page file is mostly on D:; hibernation is off.
+- `httpx2` in the API's dev dependencies is **legitimate and needed** (Starlette's TestClient wants it). Don't remove it.
 
-**Phase 3: quiz + matching engine** (`data/game/`, `apps/api/app/engines/`, `apps/api/scripts/calibrate_matching.py`)
-- `traits.yaml` (7 traits), `quiz_v1.yaml` (12 questions; every trait touched 9–12 times), `species_profiles.yaml` (15 matchable species), `complements.yaml` (3 rules), `encounter_v1.yaml` (the 3 scenes). All validated on load by `engines/game_data.py` (Pydantic).
-- `engines/matching.py`: pure quiz scoring + matching per Plan §9.3, explanations, displayed 60–99% compatibility.
-- `pnpm match:calibrate`: 100,000 random players, writes `data/build/matching_calibration.json`. CI (Data job) runs `--check`. It takes ~2–3 minutes. The engine refuses a stale calibration (fingerprint of the game data).
-- 16 tests in `tests/test_matching.py`, including 6 archetype fixtures (cautious scholar, reckless daredevil, loyal friend, lone wolf, curious explorer, calm homebody). No database needed.
-- Current shares: Scuttleclaw 14.2% (highest) … Light Fury 2.5%, Night Fury 0.7%.
-- 2026-10-01 review fixes: Deathgripper courage min 40→60, Nightmare 50→45; Light Fury patience min 55→50; Scuttleclaw curiosity weight 2.0→1.5; Q1a intelligence −4→+2; Q9c and Q12c reworded.
+**Dragon data (Phase 1)**: `data/`, `scripts/`, `supabase/migrations/`
+- Scene logs `data/research/httyd{1,2,3}_scene_log.md` were pre-filled by Claude from the fan wiki (pinned revisions) and general knowledge; rows marked `yes?` / `no?` await the user's film check. Catalog: 50 species, 27 named dragons, 138 appearances, 25 rider links, 10 sources.
+- Pipeline: `catalog:import` → `catalog:check` → `catalog:build` (→ `data/build/seed.sql`, `dragons.json`, `references.json`). Read-only canon API: `/movies`, `/species`, `/individuals`, `/search`.
 
-**Phase 3: quiz page** (2026-10-01; see CHANGELOG.md "Unreleased")
-- Migration `20261001120000_quiz_attempts.sql`: `quiz_attempts` with an owner-only select RLS policy. The API writes through the postgres connection.
-- API: `app/quiz.py` (service), `routers/quiz.py`, `schemas/quiz.py`. `GET /api/v1/quiz` returns the quiz without deltas, options shuffled with a seed of user id + version + question (stable across reloads). `POST /api/v1/quiz/attempts` checks the version (409 if stale) and the answers (422), then saves the answers + min–max trait scores and returns `{id, quiz_version, traits[]}`. The `QuizAttemptRow` model is in `db/models.py`.
-- `tests/test_quiz.py`: 7 tests. The 2 without a database pass; **the 5 database tests haven't run yet** (Docker was closed). They insert a throwaway `auth.users` row.
-- Web: `/academy/quiz` → `components/quiz/quiz-flow.tsx` (sign-in check, TanStack Query, submit) → `quiz-runner.tsx` (one question per screen, progress bar, Back, focus moves to each new question) → `trait-bars.tsx` (reusable for the result screen). The pure logic is in `lib/quiz/progress.ts`; progress is kept in `sessionStorage` and only reused if it fits the quiz version.
-- `/login?next=…` returns to the page you came from (same-site paths only). The header and home page link to the quiz.
-- 27 web tests pass (8 new). API types were regenerated with `pnpm gen:api-types`.
+**Dragon Book (Phase 2)**: `apps/web/src/app/dragon-book/`, `components/dragon-book/`, `lib/dragon-book/`
+- Static pages from `@data/dragons.json`; Fuse.js search with word-aware re-ranking; 77 pre-built detail pages; confidence meters and franchise tags.
+- Academy mode (Phase 4): `lib/dragon-book/academy.ts` (pure), `DragonBook` takes `academy`, `LockedCard`, `academy-book.tsx` (session + `GET /discoveries`). Searching never reveals a locked name.
+- Each detail page links to the fan wiki via `Special:Search?go=Go`, so no link goes dead.
 
-**Phase 3: encounter scenes** (2026-10-02)
-- API: `GET /encounter`, `POST /quiz/attempts/{id}/encounter` (locks the row; 409 if done or the quiz/encounter version changed; 422 for an unknown option), `GET /quiz/attempts/{id}` (`match` is null until finished). `ranking` stores the top 3 as `{species_id, raw, compatibility, explanation}`; names come from the `species` table, rarity and summary from the profiles. `get_calibration()` (cached) in `matching.py`.
-- Web: `/academy/encounter?attempt=<id>` → `components/encounter/encounter-flow.tsx`. It **reuses `QuizRunner`** (scenes have the same shape as questions; new `storageKey` and `wording` props). A finished attempt redirects to the reveal. `Notice` is in `components/quiz/notice.tsx`; `AttemptGate` (`components/quiz/attempt-gate.tsx`) does the id / sign-in / ownership checks for both pages.
-- Reveal: `/academy/reveal?attempt=<id>` → `components/reveal/` (`reveal-flow.tsx` → `reveal.tsx` with phases circling → peel → landed, timings in `TIMING`; `reveal-stage.tsx` is the Motion animation; `silhouette.tsx` is a generic SVG dragon, the same for all species until there's art). Reduced motion = fades only. "Seen" is kept in localStorage per attempt, so a reload skips the animation. Motion 14 installed.
-- **Decision (2026-10-02):** naming the dragon moves to the start of Phase 4 (it needs `player_dragons` + `POST /dragons`). The reveal has a disabled "Naming your dragon is coming next" button.
-- All 64 API tests pass, including the 5 quiz database tests that hadn't run before. 33 web tests pass, but only with `vitest run --maxWorkers=1` when RAM is tight (the default run timed out starting workers).
-- The user played quiz → encounter in the browser (got a Light Fury, 90%) before the reveal existed. **The reveal animation hasn't been seen in a browser yet.**
+**Game data** (`data/game/`, all invented, validated on load)
+- `traits.yaml`, `quiz_v1.yaml`, `species_profiles.yaml` (15 matchable species), `complements.yaml`, `encounter_v1.yaml`: these feed matching. **After editing them, run `pnpm match:calibrate`** (~2–3 min; CI checks it).
+- `adoption.yaml` (starting values, name rules, 12 quirks, colour variants with hex) and `care.yaml` (decay rates, care effects and refusals, messages, idle thoughts): separate on purpose, so no recalibration is needed. Quirks, colours and thoughts are Claude's drafts for the user to review.
 
-**Phase 4: naming + adoption** (2026-10-02)
-- `data/game/adoption.yaml` + `engines/adoption.py` (`get_adoption()` checks every matchable species has colours). The dragon is rolled with `random.Random(f"{version}:{attempt_id}")`, so it's reproducible.
-- Migration `20261002120000_profiles_and_dragons.sql` was applied locally with `supabase migration up` (not `db:reset`, to keep the user's test account). `player_dragons.user_id` is unique (one dragon each) and has extra `compatibility` and `rules_version` columns.
-- API: `app/dragons.py`, `routers/dragons.py`, `schemas/dragons.py`. `quiz.own_attempt` is now public. The shared test fixtures (`player`, `quiz_client`, `auth_headers`, `first_answers`) moved to `tests/conftest.py`.
-- Web: `components/reveal/name-dragon.tsx` (passed into `Reveal` as its `naming` slot, so the reveal tests need no data client), `lib/dragon/name.ts` (quick client-side name check), `lib/dragon/my-dragon.ts`, `/dragon` → `components/dragon/dragon-home.tsx` + `dragon-card.tsx`.
-- 139 API tests and 51 web tests pass. **Naming hasn't been tried in a browser yet.**
+**Engines** (`apps/api/app/engines/`, pure and deterministic)
+- `matching.py`: percentile-based matching, explanations, 60–99% compatibility, `get_calibration()`. Current shares: Scuttleclaw 14.2% (highest) … Light Fury 2.5%, Night Fury 0.7%.
+- `adoption.py`: `roll_dragon` seeded by `adoption version + attempt id`; `clean_name` (whole-word blocklist, so "Cassandra" passes).
+- `care.py`: `decay`, `care` → `CareOutcome` or `Refused`, `mood` (Plan §9.7 table; Scared waits for stories, Angry for Phase 5 refusals), `thought` (seeded by dragon id + hour).
 
-**Art: species silhouettes + wiki links** (2026-10-02)
-- The user asked for "the exact image of each dragon". That isn't allowed (Plan §16: no film assets, no copied designs). Agreed instead: original part-based silhouettes now + fan wiki links; commissioned art later (the Plan's final art pass).
-- `lib/art/shapes.ts` (`BUILDS` per matchable species: wings/head/tail/legs/body) → `components/art/dragon-silhouette.tsx` (`speciesId`, `color`, `scale`, `outline`). The old generic silhouettes are gone (`components/dragon-book/silhouette.tsx` is now a size-scaling wrapper). The Dragon Book `DragonCard` type has `speciesId`.
-- To preview the shapes: render them to HTML and screenshot with headless Chrome (`chrome.exe --headless --screenshot`). That's how they were checked. Fade silhouettes with `opacity-*`, not `text-x/40`, or the overlapping parts show through.
+**API services** (`apps/api/app/`)
+- `quiz.py` (quiz, attempts, encounter; `own_attempt` locks with `FOR UPDATE`; finishing the encounter calls `discover()`), `dragons.py` (`Rulebook` = game + adoption + care; adopt, get, `look_after`), `discoveries.py`.
+- All player tables are written by the API's postgres connection; RLS gives players owner-only **select**.
+- `db/models.py`: `Base.type_annotation_map` makes every datetime timezone-aware (a bug before 2026-10-02).
+- Shared test fixtures (`player`, `quiz_client`, `auth_headers`, `first_answers`, `_sql`, `_rows`) are in `tests/conftest.py`. `player` inserts a throwaway `auth.users` row; a trigger creates its profile.
 
-**Phase 4: living dragon** (2026-10-02)
-- `data/game/care.yaml` + `engines/care.py` (pure: `decay`, `care` → `CareOutcome` or `Refused`, `mood`, `thought`). Mood thresholds are in code (the Plan's table); numbers and texts are in YAML.
-- `app/dragons.py` now takes a `Rulebook` (game + adoption + care, `get_rulebook()`); `look_after()` locks the row, decays, applies, writes `needs_updated_at = now` and a `dragon_events` row. Reading doesn't write the decay back.
-- Migration `20261003120000_dragon_events.sql`, applied with `supabase migration up`. Adoption also logs an `adopted` event.
-- Gotcha fixed: `Mapped[datetime]` defaulted to `timestamp without time zone`. `Base.type_annotation_map` now makes every datetime timezone-aware.
-- Web: `components/dragon/care-panel.tsx` (passed into `DragonCard` as its `care` slot); mood badge + thought on the card.
-- 162 API tests, 57 web tests. **Not yet tried in a browser.**
+**Web** (`apps/web/src/`)
+- Quiz: `components/quiz/` (`quiz-flow`, `quiz-runner` with `storageKey`/`wording` props so the encounter reuses it, `trait-bars`, `notice`, `attempt-gate` for the id / sign-in / ownership checks).
+- Encounter: `components/encounter/encounter-flow.tsx` (a finished attempt redirects to the reveal; it invalidates `["discoveries"]`).
+- Reveal: `components/reveal/` (`reveal-flow` → `reveal` with phases circling → peel → landed and `TIMING`; `reveal-stage` uses Motion; `name-dragon` is passed in as the `naming` slot). Reduced motion = fades only; "seen" is kept in localStorage per attempt.
+- Dragon: `components/dragon/` (`dragon-home`, `dragon-card` with a `care` slot, `care-panel`); `lib/dragon/` (`my-dragon.ts`, `name.ts`).
+- Art: `lib/art/shapes.ts` (`BUILDS`: wings/head/tail/legs/body per species, generic fallback) → `components/art/dragon-silhouette.tsx`. To preview shapes, render them to HTML and screenshot with headless Chrome. Fade silhouettes with `opacity-*`, not `text-x/40`.
 
-**Phase 4: discoveries** (2026-10-02)
-- Migration `20261004120000_discoveries.sql` (back-fill from `quiz_attempts.ranking`; the user's account got Light Fury, Stormcutter and Crimson Goregutter). `app/discoveries.py` `discover()` is called in `quiz.complete_encounter` (via `quiz`, `on conflict do nothing`).
-- **Decision:** discoveries are per species; named dragons unlock with their species; the counter counts species only. "New" means discovered in the last 24 h (no "seen" tracking).
-- Web: `lib/dragon-book/academy.ts` (pure), `DragonBook` takes `academy`, `LockedCard`, `components/dragon-book/academy-book.tsx` (session + query) used by `/dragon-book`. The encounter invalidates `["discoveries"]`.
-- 165 API tests, 63 web tests.
+**Migrations** (applied locally with `supabase migration up`, which keeps the user's account; `db:reset` would wipe it)
+`20260930063434_init_extensions` · `20260930150000_canon_tables` · `20261001120000_quiz_attempts` · `20261002120000_profiles_and_dragons` · `20261003120000_dragon_events` · `20261004120000_discoveries` (back-filled; the user's account has Light Fury, Stormcutter and Crimson Goregutter).
 
 ## Decisions and deviations from Plan.md
 
 - **Local Supabase only** during development, so the user can learn it. Hosted Supabase comes at launch.
-- **Option 1 data:** all pre-filled rows go into the catalog (including low-confidence ones), labelled with confidence and sources, instead of waiting for film verification.
-- `appearances` and `rider_links` also carry `source_ids` and `confidence`. Plan §8.3 didn't have them, but they're needed so every fact is traceable.
-- Scene logs are the source of truth for `appearances.csv` and `rider_links.csv`: **edit the logs, not those two CSVs**.
-- Species and individual ids share one namespace (`/dragon-book/<id>`). The validator enforces the Plan's `the_` rule (`light_fury` vs `the_light_fury`).
-- **Player traits are converted to percentiles before matching** (exact, assuming random answers), because summed quiz scores cluster in the middle and the strong-personality dragons could never win. The Plan's min–max scores are still used for display.
-- Dropped `base_stats`; only `stat_caps` (a new dragon starts at 30–40% of caps). Removed two complement rules (restless→patience, timid→courage) that pulled everyone toward a few dragons.
-- Matchable pool: on-screen, trainable film species minus titans, the Night Light hatchlings and the Seashocker. Legendary target is 0.5–3% (the Plan's "≥3%" for every species can't also hold for legendaries). Calibration script lives in `apps/api/scripts/` (not root `scripts/`) because it imports the engine.
-- No quiz_versions / quiz_questions / quiz_options tables: the quiz stays in YAML. `quiz_attempts.user_id` references `auth.users` until `profiles` arrives in Phase 4.
-- CI has three jobs: API (starts `supabase db start` and loads the seed if it's empty), Data (catalog check, and checks that scene logs, catalog and build agree), and Web.
+- All pre-filled catalog rows are included, labelled with confidence and sources, instead of waiting for film verification. `appearances` and `rider_links` carry `source_ids` and `confidence`. **Edit the scene logs, not `appearances.csv` / `rider_links.csv`.**
+- Player traits are converted to **percentiles** before matching (summed scores cluster in the middle). Min–max scores are still used for display.
+- Dropped `base_stats` (only `stat_caps`) and two complement rules. Legendary target is 0.5–3%.
+- No quiz tables: the quiz stays in YAML. Never edit a quiz or encounter file players have taken; copy it to a new version.
+- **One dragon per player** (`player_dragons.user_id` unique); extra columns `compatibility` and `rules_version`.
+- Adoption and care data live in their own YAML files, outside the calibration fingerprint.
+- **Discoveries are per species**; named dragons unlock with their species; the counter counts species; "new" = discovered in the last 24 h.
+- Care refusals are 409s, not events; a dragon can't be fed when full or play when exhausted.
+- **Art:** no film assets or copied designs (Plan §16). Original part-based silhouettes now, fan wiki links, commissioned art later. The user is making images with GPT in `dragons_images/` (gitignored by the user). Claude advised describing original dragons instead of naming film species, and keeping the images out of git until that's settled.
+- CI has three jobs: API (starts `supabase db start`, loads the seed if empty), Data (catalog and calibration checks) and Web.
 
 ## Working with this user
 
-- They're learning as they build. Explain in **plain language with analogies** (Supabase = kitchen, Docker = room, images = flat-packed appliances, CLI = handyman). Keep tables short.
-- They prefer "just asking, don't do anything yet" questions to be answered without acting.
-- PC limits: 16 GB RAM (often under 1 GB free), a small C: drive. Run `pnpm db:start` (lean), not `db:start:full`. Web tests and builds are slow when RAM is tight.
-- Shell: PowerShell on Windows. Git Bash's `pnpm` path is broken (Anaconda PATH), so run pnpm from PowerShell.
+- They're learning as they build. Explain in **plain language with analogies** (Supabase = kitchen, Docker = room, CLI = handyman, the Dragon Book = sticker album). Keep tables short. When they say "didn't understand", give a simpler version with a short description.
+- They prefer "just asking, don't do anything" questions to be answered without acting, often with a plain yes or no first.
+- PC limits: 16 GB RAM (often under 1 GB free), a small C: drive. Run `pnpm db:start` (lean). Run web tests with `pnpm exec vitest run --maxWorkers=1` in `apps/web`; the default run can time out starting workers.
+- Shell: PowerShell on Windows. Git Bash's `pnpm` path is broken (Anaconda PATH), so run pnpm from PowerShell. Very long Bash heredocs with mixed quotes can fail; write files with the Write tool instead.
 - Docker Desktop must be running before `pnpm db:start`; it's often closed after a restart.
 
 ## Next steps
 
-> **Resume here (2026-10-02):** quiz → encounter → reveal → name → `/dragon` is built. **First:** try it in the browser (naming and the reveal animation are both untested there) and have the user review `data/game/adoption.yaml` (quirks and colours are Claude's drafts). Phase 4 is complete (M2 in code). **Next:** pick between Phase 5 (training: sessions API, 5 simple activities, XP/levels, refusals, history chart), Phase 3/4 polish, or deploying (hosted Supabase + Vercel + API host). The user is making their own dragon images with GPT in `dragons_images/` (gitignored); Claude advised describing original dragons rather than naming film species. The user commits themselves.
+> **Resume here (2026-10-02):** Phase 4 is complete; the MVP loop works in code. **First:** have the user try the reveal animation, naming, care actions and Academy mode in the browser (only quiz → encounter has been confirmed there), and commit. **Then** let the user choose between Phase 5 (training), polish, or deploying.
 
-1. ✅ Quiz wording and dragon personality review (done 2026-10-01). After any later edit to `data/game/`, run `pnpm match:calibrate` and the tests, and add a line to CHANGELOG.md.
-2. **Phase 3 UI:** ✅ quiz page. ✅ encounter scenes. ✅ reveal. **Phase 4:** ✅ profiles, naming/adoption, first dragon card. ✅ mood + idle thoughts, care actions + lazy needs decay. ✅ discoveries / Academy mode.
-3. Polish: extreme personalities only reach ~76–80% compatibility; runner-up explanations fall back to vague text.
-4. **User:** watch the films and confirm the scene logs (`yes?` → `yes`, source → `film`), then run `pnpm catalog:import && pnpm catalog:build && pnpm db:reset`.
-5. Optional: deploy the Dragon Book (Vercel), keep filters in the URL, and fill in abilities and diet in the catalog.
+1. **Phase 5: training** (Plan §9.6): training session API (start/complete, plausibility checks, one completion per session), 5 simple DOM activities with the `ActivityResult` contract, XP / levels / stages / unlocks (`progression.yaml`), energy and hunger costs with refusals (these also enable the Angry mood), and a training history chart.
+2. **Deploy** (when wanted): hosted Supabase, Vercel for the web app, a host for the API. The Plan's sign-up flow (email confirmation, profile display names) needs a look then.
+3. **Polish:** extreme personalities only reach ~76–80% compatibility; runner-up explanations can be vague; filters aren't kept in the URL; abilities and diet are missing from the catalog.
+4. **User:** review `adoption.yaml` and `care.yaml` drafts; watch the films and confirm the scene logs (`yes?` → `yes`, source → `film`), then run `pnpm catalog:import && pnpm catalog:build && pnpm db:reset`.
+5. After any edit to the matching files in `data/game/`: `pnpm match:calibrate`, the tests, and a CHANGELOG line.
