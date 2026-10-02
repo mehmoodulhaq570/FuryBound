@@ -4,7 +4,7 @@ import { motion } from "motion/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-import { DragonSilhouette } from "@/components/art/dragon-silhouette";
+import { DragonPortrait } from "@/components/art/dragon-portrait";
 import { TraitBars } from "@/components/quiz/trait-bars";
 import type { DragonMatch, QuizAttemptDetail, QuizMatch } from "@/lib/quiz/encounter";
 
@@ -80,7 +80,14 @@ function Result({
     <div className="mx-auto max-w-xl space-y-10">
       <Appear entrance={entrance} delay={0}>
         <section className="bg-surface border-line space-y-4 rounded-xl border p-6">
-          <DragonSilhouette speciesId={top.species_id} className="text-accent mx-auto w-28" />
+          <DragonPortrait
+            speciesId={top.species_id}
+            speciesName={top.name}
+            sizes="256px"
+            priority
+            className="mx-auto w-64"
+            silhouetteClassName="text-accent"
+          />
           <p className="text-accent text-center text-sm font-medium tracking-widest uppercase">
             It chose you
           </p>
@@ -113,11 +120,17 @@ function Result({
           <ul className="space-y-3">
             {runners_up.map((d) => (
               <li key={d.species_id} className="border-line space-y-2 rounded-xl border p-4">
-                <div className="flex items-baseline justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <DragonPortrait
+                    speciesId={d.species_id}
+                    speciesName={d.name}
+                    sizes="48px"
+                    className="size-12 shrink-0"
+                  />
                   <Link href={`/dragon-book/${d.species_id}`} className="font-medium underline">
                     {d.name}
                   </Link>
-                  <span className="text-muted">{d.compatibility}%</span>
+                  <span className="text-muted ml-auto">{d.compatibility}%</span>
                 </div>
                 <CompatibilityBar dragon={d} entrance={entrance} />
                 <p className="text-muted text-sm">{d.explanation}</p>

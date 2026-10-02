@@ -3,6 +3,8 @@ import Link from "next/link";
 import type { DragonCard as Card, Movie } from "@/lib/dragon-book/types";
 
 import { ClassBadge, ConfidenceMeter, FilmChips } from "./badges";
+import { DragonPortrait } from "@/components/art/dragon-portrait";
+
 import { Silhouette } from "./silhouette";
 
 export function DragonCard({
@@ -36,10 +38,11 @@ export function DragonCard({
             )}
           </h2>
         </div>
-        <Silhouette
+        <DragonPortrait
           speciesId={card.speciesId}
-          size={card.size}
-          className="text-muted size-12 shrink-0 opacity-50"
+          speciesName={card.speciesName ?? card.name}
+          sizes="64px"
+          className="size-16 shrink-0"
         />
       </div>
       <div className="mt-auto flex flex-wrap items-center justify-between gap-2">

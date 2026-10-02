@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { ClassBadge, ConfidenceMeter } from "@/components/dragon-book/badges";
-import { Silhouette } from "@/components/dragon-book/silhouette";
+import { DragonPortrait } from "@/components/art/dragon-portrait";
 import { dragons, getDragon, movies, sources, speciesOf } from "@/lib/dragon-book/catalog";
 import { APPEARANCE_HELP, APPEARANCE_LABELS, filmLabel } from "@/lib/dragon-book/labels";
 import type { DragonEntry } from "@/lib/dragon-book/types";
@@ -79,7 +79,6 @@ export default async function DragonPage(props: PageProps<"/dragon-book/[id]">) 
   const entry = getDragon((await props.params).id);
   if (!entry) notFound();
 
-  const species = entry.kind === "species" ? entry : speciesOf(entry.species.id);
   const namedDragons =
     entry.kind === "species" ? entry.known_individuals.flatMap((id) => getDragon(id) ?? []) : [];
 
@@ -91,7 +90,7 @@ export default async function DragonPage(props: PageProps<"/dragon-book/[id]">) 
         </Link>
       </div>
 
-      <header className="flex items-start justify-between gap-6">
+      <header className="flex flex-col-reverse gap-6 sm:flex-row sm:items-start sm:justify-between">
         <div className="min-w-0 space-y-2">
           <p className="text-accent text-sm font-medium tracking-widest uppercase">
             {entry.kind === "species" ? "Species" : "Named dragon"}
@@ -111,11 +110,20 @@ export default async function DragonPage(props: PageProps<"/dragon-book/[id]">) 
             See what it looks like on the fan wiki ↗
           </a>
         </div>
-        <Silhouette
-          speciesId={entry.kind === "species" ? entry.id : entry.species.id}
-          size={species?.size ?? null}
-          className="text-muted hidden size-28 shrink-0 opacity-40 sm:block"
-        />
+        <figure className="w-48 shrink-0 space-y-1 sm:w-56">
+          <DragonPortrait
+            speciesId={entry.kind === "species" ? entry.id : entry.species.id}
+            speciesName={entry.kind === "species" ? entry.name : entry.species.name}
+            sizes="(min-width: 640px) 224px, 192px"
+            priority
+            className="w-full"
+          />
+          <figcaption className="text-muted text-xs">
+            {entry.kind === "species"
+              ? "Original artwork, not the film design."
+              : `${entry.species.name} species artwork, not ${entry.name} from the films.`}
+          </figcaption>
+        </figure>
       </header>
 
       <Facts entry={entry} />

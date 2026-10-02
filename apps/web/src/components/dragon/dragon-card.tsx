@@ -1,4 +1,4 @@
-import { DragonSilhouette } from "@/components/art/dragon-silhouette";
+import { DragonPortrait } from "@/components/art/dragon-portrait";
 import type { Labelled, PlayerDragon } from "@/lib/dragon/my-dragon";
 
 function Bars({ title, items }: { title: string; items: Labelled[] }) {
@@ -52,15 +52,24 @@ export function DragonCard({ dragon, care }: { dragon: PlayerDragon; care?: Reac
   return (
     <div className="mx-auto max-w-xl space-y-10">
       <section className="bg-surface border-line space-y-4 rounded-xl border p-6">
-        <DragonSilhouette
+        <DragonPortrait
           speciesId={dragon.species_id}
-          color={dragon.color_hex ?? undefined}
-          outline
-          className="text-accent mx-auto w-32"
+          speciesName={dragon.species_name}
+          sizes="256px"
+          priority
+          className="mx-auto w-64"
+          silhouetteClassName="text-accent"
         />
         <div className="text-center">
           <h1 className="text-3xl font-semibold tracking-tight">{dragon.name}</h1>
           <p className="text-muted">
+            {dragon.color_variant && (
+              <span
+                aria-hidden="true"
+                className="border-line mr-1.5 inline-block size-3 rounded-full border align-middle"
+                style={{ background: dragon.color_hex ?? undefined }}
+              />
+            )}
             {dragon.color_variant ? `${capitalise(dragon.color_variant)} ` : ""}
             {dragon.species_name} · <span className="capitalize">{dragon.rarity}</span>
           </p>
