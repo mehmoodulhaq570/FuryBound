@@ -11,6 +11,7 @@ from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db.models import QuizAttemptRow, SpeciesRow
+from app.discoveries import discover
 from app.engines import matching
 from app.engines.game_data import TRAITS, GameData
 from app.engines.matching import ALGORITHM_VERSION, display_scores, raw_totals
@@ -227,6 +228,8 @@ async def complete_encounter(
     ]
     row.algorithm_version = result.algorithm_version
     row.completed_at = func.now()
+    # The three that circle overhead in the reveal are met (Plan §9.1: quiz runners-up).
+    await discover(session, user_id, (r["species_id"] for r in row.ranking), via="quiz")
     await session.commit()
     await session.refresh(row)
     return await _detail(session, data, row)

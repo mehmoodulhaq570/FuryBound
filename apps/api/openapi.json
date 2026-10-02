@@ -1047,6 +1047,47 @@
           }
         }
       }
+    },
+    "/api/v1/discoveries": {
+      "get": {
+        "tags": [
+          "dragon book"
+        ],
+        "summary": "My Discoveries",
+        "description": "Every dragon the player has met, oldest first. Named dragons follow their species.",
+        "operationId": "my_discoveries",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/Discovery"
+                  },
+                  "type": "array",
+                  "title": "Response My Discoveries"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
     }
   },
   "components": {
@@ -1171,6 +1212,45 @@
           "role"
         ],
         "title": "CurrentUser"
+      },
+      "Discovery": {
+        "properties": {
+          "entity_kind": {
+            "type": "string",
+            "title": "Entity Kind",
+            "examples": [
+              "species"
+            ]
+          },
+          "entity_id": {
+            "type": "string",
+            "title": "Entity Id",
+            "examples": [
+              "deadly_nadder"
+            ]
+          },
+          "via": {
+            "type": "string",
+            "title": "Via",
+            "description": "How the player met it",
+            "examples": [
+              "quiz"
+            ]
+          },
+          "discovered_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Discovered At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "entity_kind",
+          "entity_id",
+          "via",
+          "discovered_at"
+        ],
+        "title": "Discovery"
       },
       "DragonAdopt": {
         "properties": {

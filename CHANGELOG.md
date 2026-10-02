@@ -5,6 +5,10 @@ All notable changes to FuryBound / Dragon Academy. The format follows [Keep a Ch
 ## [Unreleased]
 
 ### Added
+- **Discoveries / Academy mode** in the Dragon Book: signed-in players see dragons they haven't met as "???" with only a silhouette, a "X / 50 species discovered" bar, "new" badges for the last day's discoveries and a Show all switch. Searching doesn't reveal hidden names. Logged-out visitors still see the full book.
+- The three dragons in the reveal (top match + 2 runners-up) are discovered when the encounter is finished. Named dragons unlock with their species.
+- `discoveries` table (migration `20261004120000_discoveries.sql`, owner-only read), back-filled from every finished attempt. `GET /api/v1/discoveries`.
+- Tests: 3 API tests and 6 web tests.
 - **A living dragon** on `/dragon`: needs drift while you're away (hunger +4/h, energy +8/h, happiness −2/h), worked out when you come back. You can **Feed** (6 foods; liked ones please it more, disliked ones cost happiness and trust), **Rest** and **Play**. The dragon refuses with a reason when it's full, wide awake or too tired. A **mood** (Hungry, Tired, Angry, Excited, Curious, Happy; first matching rule wins, Plan §9.7) and an **idle thought** that changes every hour show on the card.
 - `data/game/care.yaml` (invented): decay rates, care action effects and refusals, messages and idle thoughts.
 - Care engine (`apps/api/app/engines/care.py`, pure): decay, care actions, mood and thoughts. Scared waits for storms in stories; Angry needs the training refusals that arrive in Phase 5.

@@ -156,3 +156,13 @@ class DragonEventRow(Base):
     kind: Mapped[str]
     payload: Mapped[dict[str, Any]] = mapped_column(JSONB, server_default=text("'{}'"))
     created_at: Mapped[datetime] = mapped_column(server_default=text("now()"))
+
+
+class DiscoveryRow(Base):
+    __tablename__ = "discoveries"
+
+    user_id: Mapped[UUID] = mapped_column(primary_key=True)
+    entity_kind: Mapped[str] = mapped_column(primary_key=True)
+    entity_id: Mapped[str] = mapped_column(primary_key=True)
+    via: Mapped[str]
+    discovered_at: Mapped[datetime] = mapped_column(server_default=text("now()"))

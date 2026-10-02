@@ -60,6 +60,8 @@ function Scenes({ attempt }: { attempt: QuizAttemptDetail }) {
     onSuccess: (detail) => {
       saveProgress(null, encounterStorageKey(attempt.id));
       queryClient.setQueryData(attemptQueryKey(attempt.id), detail);
+      // The reveal's three dragons are now discovered in the Dragon Book.
+      queryClient.invalidateQueries({ queryKey: ["discoveries"] });
     },
     // E.g. already finished in another tab: reloading the attempt shows that result.
     onError: () => queryClient.invalidateQueries({ queryKey: attemptQueryKey(attempt.id) }),

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { DragonBook } from "@/components/dragon-book/dragon-book";
+import { AcademyBook } from "@/components/dragon-book/academy-book";
 import { dragons, movies, toCard } from "@/lib/dragon-book/catalog";
 
 export const metadata: Metadata = {
@@ -25,7 +25,7 @@ export default function DragonBookPage() {
           checked against the films, so look for the confidence dots.
         </p>
       </header>
-      <DragonBook cards={cards} movies={movies} />
+      <AcademyBook cards={cards} movies={movies} />
     </div>
   );
 }

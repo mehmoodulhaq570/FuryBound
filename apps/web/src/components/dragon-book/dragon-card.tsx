@@ -9,10 +9,13 @@ export function DragonCard({
   card,
   movies,
   showClass,
+  isNew = false,
 }: {
   card: Card;
   movies: Movie[];
   showClass: boolean;
+  /** Just discovered (Academy mode). */
+  isNew?: boolean;
 }) {
   return (
     <Link
@@ -24,7 +27,14 @@ export function DragonCard({
           <p className="text-muted text-xs">
             {card.kind === "species" ? "Species" : `Named dragon · ${card.speciesName}`}
           </p>
-          <h2 className="group-hover:text-accent truncate font-semibold">{card.name}</h2>
+          <h2 className="group-hover:text-accent truncate font-semibold">
+            {card.name}
+            {isNew && (
+              <span className="bg-accent ml-2 rounded-full px-2 py-0.5 align-middle text-xs font-medium text-white">
+                new
+              </span>
+            )}
+          </h2>
         </div>
         <Silhouette
           speciesId={card.speciesId}
@@ -42,5 +52,26 @@ export function DragonCard({
         </div>
       )}
     </Link>
+  );
+}
+
+/** A dragon the player hasn't met yet (Academy mode): only its shape shows. */
+export function LockedCard({ card }: { card: Card }) {
+  return (
+    <div className="border-line flex h-full items-start justify-between gap-3 rounded-xl border border-dashed p-4">
+      <div className="min-w-0">
+        <p className="text-muted text-xs">
+          {card.kind === "species" ? "Species" : "Named dragon"} · not met yet
+        </p>
+        <h2 className="text-muted font-semibold" aria-label="Undiscovered dragon">
+          ???
+        </h2>
+      </div>
+      <Silhouette
+        speciesId={card.speciesId}
+        size={card.size}
+        className="text-muted size-12 shrink-0 opacity-30"
+      />
+    </div>
   );
 }

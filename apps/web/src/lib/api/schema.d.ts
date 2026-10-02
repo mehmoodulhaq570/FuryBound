@@ -361,6 +361,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/discoveries": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * My Discoveries
+         * @description Every dragon the player has met, oldest first. Named dragons follow their species.
+         */
+        get: operations["my_discoveries"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -411,6 +431,30 @@ export interface components {
             email?: string | null;
             /** Role */
             role: string;
+        };
+        /** Discovery */
+        Discovery: {
+            /**
+             * Entity Kind
+             * @example species
+             */
+            entity_kind: string;
+            /**
+             * Entity Id
+             * @example deadly_nadder
+             */
+            entity_id: string;
+            /**
+             * Via
+             * @description How the player met it
+             * @example quiz
+             */
+            via: string;
+            /**
+             * Discovered At
+             * Format: date-time
+             */
+            discovered_at: string;
         };
         /** DragonAdopt */
         DragonAdopt: {
@@ -1676,6 +1720,35 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    my_discoveries: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Discovery"][];
+                };
+            };
+            /** @description Missing or invalid token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
         };

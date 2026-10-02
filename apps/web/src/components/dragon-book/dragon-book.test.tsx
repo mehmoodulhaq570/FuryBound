@@ -73,4 +73,35 @@ describe("DragonBook", () => {
     expect(screen.queryAllByText("franchise")).toHaveLength(0);
     expect((screen.getByLabelText("Class (franchise)") as HTMLSelectElement).disabled).toBe(true);
   });
+
+  describe("Academy mode", () => {
+    const academy = { discovered: new Map([["night_fury", new Date().toISOString()]]) };
+
+    it("hides dragons the player hasn't met, and counts what they have", () => {
+      render(<DragonBook cards={CARDS} movies={MOVIES} academy={academy} />);
+
+      expect(screen.getByText("species discovered")).toBeTruthy();
+      expect(
+        screen
+          .getByRole("progressbar", { name: "Species discovered" })
+          .getAttribute("aria-valuenow"),
+      ).toBe("1");
+      expect(screen.getByRole("heading", { name: /Night Fury/ })).toBeTruthy();
+      expect(screen.getByText("new")).toBeTruthy();
+      expect(screen.queryByText("Stormcutter")).toBeNull();
+      expect(screen.getByRole("heading", { name: "Undiscovered dragon" })).toBeTruthy();
+    });
+
+    it("doesn't let search reveal a hidden dragon", () => {
+      render(<DragonBook cards={CARDS} movies={MOVIES} academy={academy} />);
+      fireEvent.change(screen.getByPlaceholderText(/Search/), { target: { value: "storm" } });
+      expect(screen.queryByRole("heading", { name: "Undiscovered dragon" })).toBeNull();
+    });
+
+    it("shows everything with Show all", () => {
+      render(<DragonBook cards={CARDS} movies={MOVIES} academy={academy} />);
+      fireEvent.click(screen.getByLabelText("Show all"));
+      expect(names()).toEqual(["Night Furynew", "Stormcutter"]);
+    });
+  });
 });

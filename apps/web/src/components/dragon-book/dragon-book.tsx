@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 
+import { type Academy, isDiscovered, isNew, progress } from "@/lib/dragon-book/academy";
 import {
   classesOf,
   createSearch,
@@ -12,7 +13,7 @@ import {
 import { APPEARANCE_LABELS, APPEARANCE_TYPES, filmLabel } from "@/lib/dragon-book/labels";
 import type { AppearanceType, DragonCard as Card, Movie } from "@/lib/dragon-book/types";
 
-import { DragonCard } from "./dragon-card";
+import { DragonCard, LockedCard } from "./dragon-card";
 
 const selectClass =
   "border-line bg-surface rounded-lg border px-3 py-2 text-sm focus-visible:outline-accent focus-visible:outline-2";
@@ -50,11 +51,29 @@ function Select<T extends string>({
   );
 }
 
-export function DragonBook({ cards, movies }: { cards: Card[]; movies: Movie[] }) {
+/**
+ * The Dragon Book list. With `academy` (a signed-in player), dragons they haven't met show
+ * as "???" unless they choose "Show all".
+ */
+export function DragonBook({
+  cards,
+  movies,
+  academy = null,
+}: {
+  cards: Card[];
+  movies: Movie[];
+  academy?: Academy | null;
+}) {
   const [filters, setFilters] = useState<Filters>(DEFAULT_FILTERS);
+  const [showAll, setShowAll] = useState(false);
   const search = useMemo(() => createSearch(cards), [cards]);
   const classes = useMemo(() => classesOf(cards), [cards]);
-  const shown = visibleCards(cards, filters, search);
+  const locking = academy !== null && !showAll;
+  const locked = (card: Card) => locking && !isDiscovered(card, academy!);
+  // Searching by name mustn't reveal which "???" is which.
+  const shown = visibleCards(cards, filters, search).filter(
+    (card) => !(filters.query.trim() && locked(card)),
+  );
   const filtered = JSON.stringify(filters) !== JSON.stringify(DEFAULT_FILTERS);
 
   const set = <K extends keyof Filters>(key: K, value: Filters[K]) =>
@@ -62,6 +81,9 @@ export function DragonBook({ cards, movies }: { cards: Card[]; movies: Movie[] }
 
   return (
     <div className="space-y-6">
+      {academy && (
+        <AcademyBar academy={academy} cards={cards} showAll={showAll} onShowAll={setShowAll} />
+      )}
       <div className="space-y-4">
         <label className="block">
           <span className="sr-only">Search dragons</span>
@@ -135,7 +157,16 @@ export function DragonBook({ cards, movies }: { cards: Card[]; movies: Movie[] }
         <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {shown.map((card) => (
             <li key={card.id}>
-              <DragonCard card={card} movies={movies} showClass={filters.includeFranchise} />
+              {locked(card) ? (
+                <LockedCard card={card} />
+              ) : (
+                <DragonCard
+                  card={card}
+                  movies={movies}
+                  showClass={filters.includeFranchise}
+                  isNew={academy !== null && isNew(card, academy)}
+                />
+              )}
             </li>
           ))}
         </ul>
@@ -144,6 +175,54 @@ export function DragonBook({ cards, movies }: { cards: Card[]; movies: Movie[] }
           No dragons match. Try fewer filters or a different spelling.
         </p>
       )}
+    </div>
+  );
+}
+
+function AcademyBar({
+  academy,
+  cards,
+  showAll,
+  onShowAll,
+}: {
+  academy: Academy;
+  cards: Card[];
+  showAll: boolean;
+  onShowAll: (showAll: boolean) => void;
+}) {
+  const { found, total } = progress(cards, academy);
+  return (
+    <div className="bg-surface border-line flex flex-wrap items-center justify-between gap-3 rounded-xl border p-4">
+      <div className="min-w-48 flex-1 space-y-2">
+        <p className="text-sm">
+          <span className="font-semibold">
+            {found} / {total}
+          </span>{" "}
+          species discovered
+        </p>
+        <div
+          role="progressbar"
+          aria-label="Species discovered"
+          aria-valuemin={0}
+          aria-valuemax={total}
+          aria-valuenow={found}
+          className="bg-line h-2 overflow-hidden rounded-full"
+        >
+          <div
+            className="bg-accent h-full rounded-full"
+            style={{ width: `${total ? (found / total) * 100 : 0}%` }}
+          />
+        </div>
+      </div>
+      <label className="flex items-center gap-2 text-sm">
+        <input
+          type="checkbox"
+          checked={showAll}
+          onChange={(e) => onShowAll(e.target.checked)}
+          className="accent-accent size-4"
+        />
+        Show all
+      </label>
     </div>
   );
 }
