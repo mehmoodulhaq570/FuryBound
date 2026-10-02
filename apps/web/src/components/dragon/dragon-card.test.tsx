@@ -29,7 +29,10 @@ const dragon: PlayerDragon = {
   dislikes: ["eel"],
   trust: 20,
   level: 1,
+  xp: 0,
+  xp_to_next: 100,
   stage: "newborn",
+  stage_label: "Newborn",
   created_at: "2026-10-02T12:00:00Z",
 };
 

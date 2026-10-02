@@ -47,7 +47,10 @@ class PlayerDragon(BaseModel):
     dislikes: list[str]
     trust: int = Field(ge=0, le=100)
     level: int
-    stage: str
+    xp: int = Field(description="Progress toward the next level")
+    xp_to_next: int | None = Field(description="XP the next level needs; null at the top")
+    stage: str = Field(examples=["newborn"])
+    stage_label: str = Field(examples=["Newborn"])
     created_at: datetime
 
 

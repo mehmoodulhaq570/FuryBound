@@ -31,6 +31,7 @@
 | **"It chose you"** | An animated reveal: your top three dragons circle overhead, two peel away and one lands, with a compatibility score and the reasons for the match. Works with reduced motion. |
 | **Your dragon** | Name it and it's yours: its own personality variation, quirks, colour and starting stats. |
 | **Care and mood** | Needs change while you're away. Feed it (it has favourite and hated foods), let it rest, play with it. It has moods and idle thoughts, and it will tell you no. |
+| **Training** | Five mini-games (flight, speed, accuracy, memory, obedience) earn XP and raise stats. Your dragon levels up through five stages, unlocks new activities, and refuses when it's exhausted. A chart shows how its stats grew. |
 | **Academy mode** | Signed in, the Dragon Book becomes a collection: dragons you haven't met show as "???" until you discover them. |
 
 ## How it works
@@ -40,12 +41,12 @@
  ─────────────────                         ───────                         ───────────────────
  Dragon Book (static, from dragons.json)
  Quiz → Encounter → Reveal → My dragon ──► /api/v1/...  ── engines ──►    canon tables (seeded)
-        TanStack Query, typed client        matching · adoption · care     player tables (RLS)
+        TanStack Query, typed client        matching · adoption · care · training     player tables (RLS)
         Supabase Auth (JWT) ───────────────► verifies JWT                  auth.users → profiles
 ```
 
 - **Four data layers.** Canon facts (sourced from the films) are kept apart from invented game data (`data/game/*.yaml`), player data (Postgres) and generated content. Game-layer values are never presented as film facts.
-- **Pure, deterministic engines.** Matching, adoption and care are plain Python functions with no I/O: the same input always gives the same dragon, and they're unit-tested in isolation.
+- **Pure, deterministic engines.** Matching, adoption, care and training are plain Python functions with no I/O: the same input always gives the same dragon, and they're unit-tested in isolation, with property tests (Hypothesis) for promises like "a higher score never gives less XP".
 - **Calibrated matching.** A Monte Carlo simulation of 100,000 random players checks that every dragon is a reachable match and that legendary dragons stay rare. CI fails if the game data changes without recalibrating.
 - **Lazy simulation.** A dragon's needs are worked out from the time since your last visit when you come back, so nothing runs in the background.
 - **One source of truth for types.** The frontend's API types are generated from FastAPI's OpenAPI schema; CI fails if they drift.
@@ -57,7 +58,7 @@
 | Web | Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS 4, TanStack Query, Motion, Fuse.js |
 | API | Python 3.14, FastAPI, Pydantic, SQLAlchemy 2 (async) + asyncpg, managed with uv |
 | Database and auth | Supabase (Postgres with row-level security, Supabase Auth), run locally in Docker |
-| Quality | Vitest + Testing Library, pytest, Ruff, mypy (strict), ESLint, Prettier, pre-commit |
+| Quality | Vitest + Testing Library, pytest + Hypothesis, Ruff, mypy (strict), ESLint, Prettier, pre-commit |
 | CI | GitHub Actions: API, Data and Web jobs |
 
 See [TECH_STACK.md](TECH_STACK.md) for versions and the reasons behind each choice.
@@ -104,7 +105,8 @@ Then:
 1. Open http://localhost:3000 and create an account at **Sign in**.
 2. Choose **Find your dragon**: take the quiz, step into the fog and see which dragon chooses you.
 3. Name it, then visit **My dragon** to look after it.
-4. Open the **Dragon Book** to see what you've discovered.
+4. **Train** it in the mini-games to level it up.
+5. Open the **Dragon Book** to see what you've discovered.
 
 Supabase Studio (a database browser) runs at http://localhost:54323.
 
@@ -155,21 +157,25 @@ All routes are under `/api/v1`. Try them at http://localhost:8000/api/v1/docs.
 | POST | `/dragons` | Name and adopt the dragon that chose you |
 | GET | `/dragons/me` | Your dragon: needs as of now, mood, idle thought, stats |
 | POST | `/dragons/{id}/feed` · `/rest` · `/play` | Care actions (409 with the dragon's reason if it refuses) |
+| GET | `/dragons/{id}/training` | Level, XP and every activity with its lock state |
+| POST | `/dragons/{id}/training-sessions` | Start a session (403 if locked, 409 if the dragon refuses) |
+| POST | `/training-sessions/{id}/complete` | Report the activity's score and duration (once): XP, stat gains, level-ups |
+| GET | `/dragons/{id}/history` | Finished sessions with the stats after each |
 | GET | `/discoveries` | The dragons you've met |
 
 ## Project structure
 
 ```
 apps/
-  web/            Next.js app: Dragon Book, quiz, encounter, reveal, dragon home
+  web/            Next.js app: Dragon Book, quiz, encounter, reveal, dragon home, training
   api/            FastAPI app
-    app/engines/  Pure game engines: matching, adoption, care
+    app/engines/  Pure game engines: matching, adoption, care, training
     app/routers/  HTTP routes          app/schemas/  Request and response models
     tests/        pytest suite         scripts/      Matching calibration
 data/
   research/       Scene logs per film (the source of truth for appearances)
   catalog/        Curated CSVs: species, named dragons, appearances, riders, sources
-  game/           Invented game data: traits, quiz, species profiles, adoption, care
+  game/           Invented game data: traits, quiz, species profiles, adoption, care, progression
   build/          Generated: seed.sql, dragons.json, matching calibration
 scripts/          Catalog import, validation and build
 supabase/         Local Supabase config and SQL migrations (the schema source of truth)
@@ -190,8 +196,8 @@ Game values (personalities, quirks, stats, care rules) are invented for play and
 | 2 | Dragon Book | ✅ Done |
 | 3 | Quiz, encounter, matching engine and reveal | ✅ Done |
 | 4 | Your dragon: adoption, care, mood, discoveries (**MVP**) | ✅ Done |
-| 5 | Training: activities, XP, levels and unlocks | Next |
-| 6 | AI companion with memory | Planned |
+| 5 | Training: activities, XP, levels and unlocks | ✅ Done |
+| 6 | AI companion with memory | Next |
 | 7 | Mini-games and arena | Planned |
 | 8 | AI adventure mode | Planned |
 

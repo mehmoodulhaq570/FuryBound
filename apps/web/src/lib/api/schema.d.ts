@@ -381,10 +381,104 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/dragons/{dragon_id}/training": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Training Overview
+         * @description Level, XP and every activity, with whether it's unlocked yet.
+         */
+        get: operations["training_overview"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/dragons/{dragon_id}/training-sessions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Start Training
+         * @description Start a session; the activity then reports its result to `/complete`.
+         */
+        post: operations["start_training"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/training-sessions/{session_id}/complete": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Complete Training
+         * @description Report the activity's result (once): XP, stat gains, level-ups and unlocks.
+         */
+        post: operations["complete_training"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/dragons/{dragon_id}/history": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Training History
+         * @description Finished training sessions, oldest first, with the stats after each.
+         */
+        get: operations["training_history"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /**
+         * ActivityResult
+         * @description What every activity reports when it finishes (Plan §9.6 activity contract).
+         */
+        ActivityResult: {
+            /** Score */
+            score: number;
+            /** Duration Ms */
+            duration_ms: number;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            } | null;
+        };
         /** Appearance */
         Appearance: {
             /** Movie Id */
@@ -583,6 +677,33 @@ export interface components {
              */
             status: "ok";
         };
+        /** HistoryEntry */
+        HistoryEntry: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Activity */
+            activity: string;
+            /**
+             * Completed At
+             * Format: date-time
+             */
+            completed_at: string;
+            /** Score */
+            score: number;
+            /** Xp Gained */
+            xp_gained: number;
+            /** Stat Deltas */
+            stat_deltas: {
+                [key: string]: number;
+            };
+            /** Stats After */
+            stats_after: {
+                [key: string]: number;
+            };
+        };
         /** IndividualDetail */
         IndividualDetail: {
             /** Id */
@@ -731,8 +852,26 @@ export interface components {
             trust: number;
             /** Level */
             level: number;
-            /** Stage */
+            /**
+             * Xp
+             * @description Progress toward the next level
+             */
+            xp: number;
+            /**
+             * Xp To Next
+             * @description XP the next level needs; null at the top
+             */
+            xp_to_next: number | null;
+            /**
+             * Stage
+             * @example newborn
+             */
             stage: string;
+            /**
+             * Stage Label
+             * @example Newborn
+             */
+            stage_label: string;
             /**
              * Created At
              * Format: date-time
@@ -862,6 +1001,14 @@ export interface components {
             /** @description For individuals: their species */
             species: components["schemas"]["SpeciesRef"] | null;
         };
+        /** SessionStart */
+        SessionStart: {
+            /**
+             * Activity
+             * @example flight
+             */
+            activity: string;
+        };
         /** Source */
         Source: {
             /** Id */
@@ -931,6 +1078,129 @@ export interface components {
              * @description Films the species appears in, in film order
              */
             movies: string[];
+        };
+        /** StageInfo */
+        StageInfo: {
+            /**
+             * Id
+             * @example newborn
+             */
+            id: string;
+            /**
+             * Label
+             * @example Newborn
+             */
+            label: string;
+        };
+        /** StatChange */
+        StatChange: {
+            /**
+             * Id
+             * @example speed
+             */
+            id: string;
+            /**
+             * Label
+             * @example Speed
+             */
+            label: string;
+            /** Delta */
+            delta: number;
+            /** Value */
+            value: number;
+        };
+        /** TrainingActivity */
+        TrainingActivity: {
+            /**
+             * Id
+             * @example flight
+             */
+            id: string;
+            /**
+             * Label
+             * @example Flight
+             */
+            label: string;
+            /** Description */
+            description: string;
+            /**
+             * Trains
+             * @example [
+             *       "agility",
+             *       "speed"
+             *     ]
+             */
+            trains: string[];
+            /** Energy Cost */
+            energy_cost: number;
+            /** Unlocked */
+            unlocked: boolean;
+            unlocks_at: components["schemas"]["StageInfo"];
+            /** Unlocks At Level */
+            unlocks_at_level: number;
+        };
+        /** TrainingOverview */
+        TrainingOverview: {
+            /** Level */
+            level: number;
+            /** Xp */
+            xp: number;
+            /** Xp To Next */
+            xp_to_next: number | null;
+            stage: components["schemas"]["StageInfo"];
+            /** Activities */
+            activities: components["schemas"]["TrainingActivity"][];
+        };
+        /** TrainingResult */
+        TrainingResult: {
+            /**
+             * Message
+             * @example Ember nailed it!
+             */
+            message: string;
+            /** Score */
+            score: number;
+            /** Xp Gained */
+            xp_gained: number;
+            /** Stat Changes */
+            stat_changes: components["schemas"]["StatChange"][];
+            /**
+             * Level Ups
+             * @description Every level reached, in order (often empty)
+             */
+            level_ups: number[];
+            stage: components["schemas"]["StageInfo"];
+            /**
+             * New Activities
+             * @description Activity ids this session unlocked
+             */
+            new_activities: string[];
+            dragon: components["schemas"]["PlayerDragon"];
+        };
+        /** TrainingSession */
+        TrainingSession: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Activity */
+            activity: string;
+            /**
+             * Started At
+             * Format: date-time
+             */
+            started_at: string;
+            /**
+             * Min Ms
+             * @description Shortest plausible attempt
+             */
+            min_ms: number;
+            /**
+             * Max Ms
+             * @description Longest plausible attempt
+             */
+            max_ms: number;
         };
         /** TraitScore */
         TraitScore: {
@@ -1749,6 +2019,237 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    training_overview: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                dragon_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TrainingOverview"];
+                };
+            };
+            /** @description Missing or invalid token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not this player's dragon */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    start_training: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                dragon_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SessionStart"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TrainingSession"];
+                };
+            };
+            /** @description Missing or invalid token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description The activity unlocks at a later stage */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not this player's dragon */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description The dragon refuses (exhausted or too hungry) */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unknown activity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    complete_training: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                session_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ActivityResult"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TrainingResult"];
+                };
+            };
+            /** @description Missing or invalid token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description No such session for this player */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Already finished, or expired */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description The duration isn't plausible */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    training_history: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                dragon_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HistoryEntry"][];
+                };
+            };
+            /** @description Missing or invalid token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not this player's dragon */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };

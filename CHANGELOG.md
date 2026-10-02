@@ -4,7 +4,22 @@ All notable changes to FuryBound / Dragon Academy. The format follows [Keep a Ch
 
 ## [Unreleased]
 
-Nothing yet.
+## Phase 5: Training (2026-10-02)
+
+### Added
+- **Training** at `/train`: your dragon's level and XP, the five activities (locked ones show the stage that unlocks them), and a **progress chart**: one small line chart per stat (shared 0–100 scale, hover readout, table view). "Train" is in the header and on `/dragon`.
+- **Five mini-games** at `/train/<activity>`, all simple DOM versions of the Plan's activity contract (score 0–100 + duration):
+  - **Flight** (agility, speed): press when the marker is in the glowing zone.
+  - **Speed** (speed, stamina): tap on every wingbeat.
+  - **Accuracy** (firepower): hit targets on a grid before they vanish. Unlocks at Young.
+  - **Memory** (intelligence): repeat a growing sequence of signs. Unlocks at Young.
+  - **Obedience** (obedience): answer commands with the right signal, fast. Unlocks at Trained.
+- **Progression** (Plan §9.6): XP = (20 + 0.6 × score) × mood multiplier; level curve 100 × L^1.5 up to level 30; stages Newborn → Young (5) → Trained (10) → Elite (20) → Master (30); stat gains shrink near the species' caps. Each session costs energy and hunger, nudges happiness by score and builds trust (more when the dragon's needs were met). A level-up celebration shows new stages and unlocks.
+- **Refusals**: an exhausted (energy < 15) or very hungry (hunger > 85) dragon won't train. Refusals are logged, so a low-trust dragon that refused recently is **Angry**.
+- **API**: `GET /dragons/{id}/training`, `POST /dragons/{id}/training-sessions`, `POST /training-sessions/{id}/complete` (once per session; the duration must be plausible for the activity and fit inside the session; sessions expire after 30 minutes) and `GET /dragons/{id}/history`. `PlayerDragon` now has `xp`, `xp_to_next` and `stage_label`.
+- `data/game/progression.yaml` (every number above) and the pure engine `apps/api/app/engines/training.py`.
+- `training_sessions` table (migration `20261005120000_training_sessions.sql`), with the mood and needs at the start and the stats afterwards.
+- **Hypothesis** property tests: a higher score never gives less XP, and stats never pass their caps. The API suite is now 184 tests and the web suite 76.
 
 ## Phase 4: Your dragon (2026-10-02)
 

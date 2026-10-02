@@ -10,7 +10,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db.models import DragonEventRow, PlayerDragonRow, SpeciesRow
-from app.engines import care
+from app.engines import care, training
 from app.engines.adoption import Adoption, clean_name, get_adoption, roll_dragon
 from app.engines.game_data import TRAITS, GameData, get_game_data
 from app.quiz import AttemptConflict, own_attempt
@@ -31,11 +31,12 @@ class Rulebook:
     game: GameData
     adoption: Adoption
     care: care.CareRules
+    progression: training.Progression
 
 
 @lru_cache
 def get_rulebook() -> Rulebook:
-    return Rulebook(get_game_data(), get_adoption(), care.get_care())
+    return Rulebook(get_game_data(), get_adoption(), care.get_care(), training.get_progression())
 
 
 class NoDragon(LookupError):
@@ -46,11 +47,11 @@ class InvalidFood(ValueError):
     pass
 
 
-def _now() -> datetime:
+def now() -> datetime:
     return datetime.now(UTC)
 
 
-async def _mine(
+async def mine(
     session: AsyncSession, user_id: UUID, dragon_id: UUID | None = None, *, lock: bool = False
 ) -> PlayerDragonRow | None:
     query = select(PlayerDragonRow).where(PlayerDragonRow.user_id == user_id)
@@ -66,19 +67,26 @@ def _current_needs(book: Rulebook, row: PlayerDragonRow, now: datetime) -> dict[
     return care.decay(book.care, row.needs, hours)
 
 
-async def present(
-    session: AsyncSession, book: Rulebook, row: PlayerDragonRow, now: datetime | None = None
-) -> PlayerDragon:
-    now = now or _now()
-    name = await session.scalar(select(SpeciesRow.name).where(SpeciesRow.id == row.species_id))
+async def state(
+    session: AsyncSession, book: Rulebook, row: PlayerDragonRow, at: datetime
+) -> tuple[dict[care.Need, int], care.Mood]:
+    """The dragon's needs and mood as of `at` (moods read the last hour's events)."""
     recent = await session.scalars(
         select(DragonEventRow.kind).where(
             DragonEventRow.dragon_id == row.id,
-            DragonEventRow.created_at > now - timedelta(hours=1),
+            DragonEventRow.created_at > at - timedelta(hours=1),
         )
     )
-    needs = _current_needs(book, row, now)
-    current = care.mood(needs, row.trust, row.personality["curiosity"], set(recent))
+    needs = _current_needs(book, row, at)
+    return needs, care.mood(needs, row.trust, row.personality["curiosity"], set(recent))
+
+
+async def present(
+    session: AsyncSession, book: Rulebook, row: PlayerDragonRow, at: datetime | None = None
+) -> PlayerDragon:
+    at = at or now()
+    name = await session.scalar(select(SpeciesRow.name).where(SpeciesRow.id == row.species_id))
+    needs, current = await state(session, book, row, at)
     trait_labels = {t.id: t.label for t in book.game.traits.traits}
     quirk_labels = {q.id: q.label for q in book.adoption.quirks}
     profile = next(s for s in book.game.species if s.id == row.species_id)
@@ -98,14 +106,17 @@ async def present(
         needs=[Labelled(id=n, label=n.title(), value=needs[n]) for n in care.NEEDS],
         mood=MoodState(id=current, label=current.title()),
         # A new line each hour, steady across reloads within it.
-        thought=care.thought(book.care, current, row.name, f"{row.id}:{now:%Y-%m-%dT%H}"),
+        thought=care.thought(book.care, current, row.name, f"{row.id}:{at:%Y-%m-%dT%H}"),
         foods=list(book.game.profiles.foods),
         quirks=[Quirk(id=q, label=quirk_labels.get(q, q)) for q in row.quirks],
         likes=row.likes,
         dislikes=row.dislikes,
         trust=row.trust,
         level=row.level,
+        xp=row.xp,
+        xp_to_next=training.xp_to_next(book.progression, row.level),
         stage=row.stage,
+        stage_label=book.progression.stage(row.stage).label,
         created_at=row.created_at,
     )
 
@@ -122,7 +133,7 @@ async def adopt(
     attempt = await own_attempt(session, user_id, body.attempt_id)
     if not attempt.ranking:
         raise AttemptConflict("Finish the encounter first: no dragon has chosen you yet")
-    if await _mine(session, user_id) is not None:
+    if await mine(session, user_id) is not None:
         raise AttemptConflict("You already have a dragon")
 
     top = attempt.ranking[0]
@@ -140,7 +151,7 @@ async def adopt(
         dislikes=list(rolled.dislikes),
         stats=rolled.stats,
         needs=rolled.needs,
-        needs_updated_at=_now(),
+        needs_updated_at=now(),
         trust=rolled.trust,
         compatibility=top["compatibility"],
         rules_version=book.adoption.version,
@@ -158,7 +169,7 @@ async def adopt(
 
 
 async def get_mine(session: AsyncSession, book: Rulebook, user_id: UUID) -> PlayerDragon:
-    row = await _mine(session, user_id)
+    row = await mine(session, user_id)
     if row is None:
         raise NoDragon("You haven't adopted a dragon yet")
     return await present(session, book, row)
@@ -178,25 +189,25 @@ async def look_after(
     """
     if action == "feed" and food not in book.game.profiles.foods:
         raise InvalidFood(f"Unknown food {food!r}; try one of {list(book.game.profiles.foods)}")
-    row = await _mine(session, user_id, dragon_id, lock=True)
+    row = await mine(session, user_id, dragon_id, lock=True)
     if row is None:
         raise NoDragon(f"No dragon {dragon_id}")
 
-    now = _now()
+    at = now()
     outcome = care.care(
         book.care,
         action,
         name=row.name,
-        needs=_current_needs(book, row, now),
+        needs=_current_needs(book, row, at),
         trust=row.trust,
         likes=row.likes,
         dislikes=row.dislikes,
         food=food,
     )
     row.needs = {str(n): v for n, v in outcome.needs.items()}
-    row.needs_updated_at = now
+    row.needs_updated_at = at
     row.trust = outcome.trust
     session.add(DragonEventRow(dragon_id=row.id, kind=outcome.event, payload=outcome.detail))
     await session.commit()
     await session.refresh(row)
-    return CareResult(message=outcome.message, dragon=await present(session, book, row, now))
+    return CareResult(message=outcome.message, dragon=await present(session, book, row, at))

@@ -1,0 +1,96 @@
+# LAYER 3: game data (invented, not canon).
+# Training and progression (Plan §9.6): activities, XP, levels, stages, unlocks and costs.
+# The formulas live in apps/api/app/engines/training.py; every number they use is here.
+#
+#   xp_gained   = round((xp_base + xp_per_point x score) x mood_mult)
+#   xp_to_next  = round(xp_curve.scale x level ^ xp_curve.power)
+#   stat gain   = stat_gain x (score / 100) x (1 - stat / cap) x mood_mult   (smaller near the cap)
+#
+# - activities: what each trains, how tiring it is, and how long a real attempt can take
+#   (anything outside min_ms-max_ms is rejected as implausible).
+# - stages: the level each starts at. An activity unlocks with its stage.
+
+version: progression_v1
+
+max_level: 30
+
+xp_base: 20
+xp_per_point: 0.6
+xp_curve: { scale: 100, power: 1.5 }
+stat_gain: 4
+
+mood_mult: { excited: 1.2, happy: 1.1, curious: 1.0, hungry: 0.85, tired: 0.8, angry: 0.75 }
+
+costs:
+  hunger: 8            # every session
+refuse:
+  energy_below: 15     # "exhausted"
+  hunger_above: 85     # "too hungry to focus"
+happiness:
+  good_score: 70       # at or above: +bonus
+  bonus: 5
+  poor_score: 30       # below: -penalty
+  penalty: 5
+trust:
+  per_session: 2
+  needs_met_bonus: 1   # if, when it started, hunger <= hunger_max and energy >= energy_min
+  needs_met: { hunger_max: 50, energy_min: 40 }
+
+session_expires_minutes: 30
+
+stages:
+  - { id: newborn, label: Newborn, from_level: 1 }
+  - { id: young, label: Young, from_level: 5 }
+  - { id: trained, label: Trained, from_level: 10 }
+  - { id: elite, label: Elite, from_level: 20 }
+  - { id: master, label: Master, from_level: 30 }
+
+activities:
+  - id: flight
+    label: Flight
+    description: Hit the timing bar as your dragon banks through the sea stacks.
+    trains: [agility, speed]
+    stage: newborn
+    energy_cost: 15
+    min_ms: 2000
+    max_ms: 120000
+  - id: speed
+    label: Speed
+    description: Tap to the beat of its wings to build a steady rhythm.
+    trains: [speed, stamina]
+    stage: newborn
+    energy_cost: 20
+    min_ms: 4000
+    max_ms: 120000
+  - id: accuracy
+    label: Accuracy
+    description: Call the shot when a target pops up, before it ducks away.
+    trains: [firepower]
+    stage: young
+    energy_cost: 15
+    min_ms: 4000
+    max_ms: 120000
+  - id: memory
+    label: Memory
+    description: Repeat the sequence of signs your dragon has to remember.
+    trains: [intelligence]
+    stage: young
+    energy_cost: 10
+    min_ms: 2000
+    max_ms: 300000
+  - id: obedience
+    label: Obedience
+    description: Answer each command with the right signal, fast.
+    trains: [obedience]
+    stage: trained
+    energy_cost: 10
+    min_ms: 3000
+    max_ms: 120000
+
+messages:
+  refused_tired: "{name} is exhausted and lies down. Let it rest first."
+  refused_hungry: "{name} is too hungry to focus. Feed it first."
+  locked: "{activity} unlocks when {name} reaches the {stage} stage (level {level})."
+  great: "{name} nailed it!"
+  good: "{name} is getting the hang of it."
+  poor: "{name} struggled with that one."

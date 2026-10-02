@@ -166,3 +166,21 @@ class DiscoveryRow(Base):
     entity_id: Mapped[str] = mapped_column(primary_key=True)
     via: Mapped[str]
     discovered_at: Mapped[datetime] = mapped_column(server_default=text("now()"))
+
+
+class TrainingSessionRow(Base):
+    __tablename__ = "training_sessions"
+
+    id: Mapped[UUID] = mapped_column(primary_key=True, server_default=text("gen_random_uuid()"))
+    dragon_id: Mapped[UUID]
+    activity: Mapped[str]
+    mood: Mapped[str]
+    needs_at_start: Mapped[dict[str, int]] = mapped_column(JSONB)
+    started_at: Mapped[datetime] = mapped_column(server_default=text("now()"))
+    completed_at: Mapped[datetime | None]
+    score: Mapped[int | None]
+    duration_ms: Mapped[int | None]
+    xp_gained: Mapped[int | None]
+    stat_deltas: Mapped[dict[str, int] | None] = mapped_column(JSONB)
+    stats_after: Mapped[dict[str, int] | None] = mapped_column(JSONB)
+    client_meta: Mapped[dict[str, Any] | None] = mapped_column(JSONB)

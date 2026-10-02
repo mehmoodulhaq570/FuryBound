@@ -11,16 +11,17 @@ Summary of the Claude Code sessions of **2026-09-30 → 2026-10-02**. Read this 
 | 2 Dragon Book | ✅ Done (Milestone M1). Not deployed |
 | 3 Quiz + matching | ✅ Engine, quiz, encounter and animated reveal |
 | 4 Profile + your dragon | ✅ Profiles, naming/adoption, species silhouettes, care + mood, discoveries. **Milestone M2 (MVP) reached in code**; not deployed |
-| 5 Training | ⏭️ Next candidate |
+| 5 Training | ✅ Engine, sessions API, 5 DOM mini-games, XP/levels/stages, refusals, progress chart (2026-10-02). **Not yet tried in a browser** |
+| 6 AI companion | ⏭️ Next in the Plan |
 
-- **Tests:** 165 API (pytest) + 63 web (Vitest), all passing on 2026-10-02.
+- **Tests:** 184 API (pytest, incl. Hypothesis property tests) + 76 web (Vitest), all passing on 2026-10-02.
 - **Repo:** https://github.com/mehmoodulhaq570/FuryBound (public, branch `main`). The user commits and pushes **themselves**; don't push.
 - **Names:** package and Supabase project `dragon-academy`; GitHub repo FuryBound; the app is called "Dragon Academy".
 - **Docs refreshed 2026-10-02:** README rewritten as a professional project README; CHANGELOG regrouped into Phase 3 and Phase 4 sections (Unreleased is empty).
 
 ## The player flow (all built)
 
-`/login` → `/academy/quiz` (12 questions) → "Step into the fog" → `/academy/encounter?attempt=<id>` (3 scenes) → `/academy/reveal?attempt=<id>` (top 3 circle, 2 peel away, "It chose you", name it) → `/dragon` (card, mood, thought, needs, feed/rest/play) and `/dragon-book` (Academy mode: "???" for unmet dragons).
+`/login` → `/academy/quiz` (12 questions) → "Step into the fog" → `/academy/encounter?attempt=<id>` (3 scenes) → `/academy/reveal?attempt=<id>` (top 3 circle, 2 peel away, "It chose you", name it) → `/dragon` (card, mood, thought, needs, feed/rest/play) → `/train` (level/XP, activities, progress chart) → `/train/<activity>` (mini-game → result, level-up) and `/dragon-book` (Academy mode: "???" for unmet dragons).
 
 ## What was built, by area
 
@@ -59,8 +60,15 @@ Summary of the Claude Code sessions of **2026-09-30 → 2026-10-02**. Read this 
 - Dragon: `components/dragon/` (`dragon-home`, `dragon-card` with a `care` slot, `care-panel`); `lib/dragon/` (`my-dragon.ts`, `name.ts`).
 - Art: `lib/art/shapes.ts` (`BUILDS`: wings/head/tail/legs/body per species, generic fallback) → `components/art/dragon-silhouette.tsx`. To preview shapes, render them to HTML and screenshot with headless Chrome. Fade silhouettes with `opacity-*`, not `text-x/40`.
 
+**Training (Phase 5)**
+- `data/game/progression.yaml` (all numbers and messages; minimum plausible durations per activity) + `engines/training.py` (pure: `xp_to_next`, `stage_for`, `unlocked`, `check_can_train` → `Locked`/`Refused`, `check_duration` → `Implausible`, `complete` → `TrainingOutcome`).
+- `app/training.py` (`overview`, `start`, `finish`, `history`) + `routers/training.py`. `Rulebook` now also holds `progression`. `dragons.state()` (needs + mood at a time) and `dragons.mine()` are shared helpers. Starting stores the mood and needs on the session. Finishing locks session + dragon (`FOR UPDATE`), checks expiry (30 min) and duration (in range and ≤ elapsed + 5 s), applies XP / stats / costs / trust, and logs `trained` and `level_up` events. A refusal logs a `refused` event (this feeds the Angry mood).
+- `xp` on `player_dragons` is progress within the current level (it resets on level-up); `stage` is updated on level-up.
+- Web: `components/training/` (`dragon-gate.tsx` = signed in + has a dragon; `train-home.tsx` with `XpBar`/`ActivityList`; `train-activity.tsx` with intro → playing (`TimedGame` times from mount) → result + level-up celebration; `stat-history.tsx` = small multiples, one hue, shared 0–100 scale, crosshair, table view, following the dataviz skill), `games/` (5 games + `use-timers.ts` with `useTimers`/`useFrames`, which clean up on unmount), `lib/training/` (`scoring.ts` pure scoring, `history.ts`, `api.ts`).
+- Hypothesis was added as an API dev dependency.
+
 **Migrations** (applied locally with `supabase migration up`, which keeps the user's account; `db:reset` would wipe it)
-`20260930063434_init_extensions` · `20260930150000_canon_tables` · `20261001120000_quiz_attempts` · `20261002120000_profiles_and_dragons` · `20261003120000_dragon_events` · `20261004120000_discoveries` (back-filled; the user's account has Light Fury, Stormcutter and Crimson Goregutter).
+`20260930063434_init_extensions` · `20260930150000_canon_tables` · `20261001120000_quiz_attempts` · `20261002120000_profiles_and_dragons` · `20261003120000_dragon_events` · `20261004120000_discoveries` (back-filled; the user's account has Light Fury, Stormcutter and Crimson Goregutter) · `20261005120000_training_sessions` (extra columns: `mood`, `needs_at_start`, `duration_ms`, `stats_after`).
 
 ## Decisions and deviations from Plan.md
 
@@ -72,7 +80,8 @@ Summary of the Claude Code sessions of **2026-09-30 → 2026-10-02**. Read this 
 - **One dragon per player** (`player_dragons.user_id` unique); extra columns `compatibility` and `rules_version`.
 - Adoption and care data live in their own YAML files, outside the calibration fingerprint.
 - **Discoveries are per species**; named dragons unlock with their species; the counter counts species; "new" = discovered in the last 24 h.
-- Care refusals are 409s, not events; a dragon can't be fed when full or play when exhausted.
+- Care refusals are 409s, not events; a dragon can't be fed when full or play when exhausted. **Training** refusals are 409s *and* `refused` events.
+- Training: the "activity in likes → +happiness" rule was skipped (likes are foods and things, not activities); "overtraining" isn't defined yet. Scores are computed in the browser and only sanity-checked by duration, as the Plan says.
 - **Art:** no film assets or copied designs (Plan §16). Original part-based silhouettes now, fan wiki links, commissioned art later. The user is making images with GPT in `dragons_images/` (gitignored by the user). Claude advised describing original dragons instead of naming film species, and keeping the images out of git until that's settled.
 - CI has three jobs: API (starts `supabase db start`, loads the seed if empty), Data (catalog and calibration checks) and Web.
 
@@ -86,9 +95,9 @@ Summary of the Claude Code sessions of **2026-09-30 → 2026-10-02**. Read this 
 
 ## Next steps
 
-> **Resume here (2026-10-02):** Phase 4 is complete; the MVP loop works in code. **First:** have the user try the reveal animation, naming, care actions and Academy mode in the browser (only quiz → encounter has been confirmed there), and commit. **Then** let the user choose between Phase 5 (training), polish, or deploying.
+> **Resume here (2026-10-02):** Phase 5 (training) is built. The user hasn't checked anything after quiz → encounter in a browser. **First:** have them try `/train` (play Flight and Speed, check the chart and a level-up) plus the earlier untested parts (reveal animation, naming, care, Academy mode), and commit. **Then** choose: Phase 6 (AI companion + memory), polish, or deploying.
 
-1. **Phase 5: training** (Plan §9.6): training session API (start/complete, plausibility checks, one completion per session), 5 simple DOM activities with the `ActivityResult` contract, XP / levels / stages / unlocks (`progression.yaml`), energy and hunger costs with refusals (these also enable the Angry mood), and a training history chart.
+1. ✅ **Phase 5: training.** **Next in the Plan: Phase 6, AI companion + memory** (Plan §9.8–9.9: chat with your dragon, Gemini/Ollama, memories with pgvector). Small follow-ups: `DragonHome` could reuse `DragonGate`; nobody has played the games yet, so tune difficulty after the user tries them.
 2. **Deploy** (when wanted): hosted Supabase, Vercel for the web app, a host for the API. The Plan's sign-up flow (email confirmation, profile display names) needs a look then.
 3. **Polish:** extreme personalities only reach ~76–80% compatibility; runner-up explanations can be vague; filters aren't kept in the URL; abilities and diet are missing from the catalog.
 4. **User:** review `adoption.yaml` and `care.yaml` drafts; watch the films and confirm the scene logs (`yes?` → `yes`, source → `film`), then run `pnpm catalog:import && pnpm catalog:build && pnpm db:reset`.

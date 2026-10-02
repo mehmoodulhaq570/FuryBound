@@ -71,6 +71,7 @@ The Dragon Book (`/dragon-book`) is statically generated from `data/build/dragon
 | Vitest | 5 | Frontend unit tests |
 | Testing Library + jsdom | 16, 30 | React component tests |
 | pytest | 9.1 | Backend tests |
+| Hypothesis | 6 | Property tests for the game engines (e.g. a higher score never gives less XP) |
 | httpx2 | 2.13 | HTTP client for backend tests |
 
 ## CI
@@ -83,7 +84,6 @@ The Dragon Book (`/dragon-book`) is statically generated from `data/build/dragon
 
 | Technology | Phase | Role |
 |---|---|---|
-| Hypothesis | 3 | Property tests for the game engines |
 | scikit-learn, NumPy, pandas | 3 | Matching calibration and analysis |
 | Gemini API, Ollama | 6 | AI companion (production and local) |
 | Phaser | 7 | Mini-games |

@@ -1088,10 +1088,374 @@
           }
         ]
       }
+    },
+    "/api/v1/dragons/{dragon_id}/training": {
+      "get": {
+        "tags": [
+          "training"
+        ],
+        "summary": "Training Overview",
+        "description": "Level, XP and every activity, with whether it's unlocked yet.",
+        "operationId": "training_overview",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dragon_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Dragon Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrainingOverview"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not this player's dragon",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/dragons/{dragon_id}/training-sessions": {
+      "post": {
+        "tags": [
+          "training"
+        ],
+        "summary": "Start Training",
+        "description": "Start a session; the activity then reports its result to `/complete`.",
+        "operationId": "start_training",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dragon_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Dragon Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SessionStart"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrainingSession"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not this player's dragon",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The activity unlocks at a later stage",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The dragon refuses (exhausted or too hungry)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unknown activity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/training-sessions/{session_id}/complete": {
+      "post": {
+        "tags": [
+          "training"
+        ],
+        "summary": "Complete Training",
+        "description": "Report the activity's result (once): XP, stat gains, level-ups and unlocks.",
+        "operationId": "complete_training",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Session Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActivityResult"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrainingResult"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No such session for this player",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Already finished, or expired",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "The duration isn't plausible",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/dragons/{dragon_id}/history": {
+      "get": {
+        "tags": [
+          "training"
+        ],
+        "summary": "Training History",
+        "description": "Finished training sessions, oldest first, with the stats after each.",
+        "operationId": "training_history",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dragon_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Dragon Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/HistoryEntry"
+                  },
+                  "title": "Response Training History"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not this player's dragon",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
+      "ActivityResult": {
+        "properties": {
+          "score": {
+            "type": "integer",
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "title": "Score"
+          },
+          "duration_ms": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Duration Ms"
+          },
+          "meta": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Meta"
+          }
+        },
+        "type": "object",
+        "required": [
+          "score",
+          "duration_ms"
+        ],
+        "title": "ActivityResult",
+        "description": "What every activity reports when it finishes (Plan \u00a79.6 activity contract)."
+      },
       "Appearance": {
         "properties": {
           "movie_id": {
@@ -1495,6 +1859,57 @@
         "type": "object",
         "title": "HealthResponse"
       },
+      "HistoryEntry": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "activity": {
+            "type": "string",
+            "title": "Activity"
+          },
+          "completed_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Completed At"
+          },
+          "score": {
+            "type": "integer",
+            "title": "Score"
+          },
+          "xp_gained": {
+            "type": "integer",
+            "title": "Xp Gained"
+          },
+          "stat_deltas": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Stat Deltas"
+          },
+          "stats_after": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Stats After"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "activity",
+          "completed_at",
+          "score",
+          "xp_gained",
+          "stat_deltas",
+          "stats_after"
+        ],
+        "title": "HistoryEntry"
+      },
       "IndividualDetail": {
         "properties": {
           "id": {
@@ -1848,9 +2263,36 @@
             "type": "integer",
             "title": "Level"
           },
+          "xp": {
+            "type": "integer",
+            "title": "Xp",
+            "description": "Progress toward the next level"
+          },
+          "xp_to_next": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Xp To Next",
+            "description": "XP the next level needs; null at the top"
+          },
           "stage": {
             "type": "string",
-            "title": "Stage"
+            "title": "Stage",
+            "examples": [
+              "newborn"
+            ]
+          },
+          "stage_label": {
+            "type": "string",
+            "title": "Stage Label",
+            "examples": [
+              "Newborn"
+            ]
           },
           "created_at": {
             "type": "string",
@@ -1879,7 +2321,10 @@
           "dislikes",
           "trust",
           "level",
+          "xp",
+          "xp_to_next",
           "stage",
+          "stage_label",
           "created_at"
         ],
         "title": "PlayerDragon"
@@ -2172,6 +2617,22 @@
         ],
         "title": "SearchResult"
       },
+      "SessionStart": {
+        "properties": {
+          "activity": {
+            "type": "string",
+            "title": "Activity",
+            "examples": [
+              "flight"
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "activity"
+        ],
+        "title": "SessionStart"
+      },
       "Source": {
         "properties": {
           "id": {
@@ -2427,6 +2888,265 @@
           "movies"
         ],
         "title": "SpeciesSummary"
+      },
+      "StageInfo": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id",
+            "examples": [
+              "newborn"
+            ]
+          },
+          "label": {
+            "type": "string",
+            "title": "Label",
+            "examples": [
+              "Newborn"
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "label"
+        ],
+        "title": "StageInfo"
+      },
+      "StatChange": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id",
+            "examples": [
+              "speed"
+            ]
+          },
+          "label": {
+            "type": "string",
+            "title": "Label",
+            "examples": [
+              "Speed"
+            ]
+          },
+          "delta": {
+            "type": "integer",
+            "title": "Delta"
+          },
+          "value": {
+            "type": "integer",
+            "title": "Value"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "label",
+          "delta",
+          "value"
+        ],
+        "title": "StatChange"
+      },
+      "TrainingActivity": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id",
+            "examples": [
+              "flight"
+            ]
+          },
+          "label": {
+            "type": "string",
+            "title": "Label",
+            "examples": [
+              "Flight"
+            ]
+          },
+          "description": {
+            "type": "string",
+            "title": "Description"
+          },
+          "trains": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Trains",
+            "examples": [
+              [
+                "agility",
+                "speed"
+              ]
+            ]
+          },
+          "energy_cost": {
+            "type": "integer",
+            "title": "Energy Cost"
+          },
+          "unlocked": {
+            "type": "boolean",
+            "title": "Unlocked"
+          },
+          "unlocks_at": {
+            "$ref": "#/components/schemas/StageInfo"
+          },
+          "unlocks_at_level": {
+            "type": "integer",
+            "title": "Unlocks At Level"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "label",
+          "description",
+          "trains",
+          "energy_cost",
+          "unlocked",
+          "unlocks_at",
+          "unlocks_at_level"
+        ],
+        "title": "TrainingActivity"
+      },
+      "TrainingOverview": {
+        "properties": {
+          "level": {
+            "type": "integer",
+            "title": "Level"
+          },
+          "xp": {
+            "type": "integer",
+            "title": "Xp"
+          },
+          "xp_to_next": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Xp To Next"
+          },
+          "stage": {
+            "$ref": "#/components/schemas/StageInfo"
+          },
+          "activities": {
+            "items": {
+              "$ref": "#/components/schemas/TrainingActivity"
+            },
+            "type": "array",
+            "title": "Activities"
+          }
+        },
+        "type": "object",
+        "required": [
+          "level",
+          "xp",
+          "xp_to_next",
+          "stage",
+          "activities"
+        ],
+        "title": "TrainingOverview"
+      },
+      "TrainingResult": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "examples": [
+              "Ember nailed it!"
+            ]
+          },
+          "score": {
+            "type": "integer",
+            "title": "Score"
+          },
+          "xp_gained": {
+            "type": "integer",
+            "title": "Xp Gained"
+          },
+          "stat_changes": {
+            "items": {
+              "$ref": "#/components/schemas/StatChange"
+            },
+            "type": "array",
+            "title": "Stat Changes"
+          },
+          "level_ups": {
+            "items": {
+              "type": "integer"
+            },
+            "type": "array",
+            "title": "Level Ups",
+            "description": "Every level reached, in order (often empty)"
+          },
+          "stage": {
+            "$ref": "#/components/schemas/StageInfo"
+          },
+          "new_activities": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "New Activities",
+            "description": "Activity ids this session unlocked"
+          },
+          "dragon": {
+            "$ref": "#/components/schemas/PlayerDragon"
+          }
+        },
+        "type": "object",
+        "required": [
+          "message",
+          "score",
+          "xp_gained",
+          "stat_changes",
+          "level_ups",
+          "stage",
+          "new_activities",
+          "dragon"
+        ],
+        "title": "TrainingResult"
+      },
+      "TrainingSession": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "activity": {
+            "type": "string",
+            "title": "Activity"
+          },
+          "started_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Started At"
+          },
+          "min_ms": {
+            "type": "integer",
+            "title": "Min Ms",
+            "description": "Shortest plausible attempt"
+          },
+          "max_ms": {
+            "type": "integer",
+            "title": "Max Ms",
+            "description": "Longest plausible attempt"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "activity",
+          "started_at",
+          "min_ms",
+          "max_ms"
+        ],
+        "title": "TrainingSession"
       },
       "TraitScore": {
         "properties": {
