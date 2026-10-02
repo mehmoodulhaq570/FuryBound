@@ -17,9 +17,17 @@ import json
 import math
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
+from functools import lru_cache
 from pathlib import Path
 
-from app.engines.game_data import TRAITS, GameData, Quiz, SpeciesProfile, Trait
+from app.engines.game_data import (
+    TRAITS,
+    GameData,
+    Quiz,
+    SpeciesProfile,
+    Trait,
+    get_game_data,
+)
 
 ALGORITHM_VERSION = "match_v1"
 CALIBRATION_PATH = (
@@ -230,6 +238,12 @@ def load_calibration(data: GameData, path: Path = CALIBRATION_PATH) -> Calibrati
             "matching_calibration.json is out of date with data/game; run `pnpm match:calibrate`"
         )
     return calibration
+
+
+@lru_cache
+def get_calibration() -> Calibration:
+    """The calibration for the loaded game data (raises if it is stale)."""
+    return load_calibration(get_game_data())
 
 
 def compatibility(raw: float, calibration: Calibration) -> int:

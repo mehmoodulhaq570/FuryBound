@@ -7,6 +7,7 @@ import {
   isComplete,
   isValidProgress,
   loadProgress,
+  QUIZ_STORAGE_KEY,
   reduce,
   saveProgress,
   type Action,
@@ -14,15 +15,28 @@ import {
   type Quiz,
 } from "@/lib/quiz/progress";
 
+/** The words that differ between the quiz and the encounter scenes. */
+export type RunnerWording = { step: string; progress: string; submitting: string };
+
+const QUIZ_WORDING: RunnerWording = {
+  step: "Question",
+  progress: "Quiz progress",
+  submitting: "Reading your answers…",
+};
+
 /** One question per screen with a progress bar. Calls `onComplete` once all are answered. */
 export function QuizRunner({
   quiz,
   onComplete,
   submitting = false,
+  storageKey = QUIZ_STORAGE_KEY,
+  wording = QUIZ_WORDING,
 }: {
   quiz: Quiz;
   onComplete: (answers: Record<string, string>) => void;
   submitting?: boolean;
+  storageKey?: string;
+  wording?: RunnerWording;
 }) {
   // Only rendered in the browser (after the sign-in check), so reading storage here is safe:
   // a reload in the same tab picks up where the player left off.
@@ -30,13 +44,13 @@ export function QuizRunner({
     (s: Progress, a: Action) => reduce(quiz, s, a),
     quiz,
     (q) => {
-      const saved = loadProgress();
+      const saved = loadProgress(storageKey);
       return isValidProgress(q, saved) ? saved : initialProgress(q);
     },
   );
   const heading = useRef<HTMLHeadingElement>(null);
 
-  useEffect(() => saveProgress(state), [state]);
+  useEffect(() => saveProgress(state, storageKey), [state, storageKey]);
 
   // Move focus to the new question so keyboard and screen-reader users follow along.
   const first = useRef(true);
@@ -66,13 +80,13 @@ export function QuizRunner({
       <div className="space-y-2">
         <div className="text-muted flex justify-between text-sm">
           <span>
-            Question {state.index + 1} of {total}
+            {wording.step} {state.index + 1} of {total}
           </span>
           <span>{answered} answered</span>
         </div>
         <div
           role="progressbar"
-          aria-label="Quiz progress"
+          aria-label={wording.progress}
           aria-valuemin={0}
           aria-valuemax={total}
           aria-valuenow={answered}
@@ -127,7 +141,7 @@ export function QuizRunner({
         </button>
         {submitting ? (
           <span className="text-muted" role="status">
-            Reading your answers…
+            {wording.submitting}
           </span>
         ) : (
           complete &&

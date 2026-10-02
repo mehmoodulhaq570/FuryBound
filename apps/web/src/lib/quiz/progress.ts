@@ -48,21 +48,21 @@ export function isValidProgress(quiz: Quiz, value: unknown): value is Progress {
 
 // Progress survives a reload in the same tab. Storage can be unavailable (private mode),
 // so every access is guarded and the quiz still works without it.
-const STORAGE_KEY = "dragon-academy:quiz-progress";
+export const QUIZ_STORAGE_KEY = "dragon-academy:quiz-progress";
 
-export function loadProgress(): unknown {
+export function loadProgress(key = QUIZ_STORAGE_KEY): unknown {
   try {
-    const raw = sessionStorage.getItem(STORAGE_KEY);
+    const raw = sessionStorage.getItem(key);
     return raw ? JSON.parse(raw) : null;
   } catch {
     return null;
   }
 }
 
-export function saveProgress(progress: Progress | null): void {
+export function saveProgress(progress: Progress | null, key = QUIZ_STORAGE_KEY): void {
   try {
-    if (progress) sessionStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
-    else sessionStorage.removeItem(STORAGE_KEY);
+    if (progress) sessionStorage.setItem(key, JSON.stringify(progress));
+    else sessionStorage.removeItem(key);
   } catch {
     // Not fatal: the player just loses progress on reload.
   }

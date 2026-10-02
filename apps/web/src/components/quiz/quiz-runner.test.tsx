@@ -72,4 +72,19 @@ describe("QuizRunner", () => {
     render(<QuizRunner quiz={quiz} onComplete={vi.fn()} />);
     expect(screen.getByText("Question 2 of 2")).toBeTruthy();
   });
+
+  it("can be reworded and keep its progress under another key", () => {
+    const wording = { step: "Scene", progress: "Encounter progress", submitting: "Deciding…" };
+    const first = render(
+      <QuizRunner quiz={quiz} onComplete={vi.fn()} storageKey="other" wording={wording} />,
+    );
+    expect(screen.getByText("Scene 1 of 2")).toBeTruthy();
+    expect(screen.getByRole("progressbar", { name: "Encounter progress" })).toBeTruthy();
+    fireEvent.click(screen.getByRole("button", { name: "Cut it free" }));
+    first.unmount();
+
+    // The quiz's own progress is untouched.
+    render(<QuizRunner quiz={quiz} onComplete={vi.fn()} />);
+    expect(screen.getByText("Question 1 of 2")).toBeTruthy();
+  });
 });

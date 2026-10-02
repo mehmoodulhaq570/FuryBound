@@ -8,7 +8,10 @@ All notable changes to FuryBound / Dragon Academy. The format follows [Keep a Ch
 - **Quiz page** at `/academy/quiz`: one question per screen, a progress bar, a Back button, and progress that survives a reload in the same tab. When the quiz is done it shows the player's trait bars. Linked from the header and home page.
 - **Quiz API**: `GET /api/v1/quiz` (the active quiz without its scores; options shuffled per player but stable across reloads) and `POST /api/v1/quiz/attempts` (scores and saves the answers). Both need sign-in.
 - `quiz_attempts` table (migration `20261001120000_quiz_attempts.sql`), so players can only read their own attempts. It references `auth.users` until profiles arrive in Phase 4. The quiz stays in YAML, so there are no quiz tables.
+- **Encounter scenes** at `/academy/encounter?attempt=<id>`: the three scenes (first contact, offering, startle) play one per screen after the quiz, then show the dragon that chose you, its compatibility and why, plus 2 runners-up linking to the Dragon Book. The quiz-done screen's button ("Step into the fog") now leads there. Progress is kept per attempt.
+- **Encounter API**: `GET /api/v1/encounter` (the scenes, without what each option means; shuffled per player), `POST /api/v1/quiz/attempts/{id}/encounter` (runs the matching engine, saves `encounter_signals`, `ranking` and `completed_at`; only once per attempt, 409 after that) and `GET /api/v1/quiz/attempts/{id}` (the attempt and, once finished, its match). Another player's attempt answers 404.
 - Sign-in now returns to the page that sent you there (`/login?next=…`).
+- Tests: 7 new API tests for the encounter, and 6 web tests for the encounter helpers, the result card and the reworded runner.
 - Tests: 7 API tests for the quiz endpoints and 8 web tests for the quiz screen and its progress logic.
 
 ### Changed

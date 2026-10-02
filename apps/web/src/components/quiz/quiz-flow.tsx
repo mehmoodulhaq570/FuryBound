@@ -7,17 +7,9 @@ import { api } from "@/lib/api/client";
 import { saveProgress, type QuizAttempt } from "@/lib/quiz/progress";
 import { useSession } from "@/lib/supabase/use-session";
 
+import { Notice } from "./notice";
 import { QuizRunner } from "./quiz-runner";
 import { TraitBars } from "./trait-bars";
-
-function Notice({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <div className="mx-auto max-w-xl space-y-3">
-      <h1 className="text-2xl font-semibold tracking-tight">{title}</h1>
-      <div className="text-muted space-y-3">{children}</div>
-    </div>
-  );
-}
 
 /** Signed-in check → load the quiz → run it → submit the answers → show the trait scores. */
 export function QuizFlow() {
@@ -88,13 +80,12 @@ export function QuizFlow() {
           </p>
         </div>
         <TraitBars traits={submit.data.traits} />
-        <button
-          type="button"
-          disabled
-          className="bg-accent w-full rounded-lg px-4 py-2 font-medium text-white opacity-60"
+        <Link
+          href={`/academy/encounter?attempt=${submit.data.id}`}
+          className="bg-accent block w-full rounded-lg px-4 py-2 text-center font-medium text-white"
         >
-          The encounter is coming next
-        </button>
+          Step into the fog
+        </Link>
       </div>
     );
   }

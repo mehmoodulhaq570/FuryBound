@@ -1,5 +1,6 @@
 """Request and response models for the personality quiz (Plan.md §9.2, §10)."""
 
+from typing import Literal
 from uuid import UUID
 
 from pydantic import BaseModel, Field
@@ -41,3 +42,42 @@ class QuizAttempt(BaseModel):
     id: UUID
     quiz_version: str
     traits: list[TraitScore]
+
+
+# ── encounter (Plan.md §9.4) ─────────────────────────────────────────────────
+
+
+class EncounterScene(BaseModel):
+    id: Literal["first_contact", "offering", "startle"]
+    prompt: str
+    options: list[QuizOption] = Field(description="In this player's shuffled order")
+
+
+class Encounter(BaseModel):
+    version: str = Field(examples=["encounter_v1"])
+    scenes: list[EncounterScene] = Field(description="In the order they are played")
+
+
+class EncounterChoices(BaseModel):
+    encounter_version: str = Field(examples=["encounter_v1"])
+    first_contact: str = Field(examples=["stay_still"])
+    offering: str = Field(examples=["fish"])
+    startle: str = Field(examples=["calm_it"])
+
+
+class DragonMatch(BaseModel):
+    species_id: str = Field(examples=["night_fury"])
+    name: str = Field(examples=["Night Fury"])
+    rarity: str = Field(examples=["legendary"])
+    summary: str
+    compatibility: int = Field(ge=60, le=99, description="Displayed compatibility, 60-99%")
+    explanation: str
+
+
+class QuizMatch(BaseModel):
+    top: DragonMatch
+    runners_up: list[DragonMatch]
+
+
+class QuizAttemptDetail(QuizAttempt):
+    match: QuizMatch | None = Field(description="Set once the encounter is done")

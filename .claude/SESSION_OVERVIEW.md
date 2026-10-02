@@ -1,6 +1,6 @@
 # Session overview: FuryBound / Dragon Academy
 
-Summary of the Claude Code sessions of **2026-09-30 → 2026-10-01** (Phase 3 started on 10-01). Read this first when picking the project back up. The full plan is [Plan.md](../Plan.md); what changed when is in [CHANGELOG.md](../CHANGELOG.md); tools are in [TECH_STACK.md](../TECH_STACK.md); the data workflow is in [data/README.md](../data/README.md).
+Summary of the Claude Code sessions of **2026-09-30 → 2026-10-01** (Phase 3 started on 10-01; the quiz page was built late on 10-01). Read this first when picking the project back up. The full plan is [Plan.md](../Plan.md); what changed when is in [CHANGELOG.md](../CHANGELOG.md); tools are in [TECH_STACK.md](../TECH_STACK.md); the data workflow is in [data/README.md](../data/README.md).
 
 ## Where things stand
 
@@ -9,7 +9,7 @@ Summary of the Claude Code sessions of **2026-09-30 → 2026-10-01** (Phase 3 st
 | 0 Foundations | ✅ Done. CI green on GitHub |
 | 1 Dragon database | ✅ Code done. ⏳ Film verification by the user (scene logs) |
 | 2 Dragon Book | ✅ Done locally (Milestone M1). Not deployed yet |
-| 3 Quiz + matching | 🔨 Engine done. Quiz page + quiz API done (2026-10-01). ⏭️ Next: encounter scenes, then the result screen |
+| 3 Quiz + matching | 🔨 Engine, quiz page and encounter scenes done (2026-10-02). ⏭️ Next: the reveal / result screen |
 
 - **Repo:** https://github.com/mehmoodulhaq570/FuryBound (public, branch `main`). The user commits and pushes **themselves**; don't push.
 - **Package / Supabase project name:** `dragon-academy` (the GitHub repo name is FuryBound).
@@ -45,6 +45,20 @@ Summary of the Claude Code sessions of **2026-09-30 → 2026-10-01** (Phase 3 st
 - Current shares: Scuttleclaw 14.2% (highest) … Light Fury 2.5%, Night Fury 0.7%.
 - 2026-10-01 review fixes: Deathgripper courage min 40→60, Nightmare 50→45; Light Fury patience min 55→50; Scuttleclaw curiosity weight 2.0→1.5; Q1a intelligence −4→+2; Q9c and Q12c reworded.
 
+**Phase 3: quiz page** (2026-10-01; see CHANGELOG.md "Unreleased")
+- Migration `20261001120000_quiz_attempts.sql`: `quiz_attempts` with an owner-only select RLS policy. The API writes through the postgres connection.
+- API: `app/quiz.py` (service), `routers/quiz.py`, `schemas/quiz.py`. `GET /api/v1/quiz` returns the quiz without deltas, options shuffled with a seed of user id + version + question (stable across reloads). `POST /api/v1/quiz/attempts` checks the version (409 if stale) and the answers (422), then saves the answers + min–max trait scores and returns `{id, quiz_version, traits[]}`. The `QuizAttemptRow` model is in `db/models.py`.
+- `tests/test_quiz.py`: 7 tests. The 2 without a database pass; **the 5 database tests haven't run yet** (Docker was closed). They insert a throwaway `auth.users` row.
+- Web: `/academy/quiz` → `components/quiz/quiz-flow.tsx` (sign-in check, TanStack Query, submit) → `quiz-runner.tsx` (one question per screen, progress bar, Back, focus moves to each new question) → `trait-bars.tsx` (reusable for the result screen). The pure logic is in `lib/quiz/progress.ts`; progress is kept in `sessionStorage` and only reused if it fits the quiz version.
+- `/login?next=…` returns to the page you came from (same-site paths only). The header and home page link to the quiz.
+- 27 web tests pass (8 new). API types were regenerated with `pnpm gen:api-types`.
+
+**Phase 3: encounter scenes** (2026-10-02)
+- API: `GET /encounter`, `POST /quiz/attempts/{id}/encounter` (locks the row; 409 if done or the quiz/encounter version changed; 422 for an unknown option), `GET /quiz/attempts/{id}` (`match` is null until finished). `ranking` stores the top 3 as `{species_id, raw, compatibility, explanation}`; names come from the `species` table, rarity and summary from the profiles. `get_calibration()` (cached) in `matching.py`.
+- Web: `/academy/encounter?attempt=<id>` → `components/encounter/encounter-flow.tsx`. It **reuses `QuizRunner`** (scenes have the same shape as questions; new `storageKey` and `wording` props). `match-result.tsx` is the plain result card. `Notice` moved to `components/quiz/notice.tsx`.
+- All 64 API tests pass, including the 5 quiz database tests that hadn't run before. 33 web tests pass, but only with `vitest run --maxWorkers=1` when RAM is tight (the default run timed out starting workers).
+- The user tested the quiz in the browser end to end before this was built. **The encounter itself hasn't been tried in the browser yet.**
+
 ## Decisions and deviations from Plan.md
 
 - **Local Supabase only** during development, so the user can learn it. Hosted Supabase comes at launch.
@@ -55,6 +69,7 @@ Summary of the Claude Code sessions of **2026-09-30 → 2026-10-01** (Phase 3 st
 - **Player traits are converted to percentiles before matching** (exact, assuming random answers), because summed quiz scores cluster in the middle and the strong-personality dragons could never win. The Plan's min–max scores are still used for display.
 - Dropped `base_stats`; only `stat_caps` (a new dragon starts at 30–40% of caps). Removed two complement rules (restless→patience, timid→courage) that pulled everyone toward a few dragons.
 - Matchable pool: on-screen, trainable film species minus titans, the Night Light hatchlings and the Seashocker. Legendary target is 0.5–3% (the Plan's "≥3%" for every species can't also hold for legendaries). Calibration script lives in `apps/api/scripts/` (not root `scripts/`) because it imports the engine.
+- No quiz_versions / quiz_questions / quiz_options tables: the quiz stays in YAML. `quiz_attempts.user_id` references `auth.users` until `profiles` arrives in Phase 4.
 - CI has three jobs: API (starts `supabase db start` and loads the seed if it's empty), Data (catalog check, and checks that scene logs, catalog and build agree), and Web.
 
 ## Working with this user
@@ -67,10 +82,10 @@ Summary of the Claude Code sessions of **2026-09-30 → 2026-10-01** (Phase 3 st
 
 ## Next steps
 
-> **Resume here (paused 2026-10-01):** the matching engine is finished, and the user chose to continue later. The personality/quiz review is done (fixes applied, recalibrated, tests green). Next: the Phase 3 screens. The Phase 3 engine is committed (98e9812); the review fixes and CHANGELOG.md are not yet. The user commits themselves.
+> **Resume here (2026-10-02):** the encounter scenes are built and tested but not committed. **First:** try quiz → "Step into the fog" → 3 scenes → result in the browser. **Next to build:** the reveal / result screen (`/academy/reveal`, Plan §9.4: silhouettes, "It chose you", naming). The user commits themselves.
 
 1. ✅ Quiz wording and dragon personality review (done 2026-10-01). After any later edit to `data/game/`, run `pnpm match:calibrate` and the tests, and add a line to CHANGELOG.md.
-2. **Phase 3 UI:** ✅ quiz page (`/academy/quiz`, `GET /quiz`, `POST /quiz/attempts`, `quiz_attempts` table). Next: the 3 encounter scenes (`/academy/encounter`, `POST /quiz/attempts/{id}/encounter`, which fills `ranking` and `completed_at`), then the result screen. The quiz-done screen has a disabled "encounter is coming next" button to replace.
+2. **Phase 3 UI:** ✅ quiz page. ✅ encounter scenes (plain `MatchResult` card at the end). Next: the reveal (`/academy/reveal`): the animated version of the result (3 silhouettes → 2 peel away → it lands, reduced-motion fades), trait bars via `TraitBars`, then naming. Naming needs `POST /dragons` and a `player_dragons` table, which overlaps with Phase 4.
 3. Polish: extreme personalities only reach ~76–80% compatibility; runner-up explanations fall back to vague text.
 4. **User:** watch the films and confirm the scene logs (`yes?` → `yes`, source → `film`), then run `pnpm catalog:import && pnpm catalog:build && pnpm db:reset`.
 5. Optional: deploy the Dragon Book (Vercel), keep filters in the URL, and fill in abilities and diet in the catalog.

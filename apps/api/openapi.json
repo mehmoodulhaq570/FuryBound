@@ -481,6 +481,201 @@
           }
         ]
       }
+    },
+    "/api/v1/quiz/attempts/{attempt_id}": {
+      "get": {
+        "tags": [
+          "quiz"
+        ],
+        "summary": "Get Quiz Attempt",
+        "description": "One of the player's attempts: trait scores, and the match once the encounter is done.",
+        "operationId": "get_quiz_attempt",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "attempt_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Attempt Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuizAttemptDetail"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No such attempt for this player",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/encounter": {
+      "get": {
+        "tags": [
+          "quiz"
+        ],
+        "summary": "Get Encounter",
+        "description": "The three encounter scenes (no hints about what each option means), options shuffled.",
+        "operationId": "get_encounter",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Encounter"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/quiz/attempts/{attempt_id}/encounter": {
+      "post": {
+        "tags": [
+          "quiz"
+        ],
+        "summary": "Complete Encounter",
+        "description": "Submit the encounter choices: the dragons are ranked and the attempt is finished, once.",
+        "operationId": "complete_encounter",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "attempt_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Attempt Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EncounterChoices"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuizAttemptDetail"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No such attempt for this player",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Already complete, or the quiz or encounter version has changed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "An unknown option",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -603,6 +798,153 @@
           "scope"
         ],
         "title": "DragonClass"
+      },
+      "DragonMatch": {
+        "properties": {
+          "species_id": {
+            "type": "string",
+            "title": "Species Id",
+            "examples": [
+              "night_fury"
+            ]
+          },
+          "name": {
+            "type": "string",
+            "title": "Name",
+            "examples": [
+              "Night Fury"
+            ]
+          },
+          "rarity": {
+            "type": "string",
+            "title": "Rarity",
+            "examples": [
+              "legendary"
+            ]
+          },
+          "summary": {
+            "type": "string",
+            "title": "Summary"
+          },
+          "compatibility": {
+            "type": "integer",
+            "maximum": 99.0,
+            "minimum": 60.0,
+            "title": "Compatibility",
+            "description": "Displayed compatibility, 60-99%"
+          },
+          "explanation": {
+            "type": "string",
+            "title": "Explanation"
+          }
+        },
+        "type": "object",
+        "required": [
+          "species_id",
+          "name",
+          "rarity",
+          "summary",
+          "compatibility",
+          "explanation"
+        ],
+        "title": "DragonMatch"
+      },
+      "Encounter": {
+        "properties": {
+          "version": {
+            "type": "string",
+            "title": "Version",
+            "examples": [
+              "encounter_v1"
+            ]
+          },
+          "scenes": {
+            "items": {
+              "$ref": "#/components/schemas/EncounterScene"
+            },
+            "type": "array",
+            "title": "Scenes",
+            "description": "In the order they are played"
+          }
+        },
+        "type": "object",
+        "required": [
+          "version",
+          "scenes"
+        ],
+        "title": "Encounter"
+      },
+      "EncounterChoices": {
+        "properties": {
+          "encounter_version": {
+            "type": "string",
+            "title": "Encounter Version",
+            "examples": [
+              "encounter_v1"
+            ]
+          },
+          "first_contact": {
+            "type": "string",
+            "title": "First Contact",
+            "examples": [
+              "stay_still"
+            ]
+          },
+          "offering": {
+            "type": "string",
+            "title": "Offering",
+            "examples": [
+              "fish"
+            ]
+          },
+          "startle": {
+            "type": "string",
+            "title": "Startle",
+            "examples": [
+              "calm_it"
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "encounter_version",
+          "first_contact",
+          "offering",
+          "startle"
+        ],
+        "title": "EncounterChoices"
+      },
+      "EncounterScene": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "enum": [
+              "first_contact",
+              "offering",
+              "startle"
+            ],
+            "title": "Id"
+          },
+          "prompt": {
+            "type": "string",
+            "title": "Prompt"
+          },
+          "options": {
+            "items": {
+              "$ref": "#/components/schemas/QuizOption"
+            },
+            "type": "array",
+            "title": "Options",
+            "description": "In this player's shuffled order"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "prompt",
+          "options"
+        ],
+        "title": "EncounterScene"
       },
       "ErrorResponse": {
         "properties": {
@@ -886,6 +1228,65 @@
           "answers"
         ],
         "title": "QuizAttemptCreate"
+      },
+      "QuizAttemptDetail": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "quiz_version": {
+            "type": "string",
+            "title": "Quiz Version"
+          },
+          "traits": {
+            "items": {
+              "$ref": "#/components/schemas/TraitScore"
+            },
+            "type": "array",
+            "title": "Traits"
+          },
+          "match": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/QuizMatch"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Set once the encounter is done"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "quiz_version",
+          "traits",
+          "match"
+        ],
+        "title": "QuizAttemptDetail"
+      },
+      "QuizMatch": {
+        "properties": {
+          "top": {
+            "$ref": "#/components/schemas/DragonMatch"
+          },
+          "runners_up": {
+            "items": {
+              "$ref": "#/components/schemas/DragonMatch"
+            },
+            "type": "array",
+            "title": "Runners Up"
+          }
+        },
+        "type": "object",
+        "required": [
+          "top",
+          "runners_up"
+        ],
+        "title": "QuizMatch"
       },
       "QuizOption": {
         "properties": {

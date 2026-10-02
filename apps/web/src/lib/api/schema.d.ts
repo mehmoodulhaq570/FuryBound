@@ -201,6 +201,66 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/quiz/attempts/{attempt_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Quiz Attempt
+         * @description One of the player's attempts: trait scores, and the match once the encounter is done.
+         */
+        get: operations["get_quiz_attempt"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/encounter": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Encounter
+         * @description The three encounter scenes (no hints about what each option means), options shuffled.
+         */
+        get: operations["get_encounter"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/quiz/attempts/{attempt_id}/encounter": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Complete Encounter
+         * @description Submit the encounter choices: the dragons are ranked and the attempt is finished, once.
+         */
+        post: operations["complete_encounter"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -249,6 +309,84 @@ export interface components {
             value: string;
             /** @description `franchise` means the class comes from outside the films */
             scope: components["schemas"]["Scope"];
+        };
+        /** DragonMatch */
+        DragonMatch: {
+            /**
+             * Species Id
+             * @example night_fury
+             */
+            species_id: string;
+            /**
+             * Name
+             * @example Night Fury
+             */
+            name: string;
+            /**
+             * Rarity
+             * @example legendary
+             */
+            rarity: string;
+            /** Summary */
+            summary: string;
+            /**
+             * Compatibility
+             * @description Displayed compatibility, 60-99%
+             */
+            compatibility: number;
+            /** Explanation */
+            explanation: string;
+        };
+        /** Encounter */
+        Encounter: {
+            /**
+             * Version
+             * @example encounter_v1
+             */
+            version: string;
+            /**
+             * Scenes
+             * @description In the order they are played
+             */
+            scenes: components["schemas"]["EncounterScene"][];
+        };
+        /** EncounterChoices */
+        EncounterChoices: {
+            /**
+             * Encounter Version
+             * @example encounter_v1
+             */
+            encounter_version: string;
+            /**
+             * First Contact
+             * @example stay_still
+             */
+            first_contact: string;
+            /**
+             * Offering
+             * @example fish
+             */
+            offering: string;
+            /**
+             * Startle
+             * @example calm_it
+             */
+            startle: string;
+        };
+        /** EncounterScene */
+        EncounterScene: {
+            /**
+             * Id
+             * @enum {string}
+             */
+            id: "first_contact" | "offering" | "startle";
+            /** Prompt */
+            prompt: string;
+            /**
+             * Options
+             * @description In this player's shuffled order
+             */
+            options: components["schemas"]["QuizOption"][];
         };
         /** ErrorResponse */
         ErrorResponse: {
@@ -364,6 +502,26 @@ export interface components {
             answers: {
                 [key: string]: string;
             };
+        };
+        /** QuizAttemptDetail */
+        QuizAttemptDetail: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Quiz Version */
+            quiz_version: string;
+            /** Traits */
+            traits: components["schemas"]["TraitScore"][];
+            /** @description Set once the encounter is done */
+            match: components["schemas"]["QuizMatch"] | null;
+        };
+        /** QuizMatch */
+        QuizMatch: {
+            top: components["schemas"]["DragonMatch"];
+            /** Runners Up */
+            runners_up: components["schemas"]["DragonMatch"][];
         };
         /** QuizOption */
         QuizOption: {
@@ -851,6 +1009,146 @@ export interface operations {
                 };
             };
             /** @description A question is unanswered, unknown or has an unknown option */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    get_quiz_attempt: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                attempt_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["QuizAttemptDetail"];
+                };
+            };
+            /** @description Missing or invalid token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description No such attempt for this player */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_encounter: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Encounter"];
+                };
+            };
+            /** @description Missing or invalid token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    complete_encounter: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                attempt_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EncounterChoices"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["QuizAttemptDetail"];
+                };
+            };
+            /** @description Missing or invalid token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description No such attempt for this player */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Already complete, or the quiz or encounter version has changed */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description An unknown option */
             422: {
                 headers: {
                     [name: string]: unknown;
