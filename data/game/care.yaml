@@ -1,0 +1,60 @@
+# LAYER 3: game data (invented, not canon).
+# Looking after your dragon (Plan §9.6-9.7): needs over time, care actions and idle thoughts.
+# Mood rules live in apps/api/app/engines/care.py (they follow the Plan's table).
+#
+# - decay_per_hour: how needs drift while you're away. Worked out when you come back
+#   ("lazy"), never by a background job. Hunger rising is bad; energy rising is rest.
+# - actions: what each care action changes, and when the dragon says no.
+# - messages / thoughts: {name} is the dragon's name, {food} the food offered.
+
+version: care_v1
+
+decay_per_hour: { hunger: 4, energy: 8, happiness: -2 }
+
+actions:
+  feed:
+    changes: { hunger: -35, happiness: 5 }
+    liked: { happiness: 10, trust: 2 }       # on top, for a food it likes
+    disliked: { happiness: -10, trust: -3 }  # on top, for a food it dislikes
+    refuse_below: { hunger: 10 }             # not hungry
+  rest:
+    changes: { energy: 35 }
+    refuse_above: { energy: 90 }             # not tired
+  play:
+    changes: { happiness: 15, energy: -15, trust: 2 }
+    refuse_below: { energy: 20 }             # too tired
+
+messages:
+  fed_liked: "{name} gobbles the {food} and hums happily."
+  fed: "{name} eats the {food}."
+  fed_disliked: "{name} eats the {food}, but glares at you the whole time."
+  rested: "{name} curls up and dozes off for a while."
+  played: "{name} chases you around the yard, tail swishing."
+  refused_feed: "{name} sniffs the {food} and looks away. It isn't hungry."
+  refused_rest: "{name} is wide awake and won't settle down."
+  refused_play: "{name} flops down. It's too tired to play."
+
+thoughts:
+  hungry:
+    - "{name} keeps sniffing your satchel."
+    - "{name}'s stomach rumbles like distant thunder."
+    - "{name} stares at the fish barrels by the dock."
+  tired:
+    - "{name} yawns so wide you can see every tooth."
+    - "{name}'s eyes keep drifting shut."
+    - "{name} has found a warm rock and won't move."
+  angry:
+    - "{name} turns its back to you and huffs smoke."
+    - "{name}'s tail flicks back and forth, sharp and annoyed."
+  excited:
+    - "{name} bounces on the spot, wings half open."
+    - "{name} keeps nudging you toward the sky."
+    - "{name} spins in circles chasing its own tail."
+  curious:
+    - "{name} is poking its nose into a crab's hole."
+    - "{name} tilts its head at every new sound."
+    - "{name} is inspecting your boots very closely."
+  happy:
+    - "{name} rests its head on your shoulder."
+    - "{name} is basking in the sun, rumbling softly."
+    - "{name} watches the clouds drift past."

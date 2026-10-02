@@ -43,8 +43,11 @@ function Tags({ title, items }: { title: string; items: string[] }) {
   );
 }
 
-/** The dragon card (Plan §9.5): who it is, its stats, needs, trust and personality. */
-export function DragonCard({ dragon }: { dragon: PlayerDragon }) {
+/**
+ * The dragon card (Plan §9.5): who it is, its mood, needs, trust, stats and personality.
+ * `care` is where the care actions go, right under the needs they change.
+ */
+export function DragonCard({ dragon, care }: { dragon: PlayerDragon; care?: React.ReactNode }) {
   const trust: Labelled = { id: "trust", label: "Trust", value: dragon.trust };
   return (
     <div className="mx-auto max-w-xl space-y-10">
@@ -61,6 +64,14 @@ export function DragonCard({ dragon }: { dragon: PlayerDragon }) {
             {dragon.color_variant ? `${capitalise(dragon.color_variant)} ` : ""}
             {dragon.species_name} · <span className="capitalize">{dragon.rarity}</span>
           </p>
+        </div>
+        <div className="space-y-1 text-center">
+          <p>
+            <span className="bg-accent/15 text-accent rounded-full px-3 py-1 text-sm font-medium">
+              {dragon.mood.label}
+            </span>
+          </p>
+          <p className="text-muted italic">{dragon.thought}</p>
         </div>
         <dl className="grid grid-cols-3 gap-2 text-center text-sm">
           <div>
@@ -84,6 +95,7 @@ export function DragonCard({ dragon }: { dragon: PlayerDragon }) {
       </section>
 
       <Bars title="Needs" items={[...dragon.needs, trust]} />
+      {care}
       <Bars title="Stats" items={dragon.stats} />
       <Bars title="Personality" items={dragon.personality} />
     </div>

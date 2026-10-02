@@ -290,11 +290,71 @@ export interface paths {
         };
         /**
          * My Dragon
-         * @description The signed-in player's dragon card.
+         * @description The signed-in player's dragon card, with needs as of now, mood and an idle thought.
          */
         get: operations["my_dragon"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/dragons/{dragon_id}/feed": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Feed Dragon
+         * @description Offer a food. Liked foods please it more; disliked ones cost happiness and trust.
+         */
+        post: operations["feed_dragon"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/dragons/{dragon_id}/rest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Rest Dragon
+         * @description Let it sleep: energy recovers.
+         */
+        post: operations["rest_dragon"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/dragons/{dragon_id}/play": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Play With Dragon
+         * @description Play together: happier and a little more trusting, but it costs energy.
+         */
+        post: operations["play_with_dragon"];
         delete?: never;
         options?: never;
         head?: never;
@@ -319,6 +379,15 @@ export interface components {
          * @enum {string}
          */
         AppearanceType: "featured" | "on_screen" | "background" | "mentioned" | "pictured";
+        /** CareResult */
+        CareResult: {
+            /**
+             * Message
+             * @example Ember gobbles the fish and hums happily.
+             */
+            message: string;
+            dragon: components["schemas"]["PlayerDragon"];
+        };
         /** CharacterRef */
         CharacterRef: {
             /** Id */
@@ -448,6 +517,14 @@ export interface components {
             /** Detail */
             detail: string;
         };
+        /** FeedRequest */
+        FeedRequest: {
+            /**
+             * Food
+             * @example fish
+             */
+            food: string;
+        };
         /** HTTPValidationError */
         HTTPValidationError: {
             /** Detail */
@@ -516,6 +593,19 @@ export interface components {
             /** Value */
             value: number;
         };
+        /** MoodState */
+        MoodState: {
+            /**
+             * Id
+             * @example hungry
+             */
+            id: string;
+            /**
+             * Label
+             * @example Hungry
+             */
+            label: string;
+        };
         /** Movie */
         Movie: {
             /** Id */
@@ -573,9 +663,20 @@ export interface components {
             stats: components["schemas"]["Labelled"][];
             /**
              * Needs
-             * @description Hunger, energy and happiness
+             * @description Hunger, energy and happiness, as of now
              */
             needs: components["schemas"]["Labelled"][];
+            mood: components["schemas"]["MoodState"];
+            /**
+             * Thought
+             * @description What the dragon is up to (changes every hour)
+             */
+            thought: string;
+            /**
+             * Foods
+             * @description What can be offered when feeding
+             */
+            foods: string[];
             /** Quirks */
             quirks: components["schemas"]["Quirk"][];
             /** Likes */
@@ -1397,6 +1498,184 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    feed_dragon: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                dragon_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FeedRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CareResult"];
+                };
+            };
+            /** @description Missing or invalid token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not this player's dragon */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description The dragon won't right now (the detail says why) */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unknown food */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    rest_dragon: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                dragon_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CareResult"];
+                };
+            };
+            /** @description Missing or invalid token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not this player's dragon */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description The dragon won't right now (the detail says why) */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    play_with_dragon: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                dragon_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CareResult"];
+                };
+            };
+            /** @description Missing or invalid token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not this player's dragon */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description The dragon won't right now (the detail says why) */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };

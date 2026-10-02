@@ -5,6 +5,15 @@ All notable changes to FuryBound / Dragon Academy. The format follows [Keep a Ch
 ## [Unreleased]
 
 ### Added
+- **A living dragon** on `/dragon`: needs drift while you're away (hunger +4/h, energy +8/h, happiness −2/h), worked out when you come back. You can **Feed** (6 foods; liked ones please it more, disliked ones cost happiness and trust), **Rest** and **Play**. The dragon refuses with a reason when it's full, wide awake or too tired. A **mood** (Hungry, Tired, Angry, Excited, Curious, Happy; first matching rule wins, Plan §9.7) and an **idle thought** that changes every hour show on the card.
+- `data/game/care.yaml` (invented): decay rates, care action effects and refusals, messages and idle thoughts.
+- Care engine (`apps/api/app/engines/care.py`, pure): decay, care actions, mood and thoughts. Scared waits for storms in stories; Angry needs the training refusals that arrive in Phase 5.
+- **Care API**: `POST /api/v1/dragons/{id}/feed` · `/rest` · `/play` (409 with the dragon's reason when it refuses). `GET /dragons/me` now returns needs as of now, `mood`, `thought` and `foods`.
+- `dragon_events` table (migration `20261003120000_dragon_events.sql`): a diary of adopted, fed, rested and played, readable by the owner only.
+- Tests: 23 API tests (care rules, mood order, endpoints, needs drift) and 2 web tests for the care panel.
+
+### Fixed
+- Datetimes are now sent to Postgres with their time zone (`type_annotation_map` in `db/models.py`).
 - **Species silhouettes** (`apps/web/src/lib/art/shapes.ts`, `components/art/dragon-silhouette.tsx`): original placeholder art for each of the 15 matchable species, built from parts (wings, head, tail, legs). For example, the Zippleback has two heads and the Gronckle a club tail. Other species use a generic shape. They're used in the Dragon Book (named dragons take their species' shape), the reveal (the actual top 3 circle overhead) and on `/dragon`, where your dragon is drawn in its own colour. No film designs are copied (Plan §16).
 - Dragon Book pages link to the fan wiki ("See what it looks like on the fan wiki"), through the wiki's search so no link goes dead. We link to the wiki and don't copy its images.
 - Colour variants in `adoption.yaml` now have a `hex` colour, and `PlayerDragon` returns `color_hex`.

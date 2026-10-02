@@ -22,6 +22,11 @@ class Quirk(BaseModel):
     label: str = Field(examples=["Hoards shiny things"])
 
 
+class MoodState(BaseModel):
+    id: str = Field(examples=["hungry"])
+    label: str = Field(examples=["Hungry"])
+
+
 class PlayerDragon(BaseModel):
     id: UUID
     name: str
@@ -33,7 +38,10 @@ class PlayerDragon(BaseModel):
     color_hex: str | None = Field(examples=["#4a90c8"], description="For drawing the dragon")
     personality: list[Labelled] = Field(description="Traits in the quiz's order")
     stats: list[Labelled]
-    needs: list[Labelled] = Field(description="Hunger, energy and happiness")
+    needs: list[Labelled] = Field(description="Hunger, energy and happiness, as of now")
+    mood: MoodState
+    thought: str = Field(description="What the dragon is up to (changes every hour)")
+    foods: list[str] = Field(description="What can be offered when feeding")
     quirks: list[Quirk]
     likes: list[str]
     dislikes: list[str]
@@ -41,3 +49,12 @@ class PlayerDragon(BaseModel):
     level: int
     stage: str
     created_at: datetime
+
+
+class FeedRequest(BaseModel):
+    food: str = Field(examples=["fish"])
+
+
+class CareResult(BaseModel):
+    message: str = Field(examples=["Ember gobbles the fish and hums happily."])
+    dragon: PlayerDragon

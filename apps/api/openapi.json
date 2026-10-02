@@ -760,7 +760,7 @@
           "dragons"
         ],
         "summary": "My Dragon",
-        "description": "The signed-in player's dragon card.",
+        "description": "The signed-in player's dragon card, with needs as of now, mood and an idle thought.",
         "operationId": "my_dragon",
         "responses": {
           "200": {
@@ -799,6 +799,253 @@
             "HTTPBearer": []
           }
         ]
+      }
+    },
+    "/api/v1/dragons/{dragon_id}/feed": {
+      "post": {
+        "tags": [
+          "dragons"
+        ],
+        "summary": "Feed Dragon",
+        "description": "Offer a food. Liked foods please it more; disliked ones cost happiness and trust.",
+        "operationId": "feed_dragon",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dragon_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Dragon Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FeedRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CareResult"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not this player's dragon",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The dragon won't right now (the detail says why)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unknown food",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/dragons/{dragon_id}/rest": {
+      "post": {
+        "tags": [
+          "dragons"
+        ],
+        "summary": "Rest Dragon",
+        "description": "Let it sleep: energy recovers.",
+        "operationId": "rest_dragon",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dragon_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Dragon Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CareResult"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not this player's dragon",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The dragon won't right now (the detail says why)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/dragons/{dragon_id}/play": {
+      "post": {
+        "tags": [
+          "dragons"
+        ],
+        "summary": "Play With Dragon",
+        "description": "Play together: happier and a little more trusting, but it costs energy.",
+        "operationId": "play_with_dragon",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dragon_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Dragon Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CareResult"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not this player's dragon",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The dragon won't right now (the detail says why)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
       }
     }
   },
@@ -847,6 +1094,26 @@
           "pictured"
         ],
         "title": "AppearanceType"
+      },
+      "CareResult": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "examples": [
+              "Ember gobbles the fish and hums happily."
+            ]
+          },
+          "dragon": {
+            "$ref": "#/components/schemas/PlayerDragon"
+          }
+        },
+        "type": "object",
+        "required": [
+          "message",
+          "dragon"
+        ],
+        "title": "CareResult"
       },
       "CharacterRef": {
         "properties": {
@@ -1107,6 +1374,22 @@
         ],
         "title": "ErrorResponse"
       },
+      "FeedRequest": {
+        "properties": {
+          "food": {
+            "type": "string",
+            "title": "Food",
+            "examples": [
+              "fish"
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "food"
+        ],
+        "title": "FeedRequest"
+      },
       "HTTPValidationError": {
         "properties": {
           "detail": {
@@ -1293,6 +1576,30 @@
         ],
         "title": "Labelled"
       },
+      "MoodState": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id",
+            "examples": [
+              "hungry"
+            ]
+          },
+          "label": {
+            "type": "string",
+            "title": "Label",
+            "examples": [
+              "Hungry"
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "label"
+        ],
+        "title": "MoodState"
+      },
       "Movie": {
         "properties": {
           "id": {
@@ -1412,7 +1719,23 @@
             },
             "type": "array",
             "title": "Needs",
-            "description": "Hunger, energy and happiness"
+            "description": "Hunger, energy and happiness, as of now"
+          },
+          "mood": {
+            "$ref": "#/components/schemas/MoodState"
+          },
+          "thought": {
+            "type": "string",
+            "title": "Thought",
+            "description": "What the dragon is up to (changes every hour)"
+          },
+          "foods": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Foods",
+            "description": "What can be offered when feeding"
           },
           "quirks": {
             "items": {
@@ -1468,6 +1791,9 @@
           "personality",
           "stats",
           "needs",
+          "mood",
+          "thought",
+          "foods",
           "quirks",
           "likes",
           "dislikes",

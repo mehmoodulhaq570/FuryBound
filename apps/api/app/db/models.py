@@ -5,10 +5,10 @@ The schema itself lives in supabase/migrations/; these classes only describe it 
 
 from datetime import date, datetime
 from enum import StrEnum
-from typing import Any
+from typing import Any, ClassVar
 from uuid import UUID
 
-from sqlalchemy import Enum, ForeignKey, Text, text
+from sqlalchemy import DateTime, Enum, ForeignKey, Text, text
 from sqlalchemy.dialects.postgresql import ARRAY, JSONB
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
@@ -21,7 +21,8 @@ def _pg_enum[E: StrEnum](enum: type[E], name: str) -> Enum:
 
 
 class Base(DeclarativeBase):
-    pass
+    # Every timestamp column is timestamptz, so datetimes carry their time zone.
+    type_annotation_map: ClassVar[dict[Any, Any]] = {datetime: DateTime(timezone=True)}
 
 
 class MovieRow(Base):
@@ -144,4 +145,14 @@ class PlayerDragonRow(Base):
     trust: Mapped[int]
     compatibility: Mapped[int | None]
     rules_version: Mapped[str]
+    created_at: Mapped[datetime] = mapped_column(server_default=text("now()"))
+
+
+class DragonEventRow(Base):
+    __tablename__ = "dragon_events"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    dragon_id: Mapped[UUID]
+    kind: Mapped[str]
+    payload: Mapped[dict[str, Any]] = mapped_column(JSONB, server_default=text("'{}'"))
     created_at: Mapped[datetime] = mapped_column(server_default=text("now()"))

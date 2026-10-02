@@ -7,6 +7,7 @@ import { Notice } from "@/components/quiz/notice";
 import { fetchMyDragon, myDragonQueryKey } from "@/lib/dragon/my-dragon";
 import { useSession } from "@/lib/supabase/use-session";
 
+import { CarePanel } from "./care-panel";
 import { DragonCard } from "./dragon-card";
 
 /** Signed-in check → the player's dragon, or a nudge to go and find one. */
@@ -63,5 +64,10 @@ export function DragonHome() {
     );
   }
 
-  return <DragonCard dragon={dragon.data} />;
+  return (
+    <DragonCard
+      dragon={dragon.data}
+      care={userId && <CarePanel dragon={dragon.data} userId={userId} />}
+    />
+  );
 }

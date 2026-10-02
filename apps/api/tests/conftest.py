@@ -158,6 +158,16 @@ async def _sql(url: str, statement: str, **params: object) -> None:
         await engine.dispose()
 
 
+async def _rows(url: str, statement: str, **params: object) -> list[Any]:
+    """The first column of every row a query returns."""
+    engine = create_engine(url)
+    try:
+        async with engine.connect() as conn:
+            return list((await conn.execute(text(statement), params)).scalars())
+    finally:
+        await engine.dispose()
+
+
 @pytest.fixture
 def player(database_url: str) -> Iterator[UUID]:
     """A throwaway account (its profile comes from a trigger); deleted with all its data."""

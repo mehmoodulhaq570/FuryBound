@@ -21,6 +21,9 @@ const dragon: PlayerDragon = {
     { id: "energy", label: "Energy", value: 80 },
     { id: "happiness", label: "Happiness", value: 60 },
   ],
+  mood: { id: "hungry", label: "Hungry" },
+  thought: "Ember keeps sniffing your satchel.",
+  foods: ["fish", "eel"],
   quirks: [{ id: "hoards_shiny", label: "Hoards shiny things" }],
   likes: ["chicken", "shiny things"],
   dislikes: ["eel"],
@@ -40,6 +43,8 @@ describe("DragonCard", () => {
     expect(screen.getByText(/Sky blue Deadly Nadder/)).toBeTruthy();
     expect(screen.getByText("91%")).toBeTruthy();
     expect(screen.getByText("Hoards shiny things")).toBeTruthy();
+    expect(screen.getByText("Hungry")).toBeTruthy();
+    expect(screen.getByText("Ember keeps sniffing your satchel.")).toBeTruthy();
     expect(screen.getByText("shiny things")).toBeTruthy();
     expect(screen.getByText("eel")).toBeTruthy();
   });

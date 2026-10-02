@@ -10,7 +10,7 @@ Summary of the Claude Code sessions of **2026-09-30 → 2026-10-01** (Phase 3 st
 | 1 Dragon database | ✅ Code done. ⏳ Film verification by the user (scene logs) |
 | 2 Dragon Book | ✅ Done locally (Milestone M1). Not deployed yet |
 | 3 Quiz + matching | ✅ Engine, quiz, encounter and reveal done (2026-10-02) |
-| 4 Profile + your dragon | 🔨 Profiles, naming/adoption and a first `/dragon` card done (2026-10-02). ⏭️ Next: Dragon Home (mood, idle thoughts), care actions + needs decay, discoveries |
+| 4 Profile + your dragon | 🔨 Profiles, naming, species silhouettes, living dragon (needs decay, feed/rest/play, mood, thoughts) done (2026-10-02). ⏭️ Next: discoveries in the Dragon Book → Milestone M2 |
 
 - **Repo:** https://github.com/mehmoodulhaq570/FuryBound (public, branch `main`). The user commits and pushes **themselves**; don't push.
 - **Package / Supabase project name:** `dragon-academy` (the GitHub repo name is FuryBound).
@@ -74,6 +74,14 @@ Summary of the Claude Code sessions of **2026-09-30 → 2026-10-01** (Phase 3 st
 - `lib/art/shapes.ts` (`BUILDS` per matchable species: wings/head/tail/legs/body) → `components/art/dragon-silhouette.tsx` (`speciesId`, `color`, `scale`, `outline`). The old generic silhouettes are gone (`components/dragon-book/silhouette.tsx` is now a size-scaling wrapper). The Dragon Book `DragonCard` type has `speciesId`.
 - To preview the shapes: render them to HTML and screenshot with headless Chrome (`chrome.exe --headless --screenshot`). That's how they were checked. Fade silhouettes with `opacity-*`, not `text-x/40`, or the overlapping parts show through.
 
+**Phase 4: living dragon** (2026-10-02)
+- `data/game/care.yaml` + `engines/care.py` (pure: `decay`, `care` → `CareOutcome` or `Refused`, `mood`, `thought`). Mood thresholds are in code (the Plan's table); numbers and texts are in YAML.
+- `app/dragons.py` now takes a `Rulebook` (game + adoption + care, `get_rulebook()`); `look_after()` locks the row, decays, applies, writes `needs_updated_at = now` and a `dragon_events` row. Reading doesn't write the decay back.
+- Migration `20261003120000_dragon_events.sql`, applied with `supabase migration up`. Adoption also logs an `adopted` event.
+- Gotcha fixed: `Mapped[datetime]` defaulted to `timestamp without time zone`. `Base.type_annotation_map` now makes every datetime timezone-aware.
+- Web: `components/dragon/care-panel.tsx` (passed into `DragonCard` as its `care` slot); mood badge + thought on the card.
+- 162 API tests, 57 web tests. **Not yet tried in a browser.**
+
 ## Decisions and deviations from Plan.md
 
 - **Local Supabase only** during development, so the user can learn it. Hosted Supabase comes at launch.
@@ -97,10 +105,10 @@ Summary of the Claude Code sessions of **2026-09-30 → 2026-10-01** (Phase 3 st
 
 ## Next steps
 
-> **Resume here (2026-10-02):** quiz → encounter → reveal → name → `/dragon` is built. **First:** try it in the browser (naming and the reveal animation are both untested there) and have the user review `data/game/adoption.yaml` (quirks and colours are Claude's drafts). **Next:** Phase 4 continues: mood + idle thoughts on Dragon Home, care actions (feed/rest/play) with lazy needs decay, then discoveries in the Dragon Book. The user commits themselves.
+> **Resume here (2026-10-02):** quiz → encounter → reveal → name → `/dragon` is built. **First:** try it in the browser (naming and the reveal animation are both untested there) and have the user review `data/game/adoption.yaml` (quirks and colours are Claude's drafts). **Next:** discoveries (your dragon + runners-up marked discovered; Academy mode in the Dragon Book with "???" silhouettes and a progress counter), which completes Phase 4 / Milestone M2. The user commits themselves.
 
 1. ✅ Quiz wording and dragon personality review (done 2026-10-01). After any later edit to `data/game/`, run `pnpm match:calibrate` and the tests, and add a line to CHANGELOG.md.
-2. **Phase 3 UI:** ✅ quiz page. ✅ encounter scenes. ✅ reveal. **Phase 4:** ✅ profiles, naming/adoption, first dragon card. Next: mood engine + idle thoughts, care actions + lazy needs decay (`dragon_events` table), discoveries (runners-up marked discovered, Academy mode in the Dragon Book).
+2. **Phase 3 UI:** ✅ quiz page. ✅ encounter scenes. ✅ reveal. **Phase 4:** ✅ profiles, naming/adoption, first dragon card. ✅ mood + idle thoughts, care actions + lazy needs decay. Next: discoveries (runners-up marked discovered, Academy mode in the Dragon Book).
 3. Polish: extreme personalities only reach ~76–80% compatibility; runner-up explanations fall back to vague text.
 4. **User:** watch the films and confirm the scene logs (`yes?` → `yes`, source → `film`), then run `pnpm catalog:import && pnpm catalog:build && pnpm db:reset`.
 5. Optional: deploy the Dragon Book (Vercel), keep filters in the URL, and fill in abilities and diet in the catalog.
