@@ -9,7 +9,7 @@ Summary of the Claude Code sessions of **2026-09-30 → 2026-10-01** (Phase 3 st
 | 0 Foundations | ✅ Done. CI green on GitHub |
 | 1 Dragon database | ✅ Code done. ⏳ Film verification by the user (scene logs) |
 | 2 Dragon Book | ✅ Done locally (Milestone M1). Not deployed yet |
-| 3 Quiz + matching | 🔨 Engine, quiz page and encounter scenes done (2026-10-02). ⏭️ Next: the reveal / result screen |
+| 3 Quiz + matching | ✅ Engine, quiz, encounter and reveal done (2026-10-02). Naming moved to Phase 4 |
 
 - **Repo:** https://github.com/mehmoodulhaq570/FuryBound (public, branch `main`). The user commits and pushes **themselves**; don't push.
 - **Package / Supabase project name:** `dragon-academy` (the GitHub repo name is FuryBound).
@@ -55,9 +55,11 @@ Summary of the Claude Code sessions of **2026-09-30 → 2026-10-01** (Phase 3 st
 
 **Phase 3: encounter scenes** (2026-10-02)
 - API: `GET /encounter`, `POST /quiz/attempts/{id}/encounter` (locks the row; 409 if done or the quiz/encounter version changed; 422 for an unknown option), `GET /quiz/attempts/{id}` (`match` is null until finished). `ranking` stores the top 3 as `{species_id, raw, compatibility, explanation}`; names come from the `species` table, rarity and summary from the profiles. `get_calibration()` (cached) in `matching.py`.
-- Web: `/academy/encounter?attempt=<id>` → `components/encounter/encounter-flow.tsx`. It **reuses `QuizRunner`** (scenes have the same shape as questions; new `storageKey` and `wording` props). `match-result.tsx` is the plain result card. `Notice` moved to `components/quiz/notice.tsx`.
+- Web: `/academy/encounter?attempt=<id>` → `components/encounter/encounter-flow.tsx`. It **reuses `QuizRunner`** (scenes have the same shape as questions; new `storageKey` and `wording` props). A finished attempt redirects to the reveal. `Notice` is in `components/quiz/notice.tsx`; `AttemptGate` (`components/quiz/attempt-gate.tsx`) does the id / sign-in / ownership checks for both pages.
+- Reveal: `/academy/reveal?attempt=<id>` → `components/reveal/` (`reveal-flow.tsx` → `reveal.tsx` with phases circling → peel → landed, timings in `TIMING`; `reveal-stage.tsx` is the Motion animation; `silhouette.tsx` is a generic SVG dragon, the same for all species until there's art). Reduced motion = fades only. "Seen" is kept in localStorage per attempt, so a reload skips the animation. Motion 14 installed.
+- **Decision (2026-10-02):** naming the dragon moves to the start of Phase 4 (it needs `player_dragons` + `POST /dragons`). The reveal has a disabled "Naming your dragon is coming next" button.
 - All 64 API tests pass, including the 5 quiz database tests that hadn't run before. 33 web tests pass, but only with `vitest run --maxWorkers=1` when RAM is tight (the default run timed out starting workers).
-- The user tested the quiz in the browser end to end before this was built. **The encounter itself hasn't been tried in the browser yet.**
+- The user played quiz → encounter in the browser (got a Light Fury, 90%) before the reveal existed. **The reveal animation hasn't been seen in a browser yet.**
 
 ## Decisions and deviations from Plan.md
 
@@ -82,10 +84,10 @@ Summary of the Claude Code sessions of **2026-09-30 → 2026-10-01** (Phase 3 st
 
 ## Next steps
 
-> **Resume here (2026-10-02):** the encounter scenes are built and tested but not committed. **First:** try quiz → "Step into the fog" → 3 scenes → result in the browser. **Next to build:** the reveal / result screen (`/academy/reveal`, Plan §9.4: silhouettes, "It chose you", naming). The user commits themselves.
+> **Resume here (2026-10-02):** Phase 3 is functionally done (quiz → encounter → reveal). **First:** watch the reveal in the browser and tune `TIMING` / the stage if it feels off. **Next:** Phase 4 starting with naming (`player_dragons`, `POST /dragons`), or Phase 3 polish (item 3 below). The user commits themselves.
 
 1. ✅ Quiz wording and dragon personality review (done 2026-10-01). After any later edit to `data/game/`, run `pnpm match:calibrate` and the tests, and add a line to CHANGELOG.md.
-2. **Phase 3 UI:** ✅ quiz page. ✅ encounter scenes (plain `MatchResult` card at the end). Next: the reveal (`/academy/reveal`): the animated version of the result (3 silhouettes → 2 peel away → it lands, reduced-motion fades), trait bars via `TraitBars`, then naming. Naming needs `POST /dragons` and a `player_dragons` table, which overlaps with Phase 4.
+2. **Phase 3 UI:** ✅ quiz page. ✅ encounter scenes. ✅ reveal. Naming → Phase 4 (replace the disabled button on the reveal).
 3. Polish: extreme personalities only reach ~76–80% compatibility; runner-up explanations fall back to vague text.
 4. **User:** watch the films and confirm the scene logs (`yes?` → `yes`, source → `film`), then run `pnpm catalog:import && pnpm catalog:build && pnpm db:reset`.
 5. Optional: deploy the Dragon Book (Vercel), keep filters in the URL, and fill in abilities and diet in the catalog.

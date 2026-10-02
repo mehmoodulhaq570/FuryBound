@@ -16,6 +16,7 @@ What Dragon Academy is built with as of **Phase 2 (Dragon Book)**. Versions come
 | openapi-typescript | 7.13 | Generates API types from the backend's OpenAPI schema |
 | @supabase/supabase-js, @supabase/ssr | 2.117, 0.12 | Sign-in from the browser |
 | Fuse.js | 7.5 | Typo-tolerant Dragon Book search, in the browser |
+| Motion | 14 | The dragon reveal animation (respects reduced motion) |
 
 The Dragon Book (`/dragon-book`) is statically generated from `data/build/dragons.json` and `references.json` at build time; it doesn't call the API.
 
@@ -84,7 +85,6 @@ The Dragon Book (`/dragon-book`) is statically generated from `data/build/dragon
 |---|---|---|
 | Hypothesis | 3 | Property tests for the game engines |
 | scikit-learn, NumPy, pandas | 3 | Matching calibration and analysis |
-| Motion | 4 | Reveal animation and transitions |
 | Gemini API, Ollama | 6 | AI companion (production and local) |
 | Phaser | 7 | Mini-games |
 | Playwright | 7+ | End-to-end tests |

@@ -14,6 +14,15 @@ export function encounterAsQuiz(encounter: Encounter): Quiz {
   return { version: encounter.version, questions: encounter.scenes };
 }
 
+export function attemptQueryKey(attemptId: string | null) {
+  return ["quiz-attempt", attemptId] as const;
+}
+
+/** Where a finished attempt's dragon is revealed. */
+export function revealPath(attemptId: string): string {
+  return `/academy/reveal?attempt=${attemptId}`;
+}
+
 /** One saved progress per attempt, so an old attempt's picks never leak into a new one. */
 export function encounterStorageKey(attemptId: string): string {
   return `dragon-academy:encounter-progress:${attemptId}`;
@@ -32,4 +41,24 @@ export function toChoices(encounter: Encounter, answers: Record<string, string>)
     offering: pick("offering"),
     startle: pick("startle"),
   };
+}
+
+// Whether this attempt's reveal has played, so a reload goes straight to the result.
+// Storage can be unavailable (private mode); then the animation just plays again.
+const revealedKey = (attemptId: string) => `dragon-academy:revealed:${attemptId}`;
+
+export function hasSeenReveal(attemptId: string): boolean {
+  try {
+    return localStorage.getItem(revealedKey(attemptId)) === "1";
+  } catch {
+    return false;
+  }
+}
+
+export function markRevealSeen(attemptId: string): void {
+  try {
+    localStorage.setItem(revealedKey(attemptId), "1");
+  } catch {
+    // Not fatal.
+  }
 }

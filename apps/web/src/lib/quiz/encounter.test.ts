@@ -1,6 +1,13 @@
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 
-import { encounterAsQuiz, encounterStorageKey, toChoices, type Encounter } from "./encounter";
+import {
+  encounterAsQuiz,
+  encounterStorageKey,
+  hasSeenReveal,
+  markRevealSeen,
+  toChoices,
+  type Encounter,
+} from "./encounter";
 
 const encounter: Encounter = {
   version: "encounter_test",
@@ -41,5 +48,16 @@ describe("encounter helpers", () => {
 
   it("keeps each attempt's progress separate", () => {
     expect(encounterStorageKey("a")).not.toBe(encounterStorageKey("b"));
+  });
+
+  describe("reveal seen", () => {
+    beforeEach(() => localStorage.clear());
+
+    it("is remembered per attempt", () => {
+      expect(hasSeenReveal("a")).toBe(false);
+      markRevealSeen("a");
+      expect(hasSeenReveal("a")).toBe(true);
+      expect(hasSeenReveal("b")).toBe(false);
+    });
   });
 });
