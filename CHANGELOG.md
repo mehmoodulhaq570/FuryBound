@@ -4,6 +4,9 @@ All notable changes to FuryBound / Dragon Academy. The format follows [Keep a Ch
 
 ## [Unreleased]
 
+### Added
+- **Artwork policy** (README "Artwork"). Species artwork is being made as original AI-generated interpretations of each species' general traits, colours and personality. The images deliberately don't reproduce DreamWorks' character designs. They're used per species, never for named film characters, and contain no logos or film text. They're kept out of git (`dragons_images/` is ignored) until reviewed and added to the app; until then the original silhouettes are shown.
+
 ## Phase 5: Training (2026-10-02)
 
 ### Added
