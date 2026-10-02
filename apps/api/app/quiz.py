@@ -121,7 +121,7 @@ def player_encounter(data: GameData, user_id: UUID) -> Encounter:
     )
 
 
-async def _own_attempt(
+async def own_attempt(
     session: AsyncSession, user_id: UUID, attempt_id: UUID, *, lock: bool = False
 ) -> QuizAttemptRow:
     query = select(QuizAttemptRow).where(
@@ -170,7 +170,7 @@ async def _detail(session: AsyncSession, data: GameData, row: QuizAttemptRow) ->
 async def get_attempt(
     session: AsyncSession, data: GameData, user_id: UUID, attempt_id: UUID
 ) -> QuizAttemptDetail:
-    return await _detail(session, data, await _own_attempt(session, user_id, attempt_id))
+    return await _detail(session, data, await own_attempt(session, user_id, attempt_id))
 
 
 def _check_choices(data: GameData, choices: EncounterChoices) -> None:
@@ -197,7 +197,7 @@ async def complete_encounter(
     Raises AttemptNotFound, AttemptConflict (already done, or the quiz has changed since)
     or InvalidAnswers (an unknown option).
     """
-    row = await _own_attempt(session, user_id, attempt_id, lock=True)
+    row = await own_attempt(session, user_id, attempt_id, lock=True)
     if row.completed_at is not None:
         raise AttemptConflict("This attempt is already complete; a dragon has chosen you")
     if row.quiz_id != data.quiz.version:

@@ -68,10 +68,12 @@ function Result({
   match,
   traits,
   entrance,
+  naming,
 }: {
   match: QuizMatch;
   traits: QuizAttemptDetail["traits"];
   entrance: Entrance;
+  naming: React.ReactNode;
 }) {
   const { top, runners_up } = match;
   return (
@@ -96,13 +98,7 @@ function Result({
           >
             Read about the {top.name} in the Dragon Book
           </Link>
-          <button
-            type="button"
-            disabled
-            className="bg-accent w-full rounded-lg px-4 py-2 font-medium text-white opacity-60"
-          >
-            Naming your dragon is coming next
-          </button>
+          {naming}
         </section>
       </Appear>
 
@@ -144,6 +140,7 @@ export function Reveal({
   reduceMotion,
   seen,
   onSeen,
+  naming,
 }: {
   attempt: QuizAttemptDetail;
   match: QuizMatch;
@@ -151,6 +148,8 @@ export function Reveal({
   /** The reveal already played for this attempt (e.g. this is a reload). */
   seen: boolean;
   onSeen: () => void;
+  /** Where the player names (adopts) the dragon. */
+  naming?: React.ReactNode;
 }) {
   const [phase, setPhase] = useState<Phase>(reduceMotion || seen ? "landed" : "circling");
   const entrance: Entrance = seen ? "none" : reduceMotion ? "fade" : "full";
@@ -175,7 +174,7 @@ export function Reveal({
           : "Three dragons circle overhead."}
       </p>
       {phase === "landed" ? (
-        <Result match={match} traits={attempt.traits} entrance={entrance} />
+        <Result match={match} traits={attempt.traits} entrance={entrance} naming={naming} />
       ) : (
         <div className="space-y-4 text-center">
           <p className="text-muted">

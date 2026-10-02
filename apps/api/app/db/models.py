@@ -120,3 +120,28 @@ class QuizAttemptRow(Base):
     algorithm_version: Mapped[str]
     created_at: Mapped[datetime] = mapped_column(server_default=text("now()"))
     completed_at: Mapped[datetime | None]
+
+
+class PlayerDragonRow(Base):
+    __tablename__ = "player_dragons"
+
+    id: Mapped[UUID] = mapped_column(primary_key=True, server_default=text("gen_random_uuid()"))
+    user_id: Mapped[UUID]
+    species_id: Mapped[str]
+    quiz_attempt_id: Mapped[UUID | None]
+    name: Mapped[str]
+    color_variant: Mapped[str | None]
+    personality: Mapped[dict[str, int]] = mapped_column(JSONB)
+    quirks: Mapped[list[str]] = mapped_column(ARRAY(Text))
+    likes: Mapped[list[str]] = mapped_column(ARRAY(Text))
+    dislikes: Mapped[list[str]] = mapped_column(ARRAY(Text))
+    level: Mapped[int] = mapped_column(server_default=text("1"))
+    xp: Mapped[int] = mapped_column(server_default=text("0"))
+    stage: Mapped[str] = mapped_column(server_default=text("'newborn'"))
+    stats: Mapped[dict[str, int]] = mapped_column(JSONB)
+    needs: Mapped[dict[str, int]] = mapped_column(JSONB)
+    needs_updated_at: Mapped[datetime] = mapped_column(server_default=text("now()"))
+    trust: Mapped[int]
+    compatibility: Mapped[int | None]
+    rules_version: Mapped[str]
+    created_at: Mapped[datetime] = mapped_column(server_default=text("now()"))

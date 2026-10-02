@@ -1,0 +1,55 @@
+# LAYER 3: game data (invented, not canon).
+# How a newly adopted dragon is rolled (Plan §9.5). Kept apart from the matching files on
+# purpose: editing this never changes who matches with which dragon, so it doesn't need
+# `pnpm match:calibrate`.
+#
+# - personality_sigma: each trait = species trait + a normal draw with this spread, clamped
+#   0-100, so no two dragons of a species are identical.
+# - stat_start: a new dragon's stats are this share of the species' stat_caps (random within).
+# - quirks: each dragon gets 1-2. `likes` / `dislikes` are added to the dragon's own lists.
+# - color_variants: per matchable species (species_profiles.yaml); every one needs at least one.
+
+version: adoption_v1
+
+personality_sigma: 6
+stat_start: { min: 0.30, max: 0.40 }
+quirks_per_dragon: { min: 1, max: 2 }
+
+start:
+  needs: { hunger: 30, energy: 80, happiness: 60 }
+  trust: 20
+
+name:
+  min_length: 2
+  max_length: 20
+
+quirks:
+  - { id: hoards_shiny, label: "Hoards shiny things", likes: [shiny things] }
+  - { id: afraid_of_thunder, label: "Afraid of thunder", dislikes: [thunderstorms] }
+  - { id: sneezes_sparks, label: "Sneezes sparks when excited" }
+  - { id: sun_napper, label: "Naps in any patch of sun", likes: [sunny rocks] }
+  - { id: chases_birds, label: "Can't resist chasing birds", likes: [birds] }
+  - { id: hates_baths, label: "Sulks after getting wet", dislikes: [baths] }
+  - { id: purrs_scratched, label: "Purrs when scratched under the chin", likes: [chin scratches] }
+  - { id: picky_eater, label: "Sniffs every meal twice" }
+  - { id: night_owl, label: "Most awake after dark", likes: [moonlight] }
+  - { id: copycat, label: "Copies your gestures" }
+  - { id: loud_snorer, label: "Snores like a rockslide" }
+  - { id: eel_terror, label: "Panics at the smell of eel", dislikes: [eel] }
+
+color_variants:
+  night_fury: [midnight black, storm grey]
+  light_fury: [moon white, pearl]
+  stormcutter: [rust and cream, slate blue, forest green]
+  deathgripper: [ember orange, sulfur yellow]
+  rumblehorn: [moss brown, bark grey]
+  crimson_goregutter: [crimson, deep maroon]
+  snafflefang: [lichen green, sandstone]
+  hobgobbler: [mud brown, olive]
+  deadly_nadder: [sky blue, sunset orange, jade green]
+  gronckle: [granite brown, boulder grey, rusty red]
+  hideous_zippleback: [swamp green, amber]
+  monstrous_nightmare: [flame red, charcoal, copper]
+  terrible_terror: [leaf green, poppy red, sand yellow]
+  hotburple: [lava orange, dusty brown]
+  scuttleclaw: [river blue, mossy green]

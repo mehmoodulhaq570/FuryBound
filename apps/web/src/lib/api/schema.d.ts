@@ -261,6 +261,46 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/dragons": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Adopt Dragon
+         * @description Adopt the dragon that chose you (the attempt's top match) and give it a name.
+         */
+        post: operations["adopt_dragon"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/dragons/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * My Dragon
+         * @description The signed-in player's dragon card.
+         */
+        get: operations["my_dragon"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -302,6 +342,21 @@ export interface components {
             email?: string | null;
             /** Role */
             role: string;
+        };
+        /** DragonAdopt */
+        DragonAdopt: {
+            /**
+             * Attempt Id
+             * Format: uuid
+             * @description The finished quiz attempt whose top match to adopt
+             */
+            attempt_id: string;
+            /**
+             * Name
+             * @description 2-20 letters; spaces, - and ' between
+             * @example Ember
+             */
+            name: string;
         };
         /** DragonClass */
         DragonClass: {
@@ -452,6 +507,15 @@ export interface components {
              */
             movies: string[];
         };
+        /** Labelled */
+        Labelled: {
+            /** Id */
+            id: string;
+            /** Label */
+            label: string;
+            /** Value */
+            value: number;
+        };
         /** Movie */
         Movie: {
             /** Id */
@@ -462,6 +526,77 @@ export interface components {
             year: number;
             /** Ordinal */
             ordinal: number;
+        };
+        /** PlayerDragon */
+        PlayerDragon: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+            /**
+             * Species Id
+             * @example deadly_nadder
+             */
+            species_id: string;
+            /**
+             * Species Name
+             * @example Deadly Nadder
+             */
+            species_name: string;
+            /** Rarity */
+            rarity: string;
+            /**
+             * Compatibility
+             * @description From the quiz match, 60-99%
+             */
+            compatibility: number | null;
+            /** Color Variant */
+            color_variant: string | null;
+            /**
+             * Personality
+             * @description Traits in the quiz's order
+             */
+            personality: components["schemas"]["Labelled"][];
+            /** Stats */
+            stats: components["schemas"]["Labelled"][];
+            /**
+             * Needs
+             * @description Hunger, energy and happiness
+             */
+            needs: components["schemas"]["Labelled"][];
+            /** Quirks */
+            quirks: components["schemas"]["Quirk"][];
+            /** Likes */
+            likes: string[];
+            /** Dislikes */
+            dislikes: string[];
+            /** Trust */
+            trust: number;
+            /** Level */
+            level: number;
+            /** Stage */
+            stage: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+        };
+        /** Quirk */
+        Quirk: {
+            /**
+             * Id
+             * @example hoards_shiny
+             */
+            id: string;
+            /**
+             * Label
+             * @example Hoards shiny things
+             */
+            label: string;
         };
         /** Quiz */
         Quiz: {
@@ -1150,6 +1285,104 @@ export interface operations {
             };
             /** @description An unknown option */
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    adopt_dragon: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DragonAdopt"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PlayerDragon"];
+                };
+            };
+            /** @description Missing or invalid token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description No such attempt for this player */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Encounter not finished, or already has a dragon */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description The name isn't allowed */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    my_dragon: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PlayerDragon"];
+                };
+            };
+            /** @description Missing or invalid token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description No dragon adopted yet */
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };

@@ -9,7 +9,8 @@ Summary of the Claude Code sessions of **2026-09-30 → 2026-10-01** (Phase 3 st
 | 0 Foundations | ✅ Done. CI green on GitHub |
 | 1 Dragon database | ✅ Code done. ⏳ Film verification by the user (scene logs) |
 | 2 Dragon Book | ✅ Done locally (Milestone M1). Not deployed yet |
-| 3 Quiz + matching | ✅ Engine, quiz, encounter and reveal done (2026-10-02). Naming moved to Phase 4 |
+| 3 Quiz + matching | ✅ Engine, quiz, encounter and reveal done (2026-10-02) |
+| 4 Profile + your dragon | 🔨 Profiles, naming/adoption and a first `/dragon` card done (2026-10-02). ⏭️ Next: Dragon Home (mood, idle thoughts), care actions + needs decay, discoveries |
 
 - **Repo:** https://github.com/mehmoodulhaq570/FuryBound (public, branch `main`). The user commits and pushes **themselves**; don't push.
 - **Package / Supabase project name:** `dragon-academy` (the GitHub repo name is FuryBound).
@@ -61,6 +62,13 @@ Summary of the Claude Code sessions of **2026-09-30 → 2026-10-01** (Phase 3 st
 - All 64 API tests pass, including the 5 quiz database tests that hadn't run before. 33 web tests pass, but only with `vitest run --maxWorkers=1` when RAM is tight (the default run timed out starting workers).
 - The user played quiz → encounter in the browser (got a Light Fury, 90%) before the reveal existed. **The reveal animation hasn't been seen in a browser yet.**
 
+**Phase 4: naming + adoption** (2026-10-02)
+- `data/game/adoption.yaml` + `engines/adoption.py` (`get_adoption()` checks every matchable species has colours). The dragon is rolled with `random.Random(f"{version}:{attempt_id}")`, so it's reproducible.
+- Migration `20261002120000_profiles_and_dragons.sql` was applied locally with `supabase migration up` (not `db:reset`, to keep the user's test account). `player_dragons.user_id` is unique (one dragon each) and has extra `compatibility` and `rules_version` columns.
+- API: `app/dragons.py`, `routers/dragons.py`, `schemas/dragons.py`. `quiz.own_attempt` is now public. The shared test fixtures (`player`, `quiz_client`, `auth_headers`, `first_answers`) moved to `tests/conftest.py`.
+- Web: `components/reveal/name-dragon.tsx` (passed into `Reveal` as its `naming` slot, so the reveal tests need no data client), `lib/dragon/name.ts` (quick client-side name check), `lib/dragon/my-dragon.ts`, `/dragon` → `components/dragon/dragon-home.tsx` + `dragon-card.tsx`.
+- 139 API tests and 51 web tests pass. **Naming hasn't been tried in a browser yet.**
+
 ## Decisions and deviations from Plan.md
 
 - **Local Supabase only** during development, so the user can learn it. Hosted Supabase comes at launch.
@@ -84,10 +92,10 @@ Summary of the Claude Code sessions of **2026-09-30 → 2026-10-01** (Phase 3 st
 
 ## Next steps
 
-> **Resume here (2026-10-02):** Phase 3 is functionally done (quiz → encounter → reveal). **First:** watch the reveal in the browser and tune `TIMING` / the stage if it feels off. **Next:** Phase 4 starting with naming (`player_dragons`, `POST /dragons`), or Phase 3 polish (item 3 below). The user commits themselves.
+> **Resume here (2026-10-02):** quiz → encounter → reveal → name → `/dragon` is built. **First:** try it in the browser (naming and the reveal animation are both untested there) and have the user review `data/game/adoption.yaml` (quirks and colours are Claude's drafts). **Next:** Phase 4 continues: mood + idle thoughts on Dragon Home, care actions (feed/rest/play) with lazy needs decay, then discoveries in the Dragon Book. The user commits themselves.
 
 1. ✅ Quiz wording and dragon personality review (done 2026-10-01). After any later edit to `data/game/`, run `pnpm match:calibrate` and the tests, and add a line to CHANGELOG.md.
-2. **Phase 3 UI:** ✅ quiz page. ✅ encounter scenes. ✅ reveal. Naming → Phase 4 (replace the disabled button on the reveal).
+2. **Phase 3 UI:** ✅ quiz page. ✅ encounter scenes. ✅ reveal. **Phase 4:** ✅ profiles, naming/adoption, first dragon card. Next: mood engine + idle thoughts, care actions + lazy needs decay (`dragon_events` table), discoveries (runners-up marked discovered, Academy mode in the Dragon Book).
 3. Polish: extreme personalities only reach ~76–80% compatibility; runner-up explanations fall back to vague text.
 4. **User:** watch the films and confirm the scene logs (`yes?` → `yes`, source → `film`), then run `pnpm catalog:import && pnpm catalog:build && pnpm db:reset`.
 5. Optional: deploy the Dragon Book (Vercel), keep filters in the URL, and fill in abilities and diet in the catalog.

@@ -8,7 +8,7 @@ from fastapi.routing import APIRoute
 from app.config import Settings, get_settings
 from app.db.session import create_engine, create_sessionmaker
 from app.log import configure_logging, request_logging_middleware
-from app.routers import canon, health, me, quiz
+from app.routers import canon, dragons, health, me, quiz
 
 API_PREFIX = "/api/v1"
 
@@ -55,6 +55,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     api.include_router(me.router)
     api.include_router(canon.router)
     api.include_router(quiz.router)
+    api.include_router(dragons.router)
     app.include_router(api)
 
     return app

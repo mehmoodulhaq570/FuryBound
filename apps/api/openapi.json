@@ -676,6 +676,130 @@
           }
         }
       }
+    },
+    "/api/v1/dragons": {
+      "post": {
+        "tags": [
+          "dragons"
+        ],
+        "summary": "Adopt Dragon",
+        "description": "Adopt the dragon that chose you (the attempt's top match) and give it a name.",
+        "operationId": "adopt_dragon",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DragonAdopt"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlayerDragon"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No such attempt for this player",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Encounter not finished, or already has a dragon",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "The name isn't allowed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/dragons/me": {
+      "get": {
+        "tags": [
+          "dragons"
+        ],
+        "summary": "My Dragon",
+        "description": "The signed-in player's dragon card.",
+        "operationId": "my_dragon",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlayerDragon"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No dragon adopted yet",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
     }
   },
   "components": {
@@ -780,6 +904,30 @@
           "role"
         ],
         "title": "CurrentUser"
+      },
+      "DragonAdopt": {
+        "properties": {
+          "attempt_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Attempt Id",
+            "description": "The finished quiz attempt whose top match to adopt"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name",
+            "description": "2-20 letters; spaces, - and ' between",
+            "examples": [
+              "Ember"
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "attempt_id",
+          "name"
+        ],
+        "title": "DragonAdopt"
       },
       "DragonClass": {
         "properties": {
@@ -1120,6 +1268,31 @@
         ],
         "title": "IndividualSummary"
       },
+      "Labelled": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "value": {
+            "type": "integer",
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "title": "Value"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "label",
+          "value"
+        ],
+        "title": "Labelled"
+      },
       "Movie": {
         "properties": {
           "id": {
@@ -1147,6 +1320,168 @@
           "ordinal"
         ],
         "title": "Movie"
+      },
+      "PlayerDragon": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "species_id": {
+            "type": "string",
+            "title": "Species Id",
+            "examples": [
+              "deadly_nadder"
+            ]
+          },
+          "species_name": {
+            "type": "string",
+            "title": "Species Name",
+            "examples": [
+              "Deadly Nadder"
+            ]
+          },
+          "rarity": {
+            "type": "string",
+            "title": "Rarity"
+          },
+          "compatibility": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Compatibility",
+            "description": "From the quiz match, 60-99%"
+          },
+          "color_variant": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Color Variant"
+          },
+          "personality": {
+            "items": {
+              "$ref": "#/components/schemas/Labelled"
+            },
+            "type": "array",
+            "title": "Personality",
+            "description": "Traits in the quiz's order"
+          },
+          "stats": {
+            "items": {
+              "$ref": "#/components/schemas/Labelled"
+            },
+            "type": "array",
+            "title": "Stats"
+          },
+          "needs": {
+            "items": {
+              "$ref": "#/components/schemas/Labelled"
+            },
+            "type": "array",
+            "title": "Needs",
+            "description": "Hunger, energy and happiness"
+          },
+          "quirks": {
+            "items": {
+              "$ref": "#/components/schemas/Quirk"
+            },
+            "type": "array",
+            "title": "Quirks"
+          },
+          "likes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Likes"
+          },
+          "dislikes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Dislikes"
+          },
+          "trust": {
+            "type": "integer",
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "title": "Trust"
+          },
+          "level": {
+            "type": "integer",
+            "title": "Level"
+          },
+          "stage": {
+            "type": "string",
+            "title": "Stage"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "species_id",
+          "species_name",
+          "rarity",
+          "compatibility",
+          "color_variant",
+          "personality",
+          "stats",
+          "needs",
+          "quirks",
+          "likes",
+          "dislikes",
+          "trust",
+          "level",
+          "stage",
+          "created_at"
+        ],
+        "title": "PlayerDragon"
+      },
+      "Quirk": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id",
+            "examples": [
+              "hoards_shiny"
+            ]
+          },
+          "label": {
+            "type": "string",
+            "title": "Label",
+            "examples": [
+              "Hoards shiny things"
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "label"
+        ],
+        "title": "Quirk"
       },
       "Quiz": {
         "properties": {

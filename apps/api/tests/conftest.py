@@ -16,6 +16,7 @@ from sqlalchemy import text
 from app.auth import TokenVerifier, get_token_verifier
 from app.config import Settings
 from app.db.session import create_engine
+from app.engines.game_data import get_game_data
 from app.main import create_app
 
 ISSUER = "http://supabase.test/auth/v1"
@@ -137,3 +138,45 @@ def make_token(ec_private_key: ec.EllipticCurvePrivateKey) -> MakeToken:
         return jwt.encode(claims, key, algorithm=alg)
 
     return _make
+
+
+def auth_headers(make_token: MakeToken, user_id: UUID) -> dict[str, str]:
+    return {"Authorization": f"Bearer {make_token(sub=user_id)}"}
+
+
+def first_answers() -> dict[str, str]:
+    """A complete, valid set of quiz answers."""
+    return {q.id: q.options[0].id for q in get_game_data().quiz.questions}
+
+
+async def _sql(url: str, statement: str, **params: object) -> None:
+    engine = create_engine(url)
+    try:
+        async with engine.begin() as conn:
+            await conn.execute(text(statement), params)
+    finally:
+        await engine.dispose()
+
+
+@pytest.fixture
+def player(database_url: str) -> Iterator[UUID]:
+    """A throwaway account (its profile comes from a trigger); deleted with all its data."""
+    user_id = uuid4()
+    asyncio.run(
+        _sql(
+            database_url,
+            "insert into auth.users (id, email) values (:id, :email)",
+            id=user_id,
+            email=f"{user_id}@quiz.test",
+        )
+    )
+    yield user_id
+    asyncio.run(_sql(database_url, "delete from auth.users where id = :id", id=user_id))
+
+
+@pytest.fixture
+def quiz_client(database_url: str, verifier: TokenVerifier) -> Iterator[TestClient]:
+    app = create_app(Settings(app_env="test", database_url=database_url))
+    app.dependency_overrides[get_token_verifier] = lambda: verifier
+    with TestClient(app) as test_client:
+        yield test_client

@@ -5,6 +5,12 @@ All notable changes to FuryBound / Dragon Academy. The format follows [Keep a Ch
 ## [Unreleased]
 
 ### Added
+- **Naming and adoption** (Phase 4 start): the reveal now ends with "Name your <dragon>". Naming adopts the top match as your dragon and opens `/dragon`, a first dragon card (name, colour, species, compatibility, level, quirks, likes and dislikes, needs, trust, stats, personality). "My dragon" is in the header. One dragon per player.
+- **Dragon API**: `POST /api/v1/dragons` (adopt from a finished attempt; 409 if the encounter isn't done or you already have a dragon, 422 with a reason for a refused name) and `GET /api/v1/dragons/me`.
+- `data/game/adoption.yaml` (invented): starting needs and trust, the personality spread (σ = 6), starting stats (30–40% of caps), name rules, 12 quirks and 2–3 colour variants per matchable species. It's separate from the matching data, so editing it needs no recalibration.
+- Adoption engine (`apps/api/app/engines/adoption.py`): rolls a dragon reproducibly from the attempt id, and checks names (2–20 letters; spaces, hyphens and apostrophes between; a small whole-word filter for unkind words).
+- Migration `20261002120000_profiles_and_dragons.sql`: `profiles` (one is created automatically for every new account, plus a backfill for existing ones), `player_dragons` (owner-only read), and `quiz_attempts.user_id` now references `profiles`.
+- Tests: 75 API tests for adoption rules and the dragon endpoints, and 13 web tests for name checks and the dragon card.
 - **Quiz page** at `/academy/quiz`: one question per screen, a progress bar, a Back button, and progress that survives a reload in the same tab. When the quiz is done it shows the player's trait bars. Linked from the header and home page.
 - **Quiz API**: `GET /api/v1/quiz` (the active quiz without its scores; options shuffled per player but stable across reloads) and `POST /api/v1/quiz/attempts` (scores and saves the answers). Both need sign-in.
 - `quiz_attempts` table (migration `20261001120000_quiz_attempts.sql`), so players can only read their own attempts. It references `auth.users` until profiles arrive in Phase 4. The quiz stays in YAML, so there are no quiz tables.

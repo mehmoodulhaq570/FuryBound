@@ -8,6 +8,7 @@ import { AttemptGate } from "@/components/quiz/attempt-gate";
 import { Notice } from "@/components/quiz/notice";
 import { hasSeenReveal, markRevealSeen, type QuizAttemptDetail } from "@/lib/quiz/encounter";
 
+import { NameDragon } from "./name-dragon";
 import { Reveal } from "./reveal";
 
 function RevealOrRedirect({ attempt }: { attempt: QuizAttemptDetail }) {
@@ -32,6 +33,7 @@ function RevealOrRedirect({ attempt }: { attempt: QuizAttemptDetail }) {
       reduceMotion={reduceMotion}
       seen={seen}
       onSeen={onSeen}
+      naming={<NameDragon attemptId={attempt.id} speciesName={match.top.name} />}
     />
   );
 }
