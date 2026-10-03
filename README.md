@@ -35,6 +35,8 @@
 | **Training** | Five mini-games (flight, speed, accuracy, memory, obedience) earn XP and raise stats. Your dragon levels up through five stages, unlocks new activities, and refuses when it's exhausted. A chart shows how its stats grew. |
 | **Talk to your dragon** | Chat with your dragon. It answers with body language and a thought (or speaks, in the just-for-fun Talking mode), knows its species facts, mood and needs, and remembers what you've done together. Replies stream in as they're written. |
 | **Habitat and rescue** | An animated coastal habitat reacts to care and mood. Four achievements unlock decorations, a journal records your story, and `/adventure` offers a one-time Misty Cove rescue with personality-based choices and a playable flight course. |
+| **Playable home** | Guide a layered 2D dragon around the meadow, feed it at the basket, rest in the nest, throw a ball and pet it. Species features, walking, blinking, eating, sleeping, wing movement, optional sounds and reduced motion are supported. Earned decorations can be placed and saved. |
+| **Island exploration** | `/island` connects home, fishing shore, training clearing, Misty Cove and an unlockable lookout. Find three saved keepsakes for a one-time 40 XP reward. Fish with a timing game, share a catch using normal care rules, and perform the rescue by loosening knots or lifting the net. |
 | **Academy mode** | Signed in, the Dragon Book becomes a collection: dragons you haven't met show as "???" until you discover them. |
 
 ## How it works
@@ -170,6 +172,8 @@ All routes are under `/api/v1`. Try them at http://localhost:8000/api/v1/docs.
 | GET | `/dragons/{id}/messages` | The latest 50 chat messages |
 | GET | `/dragons/{id}/memory` | What the dragon remembers from your time together |
 | GET | `/dragons/{id}/experience` | Achievements, habitat decoration, journal, next milestone, rescue state |
+| GET | `/dragons/{id}/island` | Saved keepsakes, lookout unlock and decoration positions |
+| POST | `/dragons/{id}/treasures/{treasure}` · `/dragons/{id}/habitat-layout` | Collect an island keepsake; save positions of earned decorations |
 | POST | `/dragons/{id}/decoration` · `/adventure` · `/adventure/{run_id}/choice` | Decorate the habitat; start and play the Misty Cove rescue |
 | GET | `/discoveries` | The dragons you've met |
 

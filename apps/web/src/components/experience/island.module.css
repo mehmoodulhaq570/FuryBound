@@ -1,0 +1,73 @@
+.map {
+  height: clamp(330px, 56vw, 460px);
+  position: relative;
+  overflow: hidden;
+  border-radius: 28px;
+  background: repeating-linear-gradient(170deg, #75acb5 0 18px, #8dbdc1 21px 23px);
+}
+.land {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 8px 3px #3f727333);
+}
+.place {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background: transparent;
+  cursor: pointer;
+  z-index: 2;
+  padding: 5px;
+}
+.place span {
+  display: grid;
+  place-items: center;
+  border: 2px solid #fff4;
+  border-radius: 50%;
+  background: #f4eed5;
+  width: 36px;
+  height: 36px;
+  color: #395c52;
+  font-size: 22px;
+  box-shadow: 0 3px 10px #28484426;
+}
+.place small {
+  color: #243b36;
+  font-size: 10px;
+  padding: 4px 6px;
+  background: #fff2cfdd;
+  border-radius: 9px;
+  margin-top: 4px;
+  white-space: nowrap;
+}
+.place[aria-pressed="true"] span {
+  border-color: #ba642d;
+}
+.place:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+.place:focus-visible {
+  outline: 3px solid #fff2b5;
+  outline-offset: 3px;
+  border-radius: 20px;
+}
+.dragon {
+  position: absolute;
+  width: clamp(65px, 13vw, 110px);
+  transform: translate(-50%, -45%);
+  transition:
+    left 0.8s ease-in-out,
+    top 0.8s ease-in-out;
+  pointer-events: none;
+  z-index: 3;
+}
+@media (prefers-reduced-motion: reduce) {
+  .dragon {
+    transition: none;
+  }
+}

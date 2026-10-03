@@ -2,9 +2,7 @@
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
-import { useRef, useState } from "react";
 
-import { DragonSilhouette } from "@/components/art/dragon-silhouette";
 import { ProgressPanel } from "@/components/experience/progress-panel";
 import type { PlayerDragon } from "@/lib/dragon/my-dragon";
 import {
@@ -13,72 +11,12 @@ import {
   setDecoration,
   type Decoration,
 } from "@/lib/experience/api";
-import { useTimers } from "@/components/training/games/use-timers";
 
 import { CarePanel } from "./care-panel";
 import { DragonCard } from "./dragon-card";
-import styles from "./habitat.module.css";
-
-export function HabitatScene({
-  dragon,
-  decoration = "camp",
-  reaction = "",
-}: {
-  dragon: PlayerDragon;
-  decoration?: string;
-  reaction?: string;
-}) {
-  const pose = reaction || dragon.mood.id;
-  const poseClass = styles[pose] ?? "";
-  return (
-    <div
-      className={styles.habitat}
-      role="img"
-      aria-label={`${dragon.name} in a coastal habitat, feeling ${dragon.mood.label.toLowerCase()}. Decoration: ${decoration}.`}
-    >
-      <div className={styles.moon} />
-      <div className={styles.ridge} />
-      <div className={styles.ground} />
-      <div className={styles.nest} />
-      <div className={styles.decoration}>
-        {decoration === "lanterns" && (
-          <div className={styles.lanterns}>
-            {[0, 1, 2, 3, 4].map((i) => (
-              <span key={i} />
-            ))}
-          </div>
-        )}
-        {decoration === "flowers" && (
-          <div className={styles.flowers}>
-            <span>✿</span>
-            <span>✿</span>
-            <span>✿</span>
-          </div>
-        )}
-        {decoration === "pennant" && <div className={styles.pennant} />}
-        {decoration === "beacon" && <div className={styles.beacon} />}
-      </div>
-      <div className={`${styles.dragon} ${poseClass}`}>
-        <DragonSilhouette
-          speciesId={dragon.species_id}
-          color={dragon.color_hex ?? "#c2dbe6"}
-          outline
-        />
-      </div>
-      {reaction && (
-        <span className={styles.reaction}>
-          {reaction === "feed" ? "♥" : reaction === "rest" ? "z z" : "✦"}
-        </span>
-      )}
-      <span className={styles.label}>Misty Cove · {dragon.mood.label}</span>
-    </div>
-  );
-}
+import { LivingHabitat } from "./living-habitat";
 
 export function DragonHabitat({ dragon, userId }: { dragon: PlayerDragon; userId: string }) {
-  const [reaction, setReaction] = useState({ action: "", count: 0 });
-  const reactionCount = useRef(0);
-  const later = useTimers();
   const queryClient = useQueryClient();
   const experience = useQuery({
     queryKey: experienceKey(dragon.id),
@@ -97,15 +35,6 @@ export function DragonHabitat({ dragon, userId }: { dragon: PlayerDragon; userId
   ];
   const hunger = dragon.needs.find((n) => n.id === "hunger")?.value ?? 0;
   const energy = dragon.needs.find((n) => n.id === "energy")?.value ?? 100;
-  function react(action: "feed" | "rest" | "play") {
-    const count = ++reactionCount.current;
-    setReaction({ action, count });
-    later(
-      () =>
-        setReaction((current) => (current.count === count ? { ...current, action: "" } : current)),
-      2500,
-    );
-  }
   return (
     <div className="mx-auto max-w-3xl space-y-8">
       <header className="space-y-2">
@@ -117,11 +46,14 @@ export function DragonHabitat({ dragon, userId }: { dragon: PlayerDragon; userId
           {dragon.species_name} · Level {dragon.level} · {dragon.stage_label}
         </p>
       </header>
-      <HabitatScene
-        key={reaction.count}
+      <LivingHabitat
+        key={dragon.id}
         dragon={dragon}
+        userId={userId}
         decoration={experience.data?.decoration}
-        reaction={reaction.action}
+        unlockedDecorations={experience.data?.achievements
+          .filter((a) => a.earned)
+          .map((a) => a.decoration)}
       />
       <p className="text-muted text-center italic">{dragon.thought}</p>
       <section className="bg-surface border-line space-y-5 rounded-2xl border p-5">
@@ -142,7 +74,12 @@ export function DragonHabitat({ dragon, userId }: { dragon: PlayerDragon; userId
             </div>
           ))}
         </div>
-        <CarePanel dragon={dragon} userId={userId} onReaction={react} />
+        <details>
+          <summary className="cursor-pointer text-sm">Care buttons</summary>
+          <div className="mt-4">
+            <CarePanel dragon={dragon} userId={userId} />
+          </div>
+        </details>
       </section>
       <div className="grid gap-3 sm:grid-cols-2">
         <Link
@@ -174,6 +111,9 @@ export function DragonHabitat({ dragon, userId }: { dragon: PlayerDragon; userId
         </Link>
       </div>
       <div className="flex flex-wrap gap-4 text-sm">
+        <Link href="/island" className="text-accent underline">
+          Explore your island
+        </Link>
         <Link href="/train" className="text-accent underline">
           All training activities
         </Link>

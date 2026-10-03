@@ -75,9 +75,19 @@
 .dragon {
   position: absolute;
   left: 22%;
-  transform: translate(-50%, -50%) rotate(90deg);
+  width: clamp(100px, 17vw, 140px);
+  transform: translate(-50%, -50%);
   pointer-events: none;
   filter: drop-shadow(0 2px 2px #ffffff90);
+}
+.spark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff3b5;
+  font-size: 25px;
+  text-shadow: 0 0 14px #ffb34a;
 }
 .pause {
   position: absolute;

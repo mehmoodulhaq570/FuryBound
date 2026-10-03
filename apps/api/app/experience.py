@@ -18,6 +18,8 @@ from app.schemas.experience import (
     Achievement,
     AdventureState,
     Experience,
+    HabitatLayout,
+    IslandState,
     JournalEntry,
     Milestone,
 )
@@ -112,6 +114,10 @@ def _journal(event: DragonEventRow, name: str) -> str | None:
             return f"{name} reached level {p.get('level')}."
         case "rescued":
             return str(p.get("outcome", "You rescued a wild dragon at Misty Cove."))
+        case "treasure_found":
+            return f"You and {name} found a {p.get('treasure', 'keepsake')} on the island."
+        case "island_explored":
+            return f"You and {name} explored the island and opened the hilltop lookout."
         case _:
             return None
 
@@ -283,3 +289,67 @@ async def choose(
     event.payload = run.model_dump(mode="json")
     await session.commit()
     return run
+
+
+TREASURES = {"shell", "ribbon", "scale"}
+
+
+async def island(session: AsyncSession, user_id: UUID, dragon_id: UUID) -> IslandState:
+    row = await _dragon(session, user_id, dragon_id)
+    events = await _events(session, row.id)
+    found = sorted({str(e.payload["treasure"]) for e in events if e.kind == "treasure_found"})
+    layouts = [e for e in events if e.kind == "habitat_arranged"]
+    explored = any(e.kind == "island_explored" for e in events)
+    return IslandState(
+        treasures=found,
+        lookout_unlocked=explored,
+        xp_reward=40 if explored else 0,
+        layout=HabitatLayout.model_validate(layouts[-1].payload)
+        if layouts
+        else HabitatLayout(positions={}),
+    )
+
+
+async def collect_treasure(
+    session: AsyncSession, book: Rulebook, user_id: UUID, dragon_id: UUID, treasure: str
+) -> IslandState:
+    row = await _dragon(session, user_id, dragon_id, lock=True)
+    if treasure not in TREASURES:
+        raise ExperienceConflict("There is no such keepsake on this island")
+    events = await _events(session, row.id)
+    found = {str(e.payload["treasure"]) for e in events if e.kind == "treasure_found"}
+    if treasure not in found:
+        session.add(
+            DragonEventRow(dragon_id=row.id, kind="treasure_found", payload={"treasure": treasure})
+        )
+        found.add(treasure)
+    if found >= TREASURES and not any(e.kind == "island_explored" for e in events):
+        row.xp += 40
+        while (
+            need := training.xp_to_next(book.progression, row.level)
+        ) is not None and row.xp >= need:
+            row.xp -= need
+            row.level += 1
+            session.add(
+                DragonEventRow(dragon_id=row.id, kind="level_up", payload={"level": row.level})
+            )
+        row.stage = training.stage_for(book.progression, row.level).id
+        session.add(DragonEventRow(dragon_id=row.id, kind="island_explored", payload={"xp": 40}))
+    await session.commit()
+    return await island(session, user_id, dragon_id)
+
+
+async def arrange_habitat(
+    session: AsyncSession, user_id: UUID, dragon_id: UUID, layout: HabitatLayout
+) -> IslandState:
+    row = await _dragon(session, user_id, dragon_id, lock=True)
+    allowed = {a.decoration for a in achievements(await _events(session, row.id)) if a.earned}
+    if not set(layout.positions) <= allowed:
+        raise ExperienceConflict("Earn each decoration before placing it in your habitat")
+    session.add(
+        DragonEventRow(
+            dragon_id=row.id, kind="habitat_arranged", payload=layout.model_dump(mode="json")
+        )
+    )
+    await session.commit()
+    return await island(session, user_id, dragon_id)

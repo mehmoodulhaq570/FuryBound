@@ -1,0 +1,216 @@
+.actor {
+  width: 100%;
+  overflow: visible;
+  --edge: color-mix(in srgb, var(--skin), #102e35 55%);
+}
+.puppet {
+  fill: var(--skin);
+  stroke: var(--edge);
+  stroke-width: 2;
+  stroke-linejoin: round;
+  transform-origin: 140px 155px;
+  animation: breathe 4s ease-in-out infinite;
+}
+.shadow {
+  fill: #162b3540;
+}
+.belly,
+.cheek {
+  fill: color-mix(in srgb, var(--skin), #fae9c6 38%);
+  stroke: none;
+}
+.horn {
+  fill: #d7c9a5;
+}
+.wing {
+  fill: color-mix(in srgb, var(--skin), #213d4a 25%);
+  transform-origin: 127px 100px;
+  animation: wing 5s ease-in-out infinite;
+}
+.secondWing {
+  transform-origin: 130px 115px;
+}
+.wingVein,
+.mouth,
+.lid {
+  fill: none;
+  stroke: var(--edge);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+.tail {
+  transform-origin: 98px 123px;
+  animation: tail 3.8s ease-in-out infinite;
+}
+.eye {
+  transform-origin: 220px 77px;
+  animation: blink 5s infinite;
+  stroke: none;
+}
+.lid,
+.sparkles {
+  display: none;
+}
+.head {
+  transform-origin: 175px 112px;
+}
+.frontLeg,
+.backLeg,
+.middleLeg {
+  transform-origin: 140px 118px;
+}
+.walk .frontLeg {
+  animation: step 0.5s ease-in-out infinite alternate;
+}
+.walk .backLeg {
+  animation: step 0.5s ease-in-out infinite alternate-reverse;
+}
+.walk .middleLeg {
+  animation: step 0.4s ease-in-out infinite alternate;
+}
+.walk .puppet {
+  animation: bob 0.5s ease-in-out infinite;
+}
+.eat .head {
+  animation: munch 0.5s ease-in-out infinite;
+}
+.happy .puppet {
+  animation: hop 0.6s ease-in-out 3;
+}
+.happy .sparkles {
+  display: block;
+  stroke: none;
+}
+.sleep .puppet {
+  transform: translateY(15px) scaleY(0.78);
+  animation: sleep 4s ease-in-out infinite;
+}
+.sleep .eye {
+  display: none;
+}
+.sleep .lid {
+  display: block;
+}
+.drowsy .eye {
+  transform: scaleY(0.65);
+}
+.fly .puppet {
+  transform: rotate(-7deg) translateY(-12px);
+  animation: soar 1.8s ease-in-out infinite;
+}
+.fly .wing,
+.fly .secondWing {
+  animation: flap 0.65s ease-in-out infinite alternate;
+}
+.fly .frontLeg,
+.fly .backLeg {
+  transform: rotate(-20deg);
+}
+.fly .shadow {
+  opacity: 0.3;
+}
+.land .puppet {
+  animation: landing 0.9s ease-out;
+}
+.takeoff .puppet {
+  animation: takeoff 1.4s ease-out forwards;
+}
+.takeoff .wing {
+  animation: flap 0.5s ease-in-out infinite alternate;
+}
+.curious.idle .head {
+  animation: look 4s ease-in-out infinite;
+}
+@keyframes look {
+  50% {
+    transform: rotate(-6deg);
+  }
+}
+@keyframes takeoff {
+  to {
+    transform: translateY(-14px) rotate(-7deg);
+  }
+}
+@keyframes breathe {
+  50% {
+    transform: scaleY(1.025);
+  }
+}
+@keyframes wing {
+  50% {
+    transform: rotate(-5deg);
+  }
+}
+@keyframes tail {
+  50% {
+    transform: rotate(7deg);
+  }
+}
+@keyframes blink {
+  0%,
+  44%,
+  48%,
+  100% {
+    transform: scaleY(1);
+  }
+  46% {
+    transform: scaleY(0.08);
+  }
+}
+@keyframes step {
+  from {
+    transform: rotate(-10deg);
+  }
+  to {
+    transform: rotate(12deg);
+  }
+}
+@keyframes bob {
+  50% {
+    transform: translateY(-3px);
+  }
+}
+@keyframes munch {
+  50% {
+    transform: rotate(12deg);
+  }
+}
+@keyframes hop {
+  50% {
+    transform: translateY(-13px) rotate(-3deg);
+  }
+}
+@keyframes sleep {
+  50% {
+    transform: translateY(15px) scaleY(0.8);
+  }
+}
+@keyframes flap {
+  from {
+    transform: rotate(-35deg) scaleY(1.2);
+  }
+  to {
+    transform: rotate(25deg) scaleY(0.75);
+  }
+}
+@keyframes soar {
+  50% {
+    transform: rotate(-4deg) translateY(-20px);
+  }
+}
+@keyframes landing {
+  from {
+    transform: translateY(-35px);
+  }
+  65% {
+    transform: scaleY(0.85);
+  }
+  to {
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .actor * {
+    animation: none !important;
+  }
+}

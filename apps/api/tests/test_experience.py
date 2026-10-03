@@ -1,12 +1,13 @@
 """Persistent mission rewards, ownership and unlocks against the seeded database."""
 
 import asyncio
+from concurrent.futures import ThreadPoolExecutor
 from typing import Any
 from uuid import UUID, uuid4
 
 from fastapi.testclient import TestClient
 
-from .conftest import MakeToken, _sql, auth_headers
+from .conftest import MakeToken, _rows, _sql, auth_headers
 from .test_dragons import _adopted
 from .test_training_api import _backdate
 
@@ -166,3 +167,73 @@ def test_exhausted_dragon_keeps_mission_at_approach(
         quiz_client.get(f"{root}/experience", headers=headers).json()["adventure"]["node"]
         == "approach"
     )
+
+
+def test_island_collection_resumes_and_concurrent_reward_is_once(
+    quiz_client: TestClient, make_token: MakeToken, player: UUID, database_url: str
+) -> None:
+    headers = auth_headers(make_token, player)
+    dragon = _adopted(quiz_client, headers)
+    root = f"/api/v1/dragons/{dragon['id']}"
+    assert quiz_client.get(f"{root}/island", headers=headers).json()["treasures"] == []
+    for treasure in ["shell", "ribbon"]:
+        assert quiz_client.post(f"{root}/treasures/{treasure}", headers=headers).status_code == 200
+    asyncio.run(
+        _sql(database_url, "update player_dragons set xp = 90 where id = :id", id=dragon["id"])
+    )
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        responses = list(
+            pool.map(
+                lambda _: quiz_client.post(f"{root}/treasures/scale", headers=headers), range(2)
+            )
+        )
+    assert all(r.status_code == 200 for r in responses)
+    state = quiz_client.get(f"{root}/island", headers=headers).json()
+    assert state["treasures"] == ["ribbon", "scale", "shell"]
+    assert state["lookout_unlocked"] and state["xp_reward"] == 40
+    current = quiz_client.get("/api/v1/dragons/me", headers=headers).json()
+    assert (current["level"], current["xp"]) == (2, 30)
+    assert asyncio.run(
+        _rows(
+            database_url,
+            "select count(*) from dragon_events where dragon_id = :id and kind = 'island_explored'",
+            id=dragon["id"],
+        )
+    ) == [1]
+    journal = quiz_client.get(f"{root}/experience", headers=headers).json()["journal"]
+    assert any("hilltop lookout" in entry["text"] for entry in journal)
+
+
+def test_island_layout_ownership_validation_and_persistence(
+    quiz_client: TestClient, make_token: MakeToken, player: UUID, database_url: str
+) -> None:
+    headers = auth_headers(make_token, player)
+    other = auth_headers(make_token, uuid4())
+    dragon = _adopted(quiz_client, headers)
+    root = f"/api/v1/dragons/{dragon['id']}"
+    for path in ["island", "treasures/shell", "habitat-layout"]:
+        request = quiz_client.get if path == "island" else quiz_client.post
+        body: dict[str, Any] = {} if path != "habitat-layout" else {"json": {"positions": {}}}
+        assert request(f"{root}/{path}", headers=other, **body).status_code == 404
+        assert request(f"{root}/{path}", **body).status_code == 401
+    assert quiz_client.post(f"{root}/treasures/invented", headers=headers).status_code == 409
+    layout = {"positions": {"lanterns": {"x": 18, "y": 65}}}
+    assert (
+        quiz_client.post(f"{root}/habitat-layout", headers=headers, json=layout).status_code == 409
+    )
+    training = quiz_client.post(
+        f"{root}/training-sessions", headers=headers, json={"activity": "flight"}
+    ).json()
+    _complete(quiz_client, headers, training["id"], database_url)
+    assert (
+        quiz_client.post(f"{root}/habitat-layout", headers=headers, json=layout).status_code == 200
+    )
+    assert quiz_client.get(f"{root}/island", headers=headers).json()["layout"] == layout
+    for invalid in [
+        {"positions": {"lanterns": {"x": 999, "y": 65}}},
+        {"positions": {"unknown": {"x": 18, "y": 65}}},
+    ]:
+        assert (
+            quiz_client.post(f"{root}/habitat-layout", headers=headers, json=invalid).status_code
+            == 422
+        )

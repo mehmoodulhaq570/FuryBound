@@ -15,6 +15,8 @@ from app.schemas.experience import (
     AdventureState,
     DecorationChoice,
     Experience,
+    HabitatLayout,
+    IslandState,
 )
 
 router = APIRouter(tags=["experience"], responses=AUTH_RESPONSES)
@@ -72,4 +74,36 @@ async def rescue_choice(
     except NoDragon as exc:
         raise HTTPException(404, detail=str(exc)) from exc
     except (experience.ExperienceConflict, Refused) as exc:
+        raise HTTPException(409, detail=str(exc)) from exc
+
+
+@router.get("/dragons/{dragon_id}/island")
+async def island_state(dragon_id: UUID, user: AuthenticatedUser, session: DbSession) -> IslandState:
+    try:
+        return await experience.island(session, user.id, dragon_id)
+    except NoDragon as exc:
+        raise HTTPException(404, detail=str(exc)) from exc
+
+
+@router.post("/dragons/{dragon_id}/treasures/{treasure}")
+async def collect_island_treasure(
+    dragon_id: UUID, treasure: str, user: AuthenticatedUser, session: DbSession, rules: Rules
+) -> IslandState:
+    try:
+        return await experience.collect_treasure(session, rules, user.id, dragon_id, treasure)
+    except NoDragon as exc:
+        raise HTTPException(404, detail=str(exc)) from exc
+    except experience.ExperienceConflict as exc:
+        raise HTTPException(409, detail=str(exc)) from exc
+
+
+@router.post("/dragons/{dragon_id}/habitat-layout")
+async def save_habitat_layout(
+    dragon_id: UUID, body: HabitatLayout, user: AuthenticatedUser, session: DbSession
+) -> IslandState:
+    try:
+        return await experience.arrange_habitat(session, user.id, dragon_id, body)
+    except NoDragon as exc:
+        raise HTTPException(404, detail=str(exc)) from exc
+    except experience.ExperienceConflict as exc:
         raise HTTPException(409, detail=str(exc)) from exc

@@ -14,7 +14,7 @@ Summary of the Claude Code sessions of **2026-09-30 → 2026-10-03**. Read this 
 | 5 Training | ✅ Engine, sessions API, 5 DOM mini-games, XP/levels/stages, refusals, progress chart (2026-10-02). **Not yet tried in a browser** |
 | 6 AI companion | 🔨 **6a done (2026-10-03):** Ollama provider, structured memory, prompt, streaming chat, `/chat`. ⏸️ **6b on hold** (AI-extracted memories with pgvector, Dragon's Journal, eval suite) while the user turns the game into a full 2D game first |
 
-- **Tests:** 211 API (pytest, incl. Hypothesis property tests) + 88 web (Vitest), all passing on 2026-10-03. API lint/format/mypy and web lint/format/typecheck also pass.
+- **Tests:** 213 API tests pass; all 94 web tests verified on 2026-10-03. The full web run passed 92 with two 5-second timeouts (reveal and feeding); both passed a targeted retry using `--pool=threads --maxWorkers=1 --testTimeout=20000`. No test timeout configuration was changed in the repository. API lint/format/mypy and web lint/format/typecheck pass.
 - **Repo:** https://github.com/mehmoodulhaq570/FuryBound (public, branch `main`). The user commits and pushes **themselves**; don't push.
 - **Names:** package and Supabase project `dragon-academy`; GitHub repo FuryBound; the app is called "Dragon Academy".
 - **Docs refreshed 2026-10-02:** README rewritten as a professional project README; CHANGELOG regrouped into Phase 3 and Phase 4 sections (Unreleased is empty).
@@ -114,6 +114,10 @@ Summary of the Claude Code sessions of **2026-09-30 → 2026-10-03**. Read this 
 - Docker Desktop must be running before `pnpm db:start`; it's often closed after a restart.
 
 ## Next steps
+
+**Visual gameplay update (Codex, 2026-10-03):** The user's 2D plan is implemented as a first playable island. `/dragon` now uses `LivingHabitat` and an original layered `DragonActor`, with clickable/keyboard movement, feeding, resting, ball chase, petting, species anatomy, optional sound and reduced motion. The old decorative habitat renderer was removed; existing profile, care controls and chat remain. `/island` offers travel between five locations, a free fishing game and three persistent keepsakes; finding them all opens the lookout and awards 40 XP once. `/adventure` includes interactive knots/lifting; flight uses the new actor and collectible sparks; accuracy has a dragon, bullseyes and hit effects. Decoration positions are saved through new island/layout API endpoints using existing events, with no migration. API ownership, coordinates, unlocks, concurrent collection and XP level-up are tested. See CHANGELOG for the full list.
+
+Browser validation used disposable local accounts: walking, petting, feeding, ball play, sound controls, island collection and reload, lookout unlock, fishing, a real rescue flight, visual knots, completed-mission reload, beacon placement and reload, and desktop/390 px mobile layouts. No page errors or horizontal overflow. Review accounts were removed; existing users and their data were preserved. Original species portraits remain in the Book/profile; the animated puppets are separate vector art.
 
 > **Current focus (decided 2026-10-03): turn it into a full 2D game first.** The user is going to enhance the game into a proper 2D game before anything else, so **Phase 6b is on hold** (its plan is kept below). Notes for that work:
 > - The Plan already foresees this: Phase 7 replaces the DOM activities with **Phaser** games (Plan §9.10, "Mini-games"): a client-only component (`dynamic(..., { ssr: false })`), a `GameBridge` that passes the dragon's stats in and posts the result out, and asset loading.

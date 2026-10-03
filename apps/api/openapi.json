@@ -1907,6 +1907,199 @@
           }
         }
       }
+    },
+    "/api/v1/dragons/{dragon_id}/island": {
+      "get": {
+        "tags": [
+          "experience"
+        ],
+        "summary": "Island State",
+        "operationId": "island_state",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dragon_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Dragon Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IslandState"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/dragons/{dragon_id}/treasures/{treasure}": {
+      "post": {
+        "tags": [
+          "experience"
+        ],
+        "summary": "Collect Island Treasure",
+        "operationId": "collect_island_treasure",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dragon_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Dragon Id"
+            }
+          },
+          {
+            "name": "treasure",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Treasure"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IslandState"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/dragons/{dragon_id}/habitat-layout": {
+      "post": {
+        "tags": [
+          "experience"
+        ],
+        "summary": "Save Habitat Layout",
+        "operationId": "save_habitat_layout",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dragon_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Dragon Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HabitatLayout"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IslandState"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -2719,6 +2912,52 @@
         "type": "object",
         "title": "HTTPValidationError"
       },
+      "HabitatLayout": {
+        "properties": {
+          "positions": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/HabitatPoint"
+            },
+            "propertyNames": {
+              "enum": [
+                "lanterns",
+                "flowers",
+                "pennant",
+                "beacon"
+              ]
+            },
+            "type": "object",
+            "title": "Positions"
+          }
+        },
+        "type": "object",
+        "required": [
+          "positions"
+        ],
+        "title": "HabitatLayout"
+      },
+      "HabitatPoint": {
+        "properties": {
+          "x": {
+            "type": "number",
+            "maximum": 90.0,
+            "minimum": 7.0,
+            "title": "X"
+          },
+          "y": {
+            "type": "number",
+            "maximum": 90.0,
+            "minimum": 30.0,
+            "title": "Y"
+          }
+        },
+        "type": "object",
+        "required": [
+          "x",
+          "y"
+        ],
+        "title": "HabitatPoint"
+      },
       "HealthResponse": {
         "properties": {
           "status": {
@@ -2917,6 +3156,36 @@
           "movies"
         ],
         "title": "IndividualSummary"
+      },
+      "IslandState": {
+        "properties": {
+          "treasures": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Treasures"
+          },
+          "lookout_unlocked": {
+            "type": "boolean",
+            "title": "Lookout Unlocked"
+          },
+          "xp_reward": {
+            "type": "integer",
+            "title": "Xp Reward"
+          },
+          "layout": {
+            "$ref": "#/components/schemas/HabitatLayout"
+          }
+        },
+        "type": "object",
+        "required": [
+          "treasures",
+          "lookout_unlocked",
+          "xp_reward",
+          "layout"
+        ],
+        "title": "IslandState"
       },
       "JournalEntry": {
         "properties": {

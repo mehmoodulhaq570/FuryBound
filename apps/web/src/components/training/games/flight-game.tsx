@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import { DragonSilhouette } from "@/components/art/dragon-silhouette";
+import { DragonActor } from "@/components/art/dragon-actor";
 import {
   courseScore,
   FLIGHT_GATES,
@@ -17,7 +17,7 @@ import { gameButton, useFrames, type GameProps } from "./use-timers";
 
 /** A six-gate flight. Missing a gate costs points, never ends the run early. */
 export function FlightGame({ onFinish, speciesId = "night_fury", color, agility = 30 }: GameProps) {
-  const [frame, setFrame] = useState({ elapsed: 0, height: 0.5, gates: 0 });
+  const [frame, setFrame] = useState({ elapsed: 0, height: 0.5, gates: 0, stars: 0 });
   const [paused, setPaused] = useState(false);
   const [feedback, setFeedback] = useState("Follow the glowing openings. First gate ahead!");
   const target = useRef(0.5);
@@ -92,18 +92,26 @@ export function FlightGame({ onFinish, speciesId = "night_fury", color, agility 
             offsets: offsets.current,
             course: "misty_cove_v1",
             gates: FLIGHT_GATES.length,
+            sparks: offsets.current.filter((offset) => Math.abs(offset) <= GATE_HALF_GAP).length,
           },
           elapsed.current,
         );
       }
     }
-    setFrame({ elapsed: elapsed.current, height: actual.current, gates: offsets.current.length });
+    setFrame({
+      elapsed: elapsed.current,
+      height: actual.current,
+      gates: offsets.current.length,
+      stars: offsets.current.filter((offset) => Math.abs(offset) <= GATE_HALF_GAP).length,
+    });
   });
 
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between text-sm">
-        <span>Gate {Math.min(frame.gates + 1, 6)} of 6 · Misty Cove</span>
+        <span>
+          Gate {Math.min(frame.gates + 1, 6)} of 6 · Sparks {frame.stars}/6
+        </span>
         <button type="button" onClick={() => pause(!paused)} className="text-accent underline">
           {paused ? "Resume" : "Pause"}
         </button>
@@ -132,7 +140,9 @@ export function FlightGame({ onFinish, speciesId = "night_fury", color, agility 
                   top: `${(height - GATE_HALF_GAP) * 100}%`,
                   height: `${GATE_HALF_GAP * 200}%`,
                 }}
-              />
+              >
+                {i >= frame.gates && <span className={styles.spark}>✦</span>}
+              </div>
               <div
                 className={styles.rockBottom}
                 style={{ top: `${(height + GATE_HALF_GAP) * 100}%` }}
@@ -140,11 +150,14 @@ export function FlightGame({ onFinish, speciesId = "night_fury", color, agility 
             </div>
           );
         })}
-        <div className={styles.dragon} style={{ top: `${frame.height * 100}%` }}>
-          <DragonSilhouette
+        <div
+          className={styles.dragon}
+          style={{ top: `${frame.height * 100}%`, rotate: `${(frame.height - 0.5) * 16}deg` }}
+        >
+          <DragonActor
             speciesId={speciesId}
             color={color ?? "#243649"}
-            className="size-20 drop-shadow-lg sm:size-24"
+            pose={frame.elapsed < FLIGHT_LEAD_IN_MS ? "takeoff" : "fly"}
           />
         </div>
         {paused && (

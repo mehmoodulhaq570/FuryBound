@@ -589,6 +589,57 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/dragons/{dragon_id}/island": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Island State */
+        get: operations["island_state"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/dragons/{dragon_id}/treasures/{treasure}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Collect Island Treasure */
+        post: operations["collect_island_treasure"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/dragons/{dragon_id}/habitat-layout": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Save Habitat Layout */
+        post: operations["save_habitat_layout"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -945,6 +996,20 @@ export interface components {
             /** Detail */
             detail?: components["schemas"]["ValidationError"][];
         };
+        /** HabitatLayout */
+        HabitatLayout: {
+            /** Positions */
+            positions: {
+                [key: string]: components["schemas"]["HabitatPoint"];
+            };
+        };
+        /** HabitatPoint */
+        HabitatPoint: {
+            /** X */
+            x: number;
+            /** Y */
+            y: number;
+        };
         /** HealthResponse */
         HealthResponse: {
             /**
@@ -1025,6 +1090,16 @@ export interface components {
              * @description Films the dragon appears in, in film order
              */
             movies: string[];
+        };
+        /** IslandState */
+        IslandState: {
+            /** Treasures */
+            treasures: string[];
+            /** Lookout Unlocked */
+            lookout_unlocked: boolean;
+            /** Xp Reward */
+            xp_reward: number;
+            layout: components["schemas"]["HabitatLayout"];
         };
         /** JournalEntry */
         JournalEntry: {
@@ -2859,6 +2934,131 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["AdventureState"];
+                };
+            };
+            /** @description Missing or invalid token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    island_state: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                dragon_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["IslandState"];
+                };
+            };
+            /** @description Missing or invalid token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    collect_island_treasure: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                dragon_id: string;
+                treasure: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["IslandState"];
+                };
+            };
+            /** @description Missing or invalid token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    save_habitat_layout: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                dragon_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HabitatLayout"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["IslandState"];
                 };
             };
             /** @description Missing or invalid token */

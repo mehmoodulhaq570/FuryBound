@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
-import { DragonSilhouette } from "@/components/art/dragon-silhouette";
+import { DragonActor } from "@/components/art/dragon-actor";
 import { DragonGate } from "@/components/training/dragon-gate";
 import { FlightGame } from "@/components/training/games/flight-game";
 import { api } from "@/lib/api/client";
@@ -18,6 +18,8 @@ import {
   type AdventureState,
 } from "@/lib/experience/api";
 import { historyKey, trainingKey } from "@/lib/training/api";
+
+import { RescueInteraction } from "./rescue-interaction";
 
 const button =
   "border-line hover:border-accent focus-visible:outline-accent bg-surface rounded-xl border p-4 text-left disabled:opacity-50";
@@ -59,6 +61,7 @@ function Mission({ dragon, userId }: { dragon: PlayerDragon; userId: string }) {
   });
   const [playing, setPlaying] = useState(false);
   const [result, setResult] = useState<FlightResult | null>(null);
+  const [rescueMethod, setRescueMethod] = useState<"untie" | "lift" | null>(null);
   const run = experience.data?.adventure;
 
   function update(run: AdventureState) {
@@ -172,13 +175,21 @@ function Mission({ dragon, userId }: { dragon: PlayerDragon; userId: string }) {
           aria-label="Two dragons on the rocky shore of Misty Cove"
         >
           <div className="absolute top-7 right-12 size-12 rounded-full bg-amber-100/90" />
-          <DragonSilhouette
-            speciesId={dragon.species_id}
-            color={dragon.color_hex ?? "#d3e8ea"}
-            className="relative w-36 drop-shadow-xl"
-          />
+          <div className="relative w-44">
+            <DragonActor
+              speciesId={dragon.species_id}
+              color={dragon.color_hex ?? "#d3e8ea"}
+              pose={run?.node === "complete" ? "happy" : "idle"}
+            />
+          </div>
           <div className="relative">
-            <DragonSilhouette speciesId="scuttleclaw" color="#bbd396" className="w-20" />
+            <div className="w-28">
+              <DragonActor
+                speciesId="scuttleclaw"
+                color="#bbd396"
+                pose={run?.node === "complete" ? "happy" : "idle"}
+              />
+            </div>
             {run?.node !== "complete" && (
               <div className="absolute inset-0 rounded-xl border-2 border-dashed border-amber-100/60" />
             )}
@@ -298,7 +309,8 @@ function Mission({ dragon, userId }: { dragon: PlayerDragon; userId: string }) {
               type="button"
               disabled={pending}
               className={button}
-              onClick={() => choose.mutate("untie")}
+              aria-pressed={rescueMethod === "untie"}
+              onClick={() => setRescueMethod("untie")}
             >
               <span className="block font-semibold">Untie the knots</span>
               <span className="text-muted text-sm">
@@ -310,7 +322,8 @@ function Mission({ dragon, userId }: { dragon: PlayerDragon; userId: string }) {
               type="button"
               disabled={pending}
               className={button}
-              onClick={() => choose.mutate("lift")}
+              aria-pressed={rescueMethod === "lift"}
+              onClick={() => setRescueMethod("lift")}
             >
               <span className="block font-semibold">Lift the net together</span>
               <span className="text-muted text-sm">
@@ -319,6 +332,14 @@ function Mission({ dragon, userId }: { dragon: PlayerDragon; userId: string }) {
               </span>
             </button>
           </div>
+          {rescueMethod && (
+            <RescueInteraction
+              key={rescueMethod}
+              method={rescueMethod}
+              pending={pending}
+              onComplete={() => choose.mutate(rescueMethod)}
+            />
+          )}
         </section>
       )}
       {run?.node === "complete" && (

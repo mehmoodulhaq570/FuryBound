@@ -4,7 +4,7 @@ from datetime import datetime
 from typing import Literal
 from uuid import UUID
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class Achievement(BaseModel):
@@ -56,3 +56,19 @@ class DecorationChoice(BaseModel):
 
 class AdventureChoice(BaseModel):
     choice: Literal["gentle", "bold", "clever", "continue", "untie", "lift"]
+
+
+class HabitatPoint(BaseModel):
+    x: float = Field(ge=7, le=90)
+    y: float = Field(ge=30, le=90)
+
+
+class HabitatLayout(BaseModel):
+    positions: dict[Literal["lanterns", "flowers", "pennant", "beacon"], HabitatPoint]
+
+
+class IslandState(BaseModel):
+    treasures: list[str]
+    lookout_unlocked: bool
+    xp_reward: int
+    layout: HabitatLayout
