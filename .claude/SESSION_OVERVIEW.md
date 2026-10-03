@@ -12,7 +12,7 @@ Summary of the Claude Code sessions of **2026-09-30 → 2026-10-03**. Read this 
 | 3 Quiz + matching | ✅ Engine, quiz, encounter and animated reveal |
 | 4 Profile + your dragon | ✅ Profiles, naming/adoption, species silhouettes, care + mood, discoveries. **Milestone M2 (MVP) reached in code**; not deployed |
 | 5 Training | ✅ Engine, sessions API, 5 DOM mini-games, XP/levels/stages, refusals, progress chart (2026-10-02). **Not yet tried in a browser** |
-| 6 AI companion | 🔨 **6a done (2026-10-03):** Ollama provider, structured memory, prompt, streaming chat, `/chat`. ⏭️ **6b:** AI-extracted memories (pgvector), Dragon's Journal, eval suite |
+| 6 AI companion | 🔨 **6a done (2026-10-03):** Ollama provider, structured memory, prompt, streaming chat, `/chat`. ⏸️ **6b on hold** (AI-extracted memories with pgvector, Dragon's Journal, eval suite) while the user turns the game into a full 2D game first |
 
 - **Tests:** 211 API (pytest, incl. Hypothesis property tests) + 88 web (Vitest), all passing on 2026-10-03. API lint/format/mypy and web lint/format/typecheck also pass.
 - **Repo:** https://github.com/mehmoodulhaq570/FuryBound (public, branch `main`). The user commits and pushes **themselves**; don't push.
@@ -114,6 +114,16 @@ Summary of the Claude Code sessions of **2026-09-30 → 2026-10-03**. Read this 
 - Docker Desktop must be running before `pnpm db:start`; it's often closed after a restart.
 
 ## Next steps
+
+> **Current focus (decided 2026-10-03): turn it into a full 2D game first.** The user is going to enhance the game into a proper 2D game before anything else, so **Phase 6b is on hold** (its plan is kept below). Notes for that work:
+> - The Plan already foresees this: Phase 7 replaces the DOM activities with **Phaser** games (Plan §9.10, "Mini-games"): a client-only component (`dynamic(..., { ssr: false })`), a `GameBridge` that passes the dragon's stats in and posts the result out, and asset loading.
+> - **Keep the activity contract**, so the server side needs no changes: every game reports `score` (0–100) and a duration to `POST /training-sessions/{id}/complete`, after `POST /dragons/{id}/training-sessions`. `GameProps` already passes `speciesId`, `color` and `agility`; `TimedGame` in `train-activity.tsx` does the timing. The duration must fit the activity's `min_ms`–`max_ms` in `data/game/progression.yaml`.
+> - Art: use the 50 species images in `apps/web/public/dragons/` (or new sprites made under the same rules: README "Artwork", Plan §16). No film assets.
+> - RAM is tight (16 GB, often < 1 GB free): keep game assets small, and run web tests with `--maxWorkers=1`.
+> - Before starting: **commit** the current work (chat, experience/habitat/rescue, docs) and try the untested pages in a browser (`/chat`, `/dragon`, `/train/flight`, `/adventure`, the reveal, Academy mode).
+> - Earlier, part of the code (experience, habitat, flight course) was being changed from another window at the same time as this session. Avoid two sessions editing the same files.
+>
+> **After the 2D game: Phase 6b** (see below), then deploy.
 
 > **Resume here (2026-10-03):** Gameplay steps 2–5 are implemented: flight course, interactive habitat, one-time Misty Cove rescue, achievements, decorations and milestone XP. All 211 API and 88 web tests pass, plus lint, format and type checks. Try `/dragon`, `/train/flight` and `/adventure` to review difficulty and presentation. Phase 6a chat is preserved. **Next, if requested: 6b** — memory extraction after chats (`generate_json`), `dragon_memories` with pgvector (`vector(768)`, extension already enabled; needs an embedding model, e.g. `nomic-embed-text` via Ollama), dedup at cosine > 0.9, retrieval score, a memory management `/journal` page (list, pin, delete, wipe), then the eval suite (Plan §13). The gameplay diary already exists and is distinct from AI memory management.
 >
