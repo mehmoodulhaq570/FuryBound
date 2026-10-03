@@ -27,11 +27,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="flex min-h-full flex-col">
         <Providers>
           <header className="border-line border-b">
-            <nav className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
+            <nav className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 px-4 py-3">
               <Link href="/" className="font-semibold tracking-tight">
                 Dragon Academy
               </Link>
-              <div className="flex items-center gap-5 text-sm">
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
                 <Link href="/dragon-book" className="text-muted hover:text-foreground">
                   Dragon Book
                 </Link>
@@ -43,6 +43,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
                 </Link>
                 <Link href="/train" className="text-muted hover:text-foreground">
                   Train
+                </Link>
+                <Link href="/chat" className="text-muted hover:text-foreground">
+                  Chat
+                </Link>
+                <Link href="/adventure" className="text-muted hover:text-foreground">
+                  Adventures
                 </Link>
                 <Link href="/login" className="text-muted hover:text-foreground">
                   Sign in

@@ -184,3 +184,15 @@ class TrainingSessionRow(Base):
     stat_deltas: Mapped[dict[str, int] | None] = mapped_column(JSONB)
     stats_after: Mapped[dict[str, int] | None] = mapped_column(JSONB)
     client_meta: Mapped[dict[str, Any] | None] = mapped_column(JSONB)
+
+
+class ChatMessageRow(Base):
+    __tablename__ = "chat_messages"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    dragon_id: Mapped[UUID]
+    role: Mapped[str]
+    content: Mapped[str]
+    mode: Mapped[str] = mapped_column(server_default=text("'narrated'"))
+    meta: Mapped[dict[str, Any]] = mapped_column(JSONB, server_default=text("'{}'"))
+    created_at: Mapped[datetime] = mapped_column(server_default=text("now()"))

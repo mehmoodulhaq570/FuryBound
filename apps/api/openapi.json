@@ -1418,10 +1418,542 @@
           }
         }
       }
+    },
+    "/api/v1/dragons/{dragon_id}/chat": {
+      "post": {
+        "tags": [
+          "chat"
+        ],
+        "summary": "Chat With Dragon",
+        "description": "Say something to your dragon; its reply streams back as it's written.",
+        "operationId": "chat_with_dragon",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dragon_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Dragon Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Server-sent events: `delta` pieces of the reply, then one `done` with the checked, saved reply (it replaces the pieces).",
+            "content": {
+              "text/event-stream": {}
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not this player's dragon",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Empty or longer than 500 characters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Daily message limit reached",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/dragons/{dragon_id}/messages": {
+      "get": {
+        "tags": [
+          "chat"
+        ],
+        "summary": "Chat History",
+        "description": "The latest 50 messages, oldest first.",
+        "operationId": "chat_history",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dragon_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Dragon Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ChatMessage"
+                  },
+                  "title": "Response Chat History"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not this player's dragon",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/dragons/{dragon_id}/memory": {
+      "get": {
+        "tags": [
+          "chat"
+        ],
+        "summary": "Dragon Memory",
+        "description": "What the dragon remembers from your time together (worked out from its diary).",
+        "operationId": "dragon_memory",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dragon_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Dragon Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DragonMemory"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not this player's dragon",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/dragons/{dragon_id}/experience": {
+      "get": {
+        "tags": [
+          "experience"
+        ],
+        "summary": "Dragon Experience",
+        "operationId": "dragon_experience",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dragon_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Dragon Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Experience"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/dragons/{dragon_id}/decoration": {
+      "post": {
+        "tags": [
+          "experience"
+        ],
+        "summary": "Decorate Habitat",
+        "operationId": "decorate_habitat",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dragon_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Dragon Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DecorationChoice"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Experience"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/dragons/{dragon_id}/adventure": {
+      "post": {
+        "tags": [
+          "experience"
+        ],
+        "summary": "Start Rescue",
+        "operationId": "start_rescue",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dragon_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Dragon Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdventureState"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/dragons/{dragon_id}/adventure/{run_id}/choice": {
+      "post": {
+        "tags": [
+          "experience"
+        ],
+        "summary": "Rescue Choice",
+        "operationId": "rescue_choice",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dragon_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Dragon Id"
+            }
+          },
+          {
+            "name": "run_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Run Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdventureChoice"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdventureState"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
+      "Achievement": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description"
+          },
+          "earned": {
+            "type": "boolean",
+            "title": "Earned"
+          },
+          "progress": {
+            "type": "integer",
+            "title": "Progress"
+          },
+          "target": {
+            "type": "integer",
+            "title": "Target"
+          },
+          "decoration": {
+            "type": "string",
+            "title": "Decoration"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "description",
+          "earned",
+          "progress",
+          "target",
+          "decoration"
+        ],
+        "title": "Achievement"
+      },
       "ActivityResult": {
         "properties": {
           "score": {
@@ -1455,6 +1987,123 @@
         ],
         "title": "ActivityResult",
         "description": "What every activity reports when it finishes (Plan \u00a79.6 activity contract)."
+      },
+      "AdventureChoice": {
+        "properties": {
+          "choice": {
+            "type": "string",
+            "enum": [
+              "gentle",
+              "bold",
+              "clever",
+              "continue",
+              "untie",
+              "lift"
+            ],
+            "title": "Choice"
+          }
+        },
+        "type": "object",
+        "required": [
+          "choice"
+        ],
+        "title": "AdventureChoice"
+      },
+      "AdventureState": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "node": {
+            "type": "string",
+            "enum": [
+              "approach",
+              "flight",
+              "rescue",
+              "complete"
+            ],
+            "title": "Node"
+          },
+          "approach": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Approach"
+          },
+          "training_session_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Training Session Id"
+          },
+          "flight_finished": {
+            "type": "boolean",
+            "title": "Flight Finished",
+            "default": false
+          },
+          "score": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Score"
+          },
+          "outcome": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Outcome"
+          },
+          "xp_reward": {
+            "type": "integer",
+            "title": "Xp Reward",
+            "default": 0
+          },
+          "trust_reward": {
+            "type": "integer",
+            "title": "Trust Reward",
+            "default": 0
+          },
+          "discovered_species": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Discovered Species"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "node"
+        ],
+        "title": "AdventureState"
       },
       "Appearance": {
         "properties": {
@@ -1538,6 +2187,75 @@
         ],
         "title": "CharacterRef"
       },
+      "ChatMessage": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "user",
+              "dragon"
+            ],
+            "title": "Role"
+          },
+          "content": {
+            "type": "string",
+            "title": "Content"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "narrated",
+              "talking"
+            ],
+            "title": "Mode"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "role",
+          "content",
+          "mode",
+          "created_at"
+        ],
+        "title": "ChatMessage"
+      },
+      "ChatRequest": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "description": "Up to 500 characters",
+            "examples": [
+              "Did you like the fish?"
+            ]
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "narrated",
+              "talking"
+            ],
+            "title": "Mode",
+            "description": "narrated: body language and a thought (canon-friendly); talking: speaks",
+            "default": "narrated"
+          }
+        },
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "title": "ChatRequest"
+      },
       "Confidence": {
         "type": "string",
         "enum": [
@@ -1576,6 +2294,26 @@
           "role"
         ],
         "title": "CurrentUser"
+      },
+      "DecorationChoice": {
+        "properties": {
+          "decoration": {
+            "type": "string",
+            "enum": [
+              "camp",
+              "lanterns",
+              "flowers",
+              "pennant",
+              "beacon"
+            ],
+            "title": "Decoration"
+          }
+        },
+        "type": "object",
+        "required": [
+          "decoration"
+        ],
+        "title": "DecorationChoice"
       },
       "Discovery": {
         "properties": {
@@ -1708,6 +2446,89 @@
         ],
         "title": "DragonMatch"
       },
+      "DragonMemory": {
+        "properties": {
+          "favourite_food": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Favourite Food"
+          },
+          "favourite_activity": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Favourite Activity"
+          },
+          "disliked_foods": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Disliked Foods"
+          },
+          "refused_activities": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Refused Activities"
+          },
+          "times_fed": {
+            "type": "integer",
+            "title": "Times Fed"
+          },
+          "times_played": {
+            "type": "integer",
+            "title": "Times Played"
+          },
+          "sessions_trained": {
+            "type": "integer",
+            "title": "Sessions Trained"
+          },
+          "days_together": {
+            "type": "integer",
+            "title": "Days Together"
+          },
+          "streak_days": {
+            "type": "integer",
+            "title": "Streak Days"
+          },
+          "lines": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Lines",
+            "description": "The same, as sentences"
+          }
+        },
+        "type": "object",
+        "required": [
+          "favourite_food",
+          "favourite_activity",
+          "disliked_foods",
+          "refused_activities",
+          "times_fed",
+          "times_played",
+          "sessions_trained",
+          "days_together",
+          "streak_days",
+          "lines"
+        ],
+        "title": "DragonMemory",
+        "description": "What the dragon knows from its diary (structured memory, Plan \u00a79.9 tier 1)."
+      },
       "Encounter": {
         "properties": {
           "version": {
@@ -1817,6 +2638,57 @@
           "detail"
         ],
         "title": "ErrorResponse"
+      },
+      "Experience": {
+        "properties": {
+          "achievements": {
+            "items": {
+              "$ref": "#/components/schemas/Achievement"
+            },
+            "type": "array",
+            "title": "Achievements"
+          },
+          "decoration": {
+            "type": "string",
+            "title": "Decoration"
+          },
+          "milestone": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Milestone"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "journal": {
+            "items": {
+              "$ref": "#/components/schemas/JournalEntry"
+            },
+            "type": "array",
+            "title": "Journal"
+          },
+          "adventure": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AdventureState"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "achievements",
+          "decoration",
+          "milestone",
+          "journal",
+          "adventure"
+        ],
+        "title": "Experience"
       },
       "FeedRequest": {
         "properties": {
@@ -2046,6 +2918,30 @@
         ],
         "title": "IndividualSummary"
       },
+      "JournalEntry": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "text": {
+            "type": "string",
+            "title": "Text"
+          },
+          "at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "text",
+          "at"
+        ],
+        "title": "JournalEntry"
+      },
       "Labelled": {
         "properties": {
           "id": {
@@ -2070,6 +2966,29 @@
           "value"
         ],
         "title": "Labelled"
+      },
+      "Milestone": {
+        "properties": {
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "level": {
+            "type": "integer",
+            "title": "Level"
+          },
+          "xp_remaining": {
+            "type": "integer",
+            "title": "Xp Remaining"
+          }
+        },
+        "type": "object",
+        "required": [
+          "label",
+          "level",
+          "xp_remaining"
+        ],
+        "title": "Milestone"
       },
       "MoodState": {
         "properties": {

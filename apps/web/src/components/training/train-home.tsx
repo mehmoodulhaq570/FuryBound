@@ -4,6 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 
 import type { PlayerDragon } from "@/lib/dragon/my-dragon";
+import { ProgressPanel } from "@/components/experience/progress-panel";
+import { experienceKey, fetchExperience } from "@/lib/experience/api";
 import {
   fetchHistory,
   fetchTraining,
@@ -92,6 +94,10 @@ export function ActivityList({
 }
 
 function TrainingPage({ dragon }: { dragon: PlayerDragon }) {
+  const experience = useQuery({
+    queryKey: experienceKey(dragon.id),
+    queryFn: () => fetchExperience(dragon.id),
+  });
   const overview = useQuery({
     queryKey: trainingKey(dragon.id),
     queryFn: () => fetchTraining(dragon.id),
@@ -117,6 +123,8 @@ function TrainingPage({ dragon }: { dragon: PlayerDragon }) {
         </div>
         <XpBar level={dragon.level} xp={dragon.xp} xpToNext={dragon.xp_to_next} />
       </header>
+
+      {experience.data && <ProgressPanel experience={experience.data} />}
 
       <section className="space-y-3">
         <h2 className="text-lg font-semibold">Activities</h2>

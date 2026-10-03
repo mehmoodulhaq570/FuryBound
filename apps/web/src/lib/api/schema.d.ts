@@ -461,10 +461,155 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/dragons/{dragon_id}/chat": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Chat With Dragon
+         * @description Say something to your dragon; its reply streams back as it's written.
+         */
+        post: operations["chat_with_dragon"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/dragons/{dragon_id}/messages": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Chat History
+         * @description The latest 50 messages, oldest first.
+         */
+        get: operations["chat_history"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/dragons/{dragon_id}/memory": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Dragon Memory
+         * @description What the dragon remembers from your time together (worked out from its diary).
+         */
+        get: operations["dragon_memory"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/dragons/{dragon_id}/experience": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Dragon Experience */
+        get: operations["dragon_experience"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/dragons/{dragon_id}/decoration": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Decorate Habitat */
+        post: operations["decorate_habitat"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/dragons/{dragon_id}/adventure": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Start Rescue */
+        post: operations["start_rescue"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/dragons/{dragon_id}/adventure/{run_id}/choice": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Rescue Choice */
+        post: operations["rescue_choice"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** Achievement */
+        Achievement: {
+            /** Id */
+            id: string;
+            /** Title */
+            title: string;
+            /** Description */
+            description: string;
+            /** Earned */
+            earned: boolean;
+            /** Progress */
+            progress: number;
+            /** Target */
+            target: number;
+            /** Decoration */
+            decoration: string;
+        };
         /**
          * ActivityResult
          * @description What every activity reports when it finishes (Plan §9.6 activity contract).
@@ -478,6 +623,52 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             } | null;
+        };
+        /** AdventureChoice */
+        AdventureChoice: {
+            /**
+             * Choice
+             * @enum {string}
+             */
+            choice: "gentle" | "bold" | "clever" | "continue" | "untie" | "lift";
+        };
+        /** AdventureState */
+        AdventureState: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Node
+             * @enum {string}
+             */
+            node: "approach" | "flight" | "rescue" | "complete";
+            /** Approach */
+            approach?: string | null;
+            /** Training Session Id */
+            training_session_id?: string | null;
+            /**
+             * Flight Finished
+             * @default false
+             */
+            flight_finished: boolean;
+            /** Score */
+            score?: number | null;
+            /** Outcome */
+            outcome?: string | null;
+            /**
+             * Xp Reward
+             * @default 0
+             */
+            xp_reward: number;
+            /**
+             * Trust Reward
+             * @default 0
+             */
+            trust_reward: number;
+            /** Discovered Species */
+            discovered_species?: string | null;
         };
         /** Appearance */
         Appearance: {
@@ -509,6 +700,44 @@ export interface components {
             /** Name */
             name: string;
         };
+        /** ChatMessage */
+        ChatMessage: {
+            /** Id */
+            id: number;
+            /**
+             * Role
+             * @enum {string}
+             */
+            role: "user" | "dragon";
+            /** Content */
+            content: string;
+            /**
+             * Mode
+             * @enum {string}
+             */
+            mode: "narrated" | "talking";
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+        };
+        /** ChatRequest */
+        ChatRequest: {
+            /**
+             * Message
+             * @description Up to 500 characters
+             * @example Did you like the fish?
+             */
+            message: string;
+            /**
+             * Mode
+             * @description narrated: body language and a thought (canon-friendly); talking: speaks
+             * @default narrated
+             * @enum {string}
+             */
+            mode: "narrated" | "talking";
+        };
         /**
          * Confidence
          * @enum {string}
@@ -525,6 +754,14 @@ export interface components {
             email?: string | null;
             /** Role */
             role: string;
+        };
+        /** DecorationChoice */
+        DecorationChoice: {
+            /**
+             * Decoration
+             * @enum {string}
+             */
+            decoration: "camp" | "lanterns" | "flowers" | "pennant" | "beacon";
         };
         /** Discovery */
         Discovery: {
@@ -599,6 +836,35 @@ export interface components {
             /** Explanation */
             explanation: string;
         };
+        /**
+         * DragonMemory
+         * @description What the dragon knows from its diary (structured memory, Plan §9.9 tier 1).
+         */
+        DragonMemory: {
+            /** Favourite Food */
+            favourite_food: string | null;
+            /** Favourite Activity */
+            favourite_activity: string | null;
+            /** Disliked Foods */
+            disliked_foods: string[];
+            /** Refused Activities */
+            refused_activities: string[];
+            /** Times Fed */
+            times_fed: number;
+            /** Times Played */
+            times_played: number;
+            /** Sessions Trained */
+            sessions_trained: number;
+            /** Days Together */
+            days_together: number;
+            /** Streak Days */
+            streak_days: number;
+            /**
+             * Lines
+             * @description The same, as sentences
+             */
+            lines: string[];
+        };
         /** Encounter */
         Encounter: {
             /**
@@ -654,6 +920,17 @@ export interface components {
         ErrorResponse: {
             /** Detail */
             detail: string;
+        };
+        /** Experience */
+        Experience: {
+            /** Achievements */
+            achievements: components["schemas"]["Achievement"][];
+            /** Decoration */
+            decoration: string;
+            milestone: components["schemas"]["Milestone"] | null;
+            /** Journal */
+            journal: components["schemas"]["JournalEntry"][];
+            adventure: components["schemas"]["AdventureState"] | null;
         };
         /** FeedRequest */
         FeedRequest: {
@@ -749,6 +1026,18 @@ export interface components {
              */
             movies: string[];
         };
+        /** JournalEntry */
+        JournalEntry: {
+            /** Id */
+            id: number;
+            /** Text */
+            text: string;
+            /**
+             * At
+             * Format: date-time
+             */
+            at: string;
+        };
         /** Labelled */
         Labelled: {
             /** Id */
@@ -757,6 +1046,15 @@ export interface components {
             label: string;
             /** Value */
             value: number;
+        };
+        /** Milestone */
+        Milestone: {
+            /** Label */
+            label: string;
+            /** Level */
+            level: number;
+            /** Xp Remaining */
+            xp_remaining: number;
         };
         /** MoodState */
         MoodState: {
@@ -2236,6 +2534,335 @@ export interface operations {
             };
             /** @description Not this player's dragon */
             404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    chat_with_dragon: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                dragon_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ChatRequest"];
+            };
+        };
+        responses: {
+            /** @description Server-sent events: `delta` pieces of the reply, then one `done` with the checked, saved reply (it replaces the pieces). */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/event-stream": unknown;
+                };
+            };
+            /** @description Missing or invalid token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not this player's dragon */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Empty or longer than 500 characters */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Daily message limit reached */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    chat_history: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                dragon_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChatMessage"][];
+                };
+            };
+            /** @description Missing or invalid token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not this player's dragon */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    dragon_memory: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                dragon_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DragonMemory"];
+                };
+            };
+            /** @description Missing or invalid token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not this player's dragon */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    dragon_experience: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                dragon_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Experience"];
+                };
+            };
+            /** @description Missing or invalid token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    decorate_habitat: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                dragon_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DecorationChoice"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Experience"];
+                };
+            };
+            /** @description Missing or invalid token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    start_rescue: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                dragon_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AdventureState"];
+                };
+            };
+            /** @description Missing or invalid token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    rescue_choice: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                dragon_id: string;
+                run_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AdventureChoice"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AdventureState"];
+                };
+            };
+            /** @description Missing or invalid token */
+            401: {
                 headers: {
                     [name: string]: unknown;
                 };

@@ -24,6 +24,19 @@ class Settings(BaseSettings):
     # Used from Phase 1 onwards.
     database_url: str = "postgresql+asyncpg://postgres:postgres@127.0.0.1:54322/postgres"
 
+    # The dragon's AI (Plan §9.8). "fake" gives canned replies (tests, or no AI available).
+    llm_provider: Literal["ollama", "fake"] = "ollama"
+    ollama_url: str = "http://127.0.0.1:11434"
+    # A ":cloud" model runs on Ollama's servers (no local RAM); a local one, e.g.
+    # "llama3.2:3b", runs on this machine after `ollama pull`.
+    ollama_chat_model: str = "nemotron-3-super:cloud"
+    # Thinking models (like nemotron) otherwise spend the reply's whole budget thinking.
+    # None leaves it to the model (for models that don't support the switch).
+    ollama_think: bool | None = False
+    llm_timeout_seconds: float = 60.0
+    # Chat messages a player may send per day (Plan §15).
+    chat_daily_limit: int = 100
+
     @field_validator("cors_origins", mode="before")
     @classmethod
     def _split_origins(cls, value: object) -> object:

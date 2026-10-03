@@ -34,7 +34,8 @@ const GAMES: Record<string, (props: GameProps) => React.ReactNode> = {
 };
 
 const HOW_TO: Record<string, string> = {
-  flight: "Press Bank! (or Space) when the marker is inside the glowing zone. Six turns.",
+  flight:
+    "Fly through six glowing openings between the sea stacks. Arrow keys or Climb/Dive steer; Space climbs. Missing a gate costs points, but you can always finish.",
   speed: "After the count-in, press Flap on every beat as the circle swells. Twelve beats.",
   accuracy: "Click each square the moment it lights up. Ten targets.",
   memory: "Watch the signs, then repeat them in order. Each round adds one more.",
@@ -50,9 +51,11 @@ type Finished = { score: number; meta: Record<string, unknown>; durationMs: numb
 function TimedGame({
   Game,
   onFinish,
+  dragon,
 }: {
   Game: (props: GameProps) => React.ReactNode;
   onFinish: (result: Finished) => void;
+  dragon: PlayerDragon;
 }) {
   const shownAt = useRef(0);
   useEffect(() => {
@@ -60,8 +63,15 @@ function TimedGame({
   }, []);
   return (
     <Game
-      onFinish={(score, meta) =>
-        onFinish({ score, meta, durationMs: Math.round(performance.now() - shownAt.current) })
+      speciesId={dragon.species_id}
+      color={dragon.color_hex}
+      agility={dragon.stats.find((s) => s.id === "agility")?.value}
+      onFinish={(score, meta, activeDurationMs) =>
+        onFinish({
+          score,
+          meta,
+          durationMs: Math.round(activeDurationMs ?? performance.now() - shownAt.current),
+        })
       }
     />
   );
@@ -194,6 +204,7 @@ function Session({
       queryClient.setQueryData(myDragonQueryKey(userId), result.dragon);
       queryClient.invalidateQueries({ queryKey: trainingKey(dragon.id) });
       queryClient.invalidateQueries({ queryKey: historyKey(dragon.id) });
+      queryClient.invalidateQueries({ queryKey: ["experience", dragon.id] });
     },
     onSettled: () => setPhase("result"),
   });
@@ -258,7 +269,7 @@ function Session({
             Scoring…
           </p>
         ) : (
-          <TimedGame Game={Game} onFinish={(r) => finish.mutate(r)} />
+          <TimedGame Game={Game} dragon={dragon} onFinish={(r) => finish.mutate(r)} />
         ))}
 
       {phase === "result" &&

@@ -5,6 +5,30 @@ All notable changes to FuryBound / Dragon Academy. The format follows [Keep a Ch
 ## [Unreleased]
 
 ### Added
+- **Talk to your dragon** (Phase 6a) at `/chat`. Replies stream in as they're written. By default the dragon answers the canon way, with what it does (*in italics*) and a short 💭 thought; a **Talking** switch (labelled non-canon fun) lets it speak. "Chat" is in the header and "Talk to …" is on `/dragon`.
+- The dragon's **prompt** is built on the server from what the game knows: canon species facts from the database (class marked *franchise* where it applies), its card (stage, personality, quirks, likes, dislikes), its state (mood, needs, trust), its last 3 events, its memory and the last 10 messages. It's told to stay in character, never claim to be a film dragon (it says it isn't Toothless), only use the canon facts given, and show stats through behaviour rather than numbers.
+- **Structured memory** (Plan §9.9, tier 1): worked out from the dragon's diary with no AI — favourite food, best activity, foods it was given and dislikes, refusals, how often you fed, played and trained, days together and a daily streak. `GET /dragons/{id}/memory`.
+- **AI providers** behind one interface: **Ollama** (a local model, or an Ollama `:cloud` model that runs on Ollama's servers and uses no local RAM; default `nemotron-3-super:cloud` with thinking switched off) and a **fake** one for tests. Gemini can be added later as another implementation. Settings: `LLM_PROVIDER`, `OLLAMA_URL`, `OLLAMA_CHAT_MODEL`, `OLLAMA_THINK`, `CHAT_DAILY_LIMIT`.
+- **Guardrails**: messages of up to 500 characters, 100 messages per day per dragon (429 after that), replies cut at about 100 words, and replies that break character ("as an AI…", "I'm Toothless") or fail are replaced with a stock line (*"Ember tilts its head, confused…"*), so chat never breaks the game. Each reply records which model answered, how long it took and whether the fallback was used.
+- **API**: `POST /dragons/{id}/chat` (server-sent events: `delta` pieces, then one `done` with the checked, saved reply) and `GET /dragons/{id}/messages`. `chat_messages` table (migration `20261006120000_chat_messages.sql`). Chatting is logged as a `chatted` event.
+- Tests: the API suite is now 205 tests (Ollama client against a mocked network, prompt building, reply checks, memory, chat endpoints with a fake AI) and the web suite 83.
+
+### Changed
+- **Flight training is now a flight course**: steer your dragon (arrow keys, Climb/Dive, or Space to climb) through six glowing gaps between sea stacks. Your dragon is drawn in its own colour, and missing a gate costs points but never ends the run. The course is fixed (`lib/training/flight-course.ts`), and the score still follows the same 0–100 activity contract. Games can now receive the dragon's species, colour and agility.
+
+### Gameplay additions
+- **Interactive habitat** at `/dragon`: a coastal nest with idle and mood animations, feed/rest/play reactions, needs, a suggested next activity and links to training, chat and discoveries. The existing dragon profile and stats remain available in an expandable panel. Animations respect reduced motion.
+- **Habitat, achievements and the Misty Cove rescue** (`GET /dragons/{id}/experience`, `POST /dragons/{id}/decoration`, `POST /dragons/{id}/adventure`, `POST /dragons/{id}/adventure/{run_id}/choice`), with the playable `/adventure` page and progress panels on `/dragon` and `/train`.
+  - Four achievements (first training session, three care actions, a score of 80+, the rescue) each unlock a habitat decoration: lanterns, flowers, a pennant or a beacon (the camp is always available).
+  - An adventure journal written from the dragon's diary, and the next stage to reach with the XP still needed.
+  - A one-time rescue mission: choose an approach (gentle, bold or clever), fly the flight course through the cove (a real training session), then free a trapped Scuttleclaw by untying or lifting the net. How well it goes depends on the dragon's personality, stats and flight score; it earns XP, trust and the Scuttleclaw discovery, and can't be repeated for more rewards.
+  - Stored entirely in `dragon_events` (no new tables).
+  - Reloads resume the mission. Expired unfinished flights get a fresh session; failed saves can be retried. Ownership checks and dragon row locks protect choices and one-time rewards.
+- **Flight controls** support keyboard and touch, pause/resume, automatic pause when the tab is hidden, and feedback at each gate. Paused time is excluded from the submitted duration. Scores continue through the existing training API and XP curve.
+- Six API tests cover experience, earned decorations, mission order, one-time rewards, ownership, expiry and exhausted dragons; five web tests cover course scoring, controls, pause timing and cleanup.
+
+### Fixed
+- Routes now read the settings their app was created with (`app.state.settings`), so test settings such as a lower chat limit apply.
 - **Species artwork** for all 50 species: original AI-generated interpretations of each species' general traits, colours and personality (README "Artwork"). They deliberately don't reproduce DreamWorks' character designs and contain no logos or film text. All 50 were reviewed before being added.
   - Shown in the Dragon Book (thumbnails on the list; a large image with a caption on each page), on the reveal (the dragon that chose you and the runners-up) and on My dragon (with a swatch of your dragon's own colour).
   - **Named dragons use their species' artwork** (Toothless's page shows the Night Fury image, captioned as species art). The 27 named-dragon images were made but are deliberately not used.

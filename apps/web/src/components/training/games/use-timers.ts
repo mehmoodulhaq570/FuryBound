@@ -26,8 +26,13 @@ export function useFrames(fn: (elapsedMs: number) => void, running = true) {
   }, [running]);
 }
 
-/** What every game reports when it ends (the page adds the session id and duration). */
-export type GameProps = { onFinish: (score: number, meta: Record<string, unknown>) => void };
+/** Games can report active time so pauses don't count toward the session duration. */
+export type GameProps = {
+  onFinish: (score: number, meta: Record<string, unknown>, activeDurationMs?: number) => void;
+  speciesId?: string;
+  color?: string | null;
+  agility?: number;
+};
 
 export const gameButton =
   "bg-surface border-line hover:border-accent focus-visible:outline-accent rounded-xl border px-4 py-3 font-medium transition-colors focus-visible:outline-2 disabled:opacity-50";

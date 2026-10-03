@@ -1,6 +1,6 @@
 # Session overview: FuryBound / Dragon Academy
 
-Summary of the Claude Code sessions of **2026-09-30 → 2026-10-02**. Read this first when picking the project back up. The full plan is [Plan.md](../Plan.md); what changed when is in [CHANGELOG.md](../CHANGELOG.md) (one section per phase); tools are in [TECH_STACK.md](../TECH_STACK.md); the data workflow is in [data/README.md](../data/README.md); setup and commands are in [README.md](../README.md).
+Summary of the Claude Code sessions of **2026-09-30 → 2026-10-03**. Read this first when picking the project back up. The full plan is [Plan.md](../Plan.md); what changed when is in [CHANGELOG.md](../CHANGELOG.md) (one section per phase); tools are in [TECH_STACK.md](../TECH_STACK.md); the data workflow is in [data/README.md](../data/README.md); setup and commands are in [README.md](../README.md).
 
 ## Where things stand
 
@@ -12,9 +12,9 @@ Summary of the Claude Code sessions of **2026-09-30 → 2026-10-02**. Read this 
 | 3 Quiz + matching | ✅ Engine, quiz, encounter and animated reveal |
 | 4 Profile + your dragon | ✅ Profiles, naming/adoption, species silhouettes, care + mood, discoveries. **Milestone M2 (MVP) reached in code**; not deployed |
 | 5 Training | ✅ Engine, sessions API, 5 DOM mini-games, XP/levels/stages, refusals, progress chart (2026-10-02). **Not yet tried in a browser** |
-| 6 AI companion | ⏭️ Next in the Plan |
+| 6 AI companion | 🔨 **6a done (2026-10-03):** Ollama provider, structured memory, prompt, streaming chat, `/chat`. ⏭️ **6b:** AI-extracted memories (pgvector), Dragon's Journal, eval suite |
 
-- **Tests:** 184 API (pytest, incl. Hypothesis property tests) + 76 web (Vitest), all passing on 2026-10-02.
+- **Tests:** 211 API (pytest, incl. Hypothesis property tests) + 88 web (Vitest), all passing on 2026-10-03. API lint/format/mypy and web lint/format/typecheck also pass.
 - **Repo:** https://github.com/mehmoodulhaq570/FuryBound (public, branch `main`). The user commits and pushes **themselves**; don't push.
 - **Names:** package and Supabase project `dragon-academy`; GitHub repo FuryBound; the app is called "Dragon Academy".
 - **Docs refreshed 2026-10-02:** README rewritten as a professional project README; CHANGELOG regrouped into Phase 3 and Phase 4 sections (Unreleased is empty).
@@ -72,8 +72,23 @@ Summary of the Claude Code sessions of **2026-09-30 → 2026-10-02**. Read this 
 - `lib/art/images.ts` (`speciesImage`) + `components/art/dragon-portrait.tsx` (next/image, or the silhouette as fallback). Used in Dragon Book cards and detail pages, the reveal result and runners-up, and the `/dragon` card (+ a colour swatch).
 - Screenshots of `/dragon-book` and `/dragon-book/toothless` checked; the reveal and `/dragon` need sign-in, so the user should check those.
 
+**Phase 6a: chat** (2026-10-03)
+- The user chose **Ollama** (free) now and Gemini later. The machine had only ~0.5 GB of RAM free, so the default is the user's existing **Ollama cloud model `nemotron-3-super:cloud`** (runs remotely through the local Ollama API). It's a *thinking* model, so requests send `think: false` (`OLLAMA_THINK`), or it spends the whole budget thinking. Verified with real prompts: in character, follows the format, uses memory, says it isn't Toothless. A rule was added after it said "hunger 78".
+- `app/ai/providers.py` (`LLMProvider` protocol; `OllamaProvider` with an injectable httpx transport for tests; `FakeProvider(replies, fail=)`, which records `calls`; `get_llm` reads `app.state.llm`, created in the lifespan by `make_llm`, and tests get the fake). `app/ai/prompts.py` (`build_messages`, `check_reply`, `fallback`). `app/engines/memory.py` (`summarize` → `MemorySummary.lines()`; computed on demand, not stored in `memory_summary`). `app/chat.py` (`prepare` validates, applies the daily limit and saves the user message; `stream_reply` streams SSE and saves the reply with a **new session** from `app.state.sessionmaker`, because the request's session may be closed while streaming).
+- `app.state.settings` now holds the app's own settings (routes should read it rather than `get_settings()` when tests need custom values).
+- Web: `/chat` → `components/chat/chat-page.tsx` (history query, Narrated/Talking toggle kept in localStorage, `api.POST(..., { parseAs: "stream" })` + `TextDecoderStream` + `sseReader`, a `DragonReply` that renders actions and thoughts), `lib/chat/parse.ts` (the stream event types are written by hand there, since OpenAPI doesn't describe streams).
+- Not done in 6a: token counts (Ollama returns them but the provider doesn't pass them on yet), Gemini, the eval suite. **The chat hasn't been tried in a browser yet.**
+
+**Gameplay steps 2–5** (completed by Codex, authorized by the user; 2026-10-03)
+- **Experience API**: `app/experience.py`, `routers/experience.py`, `schemas/experience.py`, registered in `main.py`. Achievements (`first_flight`, `care`, `ace`, `rescue`) unlock habitat decorations (camp, lanterns, flowers, pennant, beacon); a journal built from `dragon_events`; `next_milestone`; a one-time **Misty Cove rescue** (approach → a real flight training session owned by the mission → untie or lift; rewards XP, trust and the Scuttleclaw discovery; can't be farmed). All state lives in `dragon_events` (`habitat_decorated`, `rescue_mission`, `rescued`); no migration. Six API tests cover ownership, locked cosmetics, ordering, reward claims, expired sessions and exhausted dragons. The earlier lint/type errors are fixed.
+- **Flight game redesign**: `components/training/games/flight-game.tsx` (+ `flight-game.module.css`) and `lib/training/flight-course.ts` (six fixed gates, `courseScore`, `steer`). `GameProps` gained `speciesId`, `color` and `agility`; `train-activity.tsx` passes them and invalidates `["experience", dragonId]`.
+- **Habitat UI**: `components/dragon/dragon-habitat.tsx` + `habitat.module.css`: animated SVG dragon in its colour, care reactions, needs, earned decorations, primary flight/care action, rescue and chat links. Existing detailed profile is expandable. `components/experience/progress-panel.tsx` shows four achievements, the next stage's XP target and a diary on `/dragon` and `/train`.
+- **Rescue UI**: `/adventure` and `components/experience/adventure-home.tsx`. Server state resumes after reload; flight completion uses the existing training endpoint; failed saves can be retried; expired unfinished flights get new sessions. The existing training curve, care rules, species artwork and chat implementation were preserved. Five web tests cover course scoring, steering, finishing once, pause timing and cleanup.
+- Documented in CHANGELOG (Unreleased: "Changed" + "Gameplay additions") and README. No commits or pushes.
+- **Browser validation:** signed in with a disposable local account, adopted a dragon, used care, completed the rescue flight, reloaded both unfinished and completed missions, persisted a beacon decoration, checked the training progress panel and the 390 px mobile habitat (no horizontal overflow). No page errors. The review account and its data were removed; existing accounts were preserved. Flight reports active duration so pauses do not exceed the activity's duration limit.
+
 **Migrations** (applied locally with `supabase migration up`, which keeps the user's account; `db:reset` would wipe it)
-`20260930063434_init_extensions` · `20260930150000_canon_tables` · `20261001120000_quiz_attempts` · `20261002120000_profiles_and_dragons` · `20261003120000_dragon_events` · `20261004120000_discoveries` (back-filled; the user's account has Light Fury, Stormcutter and Crimson Goregutter) · `20261005120000_training_sessions` (extra columns: `mood`, `needs_at_start`, `duration_ms`, `stats_after`).
+`20260930063434_init_extensions` · `20260930150000_canon_tables` · `20261001120000_quiz_attempts` · `20261002120000_profiles_and_dragons` · `20261003120000_dragon_events` · `20261004120000_discoveries` (back-filled; the user's account has Light Fury, Stormcutter and Crimson Goregutter) · `20261006120000_chat_messages` (extra columns `mode`, `meta`) · `20261005120000_training_sessions` (extra columns: `mood`, `needs_at_start`, `duration_ms`, `stats_after`).
 
 ## Decisions and deviations from Plan.md
 
@@ -100,7 +115,9 @@ Summary of the Claude Code sessions of **2026-09-30 → 2026-10-02**. Read this 
 
 ## Next steps
 
-> **Resume here (2026-10-02):** Phase 5 (training) is built. The user hasn't checked anything after quiz → encounter in a browser. **First:** have them try `/train` (play Flight and Speed, check the chart and a level-up) plus the earlier untested parts (reveal animation, naming, care, Academy mode), and commit. **Then** choose: Phase 6 (AI companion + memory), polish, or deploying.
+> **Resume here (2026-10-03):** Gameplay steps 2–5 are implemented: flight course, interactive habitat, one-time Misty Cove rescue, achievements, decorations and milestone XP. All 211 API and 88 web tests pass, plus lint, format and type checks. Try `/dragon`, `/train/flight` and `/adventure` to review difficulty and presentation. Phase 6a chat is preserved. **Next, if requested: 6b** — memory extraction after chats (`generate_json`), `dragon_memories` with pgvector (`vector(768)`, extension already enabled; needs an embedding model, e.g. `nomic-embed-text` via Ollama), dedup at cosine > 0.9, retrieval score, a memory management `/journal` page (list, pin, delete, wipe), then the eval suite (Plan §13). The gameplay diary already exists and is distinct from AI memory management.
+>
+> **Earlier (2026-10-02):** Phase 5 (training) is built. The user hasn't checked anything after quiz → encounter in a browser. **First:** have them try `/train` (play Flight and Speed, check the chart and a level-up) plus the earlier untested parts (reveal animation, naming, care, Academy mode), and commit. **Then** choose: Phase 6 (AI companion + memory), polish, or deploying.
 
 1. ✅ **Phase 5: training.** **Next in the Plan: Phase 6, AI companion + memory** (Plan §9.8–9.9: chat with your dragon, Gemini/Ollama, memories with pgvector). Small follow-ups: `DragonHome` could reuse `DragonGate`; nobody has played the games yet, so tune difficulty after the user tries them.
 2. **Deploy** (when wanted): hosted Supabase, Vercel for the web app, a host for the API. The Plan's sign-up flow (email confirmation, profile display names) needs a look then.

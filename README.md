@@ -33,6 +33,8 @@
 | **Your dragon** | Name it and it's yours: its own personality variation, quirks, colour and starting stats. |
 | **Care and mood** | Needs change while you're away. Feed it (it has favourite and hated foods), let it rest, play with it. It has moods and idle thoughts, and it will tell you no. |
 | **Training** | Five mini-games (flight, speed, accuracy, memory, obedience) earn XP and raise stats. Your dragon levels up through five stages, unlocks new activities, and refuses when it's exhausted. A chart shows how its stats grew. |
+| **Talk to your dragon** | Chat with your dragon. It answers with body language and a thought (or speaks, in the just-for-fun Talking mode), knows its species facts, mood and needs, and remembers what you've done together. Replies stream in as they're written. |
+| **Habitat and rescue** | An animated coastal habitat reacts to care and mood. Four achievements unlock decorations, a journal records your story, and `/adventure` offers a one-time Misty Cove rescue with personality-based choices and a playable flight course. |
 | **Academy mode** | Signed in, the Dragon Book becomes a collection: dragons you haven't met show as "???" until you discover them. |
 
 ## How it works
@@ -72,6 +74,7 @@ See [TECH_STACK.md](TECH_STACK.md) for versions and the reasons behind each choi
 - [uv](https://docs.astral.sh/uv/) (installs Python 3.14 for you)
 - The [Supabase CLI](https://supabase.com/docs/guides/cli)
 - Docker Desktop, **running**, for the local database
+- [Ollama](https://ollama.com) for the dragon's chat. The default model, `nemotron-3-super:cloud`, runs on Ollama's servers (run `ollama signin` once); a local model such as `llama3.2:3b` works too (`ollama pull llama3.2:3b`, then set `OLLAMA_CHAT_MODEL`) but needs a few GB of free RAM. Without Ollama the dragon answers with a stock line, and everything else works.
 
 ### Setup
 
@@ -163,6 +166,11 @@ All routes are under `/api/v1`. Try them at http://localhost:8000/api/v1/docs.
 | POST | `/dragons/{id}/training-sessions` | Start a session (403 if locked, 409 if the dragon refuses) |
 | POST | `/training-sessions/{id}/complete` | Report the activity's score and duration (once): XP, stat gains, level-ups |
 | GET | `/dragons/{id}/history` | Finished sessions with the stats after each |
+| POST | `/dragons/{id}/chat` | Say something; the reply streams back as server-sent events |
+| GET | `/dragons/{id}/messages` | The latest 50 chat messages |
+| GET | `/dragons/{id}/memory` | What the dragon remembers from your time together |
+| GET | `/dragons/{id}/experience` | Achievements, habitat decoration, journal, next milestone, rescue state |
+| POST | `/dragons/{id}/decoration` · `/adventure` · `/adventure/{run_id}/choice` | Decorate the habitat; start and play the Misty Cove rescue |
 | GET | `/discoveries` | The dragons you've met |
 
 ## Project structure
@@ -171,7 +179,8 @@ All routes are under `/api/v1`. Try them at http://localhost:8000/api/v1/docs.
 apps/
   web/            Next.js app: Dragon Book, quiz, encounter, reveal, dragon home, training
   api/            FastAPI app
-    app/engines/  Pure game engines: matching, adoption, care, training
+    app/engines/  Pure game engines: matching, adoption, care, training, memory
+    app/ai/       AI providers (Ollama, fake) and the dragon's prompt
     app/routers/  HTTP routes          app/schemas/  Request and response models
     tests/        pytest suite         scripts/      Matching calibration
 data/
@@ -212,7 +221,7 @@ The project uses **no film assets**: no stills, official renders, logos, music o
 | 3 | Quiz, encounter, matching engine and reveal | ✅ Done |
 | 4 | Your dragon: adoption, care, mood, discoveries (**MVP**) | ✅ Done |
 | 5 | Training: activities, XP, levels and unlocks | ✅ Done |
-| 6 | AI companion with memory | Next |
+| 6 | AI companion with memory | 🔨 Chat and structured memory done; AI memories and the journal next |
 | 7 | Mini-games and arena | Planned |
 | 8 | AI adventure mode | Planned |
 

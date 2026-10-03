@@ -8,7 +8,15 @@ import { myDragonQueryKey, type PlayerDragon } from "@/lib/dragon/my-dragon";
 type Care = { action: "feed"; food: string } | { action: "rest" } | { action: "play" };
 
 /** Feed, rest or play. The reply (or the dragon's refusal) is shown in the dragon's voice. */
-export function CarePanel({ dragon, userId }: { dragon: PlayerDragon; userId: string }) {
+export function CarePanel({
+  dragon,
+  userId,
+  onReaction,
+}: {
+  dragon: PlayerDragon;
+  userId: string;
+  onReaction?: (action: "feed" | "rest" | "play") => void;
+}) {
   const queryClient = useQueryClient();
 
   const act = useMutation({
@@ -26,14 +34,18 @@ export function CarePanel({ dragon, userId }: { dragon: PlayerDragon; userId: st
       if (error || !data) throw new Error(error?.detail?.toString() ?? "Something went wrong");
       return data;
     },
-    onSuccess: (result) => queryClient.setQueryData(myDragonQueryKey(userId), result.dragon),
+    onSuccess: (result, care) => {
+      queryClient.setQueryData(myDragonQueryKey(userId), result.dragon);
+      queryClient.invalidateQueries({ queryKey: ["experience", dragon.id] });
+      onReaction?.(care.action);
+    },
   });
 
   const button =
     "border-line hover:border-accent rounded-lg border px-3 py-2 text-sm transition-colors disabled:opacity-60";
 
   return (
-    <section className="space-y-4">
+    <section id="care" className="space-y-4">
       <h2 className="text-lg font-semibold">Look after {dragon.name}</h2>
       <div className="space-y-2">
         <h3 className="text-muted text-sm">Feed</h3>

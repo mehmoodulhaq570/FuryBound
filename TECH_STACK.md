@@ -74,6 +74,8 @@ The Dragon Book (`/dragon-book`) is statically generated from `data/build/dragon
 | Pillow | 12 | Converts the species artwork to small WebP images (`pnpm art:build`) |
 | Hypothesis | 6 | Property tests for the game engines (e.g. a higher score never gives less XP) |
 | httpx2 | 2.13 | HTTP client for backend tests |
+| httpx | 0.28 | Talks to Ollama (streaming chat) |
+| Ollama | 0.34 | The dragon's AI: a local model or an Ollama cloud model, through one local API |
 
 ## CI
 
@@ -86,6 +88,7 @@ The Dragon Book (`/dragon-book`) is statically generated from `data/build/dragon
 | Technology | Phase | Role |
 |---|---|---|
 | scikit-learn, NumPy, pandas | 3 | Matching calibration and analysis |
-| Gemini API, Ollama | 6 | AI companion (production and local) |
+| Gemini API | 6 | The dragon's AI in production (Ollama is used for now) |
+| pgvector | 6b | Searchable dragon memories |
 | Phaser | 7 | Mini-games |
 | Playwright | 7+ | End-to-end tests |
